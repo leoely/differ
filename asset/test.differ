@@ -1,0 +1,30 @@
+={%opensource}
+| -- The databasea is open source and can be used for free and safely.
+={%oracle}
+| -- The database is charged and subsequent use requires attention.
+
+-- This sql is used to create a database.
+={%postgresql}
+| DROP TABLE IF EXISTS "users";
+| CREATE TABLE "public"."users" (
+|     "id" bigint NOT NULL,
+|    "name" text,
+|    "age" integer,
+|    "gender" integer,
+|    "city" text,
+|    "country" text,
+|    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+| ) WITH (oids = false);
+={%mysql}
+| DROP TABLE IF EXISTS `users`;
+| CREATE TABLE `users` (
+|  `id` bigint NOT NULL,
+|  `name` text,
+|  `age` int DEFAULT NULL,
+|  `gender` int DEFAULT NULL,
+|  `city` text,
+|  `country` text,
+|  PRIMARY KEY (`id`)
+| ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+={%oracle}
+| -- database not be installed.
