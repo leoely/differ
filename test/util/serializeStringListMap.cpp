@@ -11,7 +11,7 @@ string serializeStringListMap(unordered_map<string, list<string>> &stringListMap
     string.append("[");
     for (auto it = e.second.begin(); it != e.second.end(); it++) {
       int index = distance(e.second.begin(), it);
-      if (index != it->size() - 1) {
+      if (index != static_cast<int>(it->size() - 1)) {
         string.append("'" + *it + "',");
       } else {
         string.append("'" + *it + "'");

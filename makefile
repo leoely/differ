@@ -2,13 +2,16 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g -std=c++20
+CXXFLAGS = -Wall -g -std=c++23
+
+# Opitimzation flags
+OPTIMIZATIONFLAGS = -Ofast
 
 # Test flags
 TESTFLAGS = -lpthread
 
 # Indluding header files
-INCLUDE = -I ./include -I /opt/local/include
+INCLUDE = -I ./include
 
 # Target executable
 TARGET = main
@@ -29,7 +32,7 @@ SRCS = Parser/Parser.cpp Parser/LocationParser.cpp Parser/DifferParser.cpp comma
 TESTS = Parser/LocationParserTest.cpp Parser/DifferParserTest.cpp util/serializeStringListMap.cpp
 
 # Library diectory
-LIBS = /opt/local/lib
+LIBS = ./lib
 
 # Source directory
 SOURCES = ./src
@@ -57,11 +60,11 @@ all: $(BUILDS)/application/$(TARGET) run
 
 # Rule to link object files into the target executable
 $(BUILDS)/application/$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(BUILDS)/application/$(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OPTIMIZATIONFLAGS) -o $(BUILDS)/application/$(TARGET) $(OBJS)
 
 # Rule to compile .cpp files into .o files
 $(BUILDS)/application/%.o: $(SOURCES)/%.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(OPTIMIZATIONFLAGS) $(INCLUDE) -c $< -o $@
 
 # Rule to run the executable
 run: prepare $(BUILDS)/application/$(TARGET)
@@ -92,7 +95,7 @@ test: prepare $(BUILDS)/test/$(TRIAL)
 
 # Rule to link object files into the test executable
 $(BUILDS)/test/$(TRIAL): $(ITEMS) $(OBJS)
-	$(CXX) $(TESTFLAGS) $(INCLUDE) -o $(BUILDS)/test/$(TRIAL) $(ITEMS) $(LIBS)/libgtest.a $(LIBS)/libgtest_main.a $(BUILDS)/application/Parser/LocationParser.o $(BUILDS)/application/Parser/Parser.o $(BUILDS)/application/Parser/DifferParser.o
+	$(CXX) $(CXXFLAGS) $(TESTFLAGS) $(INCLUDE) -o $(BUILDS)/test/$(TRIAL) $(ITEMS) $(LIBS)/libgtest.a $(LIBS)/libgtest_main.a $(BUILDS)/application/Parser/LocationParser.o $(BUILDS)/application/Parser/Parser.o $(BUILDS)/application/Parser/DifferParser.o
 
 # Rule to compile .cpp files into .o files
 $(BUILDS)/test/%.o: $(CHECKOUTS)/%.cpp

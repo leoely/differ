@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <fstream>
+#include <filesystem>
 #include <Parser/LocationParser.hpp>
 #include <Parser/DifferParser.hpp>
 #include <command/help.hpp>
@@ -79,7 +80,7 @@ void generate(const vector<string> &args) {
         file.open(d.first);
         for (auto it = d.second.begin(); it != d.second.end(); it++) {
           int index = distance(d.second.begin(), it);
-          if (index == d.second.size() - 1) {
+          if (index == static_cast<int>(d.second.size() - 1)) {
             file << dealBlankLine(*it);
           } else {
             file << dealBlankLine(*it) << "\n";

@@ -8,12 +8,12 @@ using namespace std;
 int main(int argc, const char *argv[]) {
   if (argc == 1) {
     help();
-    return 1;
+    return 0;
   }
   string argv1 = argv[1];
   if (argv1 == "--help") {
     help();
-    return 1;
+    return 0;
   }
   vector<string> args;
   for (int i = 2; i < argc; i += 1) {
@@ -22,6 +22,6 @@ int main(int argc, const char *argv[]) {
   }
   if (argv1 == "generate") {
     generate(args);
-    return 1;
+    return 0;
   }
 }

@@ -120,7 +120,7 @@ bool DifferParser::dealChar(const char c, const string &lineText) {
     case 6:
       if (c == ' ') {
         if (location.contains(key) == true) {
-          list<string> aloneList = location.find(key)->second;
+          list<string> aloneList = location[key];
           string sub = lineText.substr(2, lineText.size() - 2);
           appendLine(aloneList, sub);
           status = 7;
@@ -153,10 +153,10 @@ bool DifferParser::dealChar(const char c, const string &lineText) {
 void DifferParser::appendLine(const list<string> &stringList, const string &lineText) {
   for (auto e : stringList) {
     if (differ.contains(e) == true) {
-      differ.find(e)->second.push_back(lineText);
+      differ[e].push_back(lineText);
     } else {
       list<string> newList = {lineText};
-      differ.emplace(e, newList);
+      differ[e] = newList;
     }
   }
 }

@@ -129,11 +129,11 @@ void LocationParser::appendValue() {
   }
   if (location.find(key) == location.end()) {
     list<string> values = {value};
-    location.emplace(key, values);
+    location[key] = values;
   } else {
     location.find(key)->second.push_back(value);
   }
-  fullHash.emplace(value, true);
+  fullHash[value] = true;
 }
 
 const list<string> LocationParser::getFullList() {

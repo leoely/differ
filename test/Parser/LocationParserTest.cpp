@@ -18,13 +18,13 @@ TEST(Class_LocationParser, test_that_the_loc_file_is_parsed_correctly) {
   }
   unordered_map<string, list<string>> location = locationParser->getLocation();
   string locationString = serializeStringListMap(location);
-  EXPECT_EQ(locationString, "{'opensource':['/tmp/differ/mysql.sql','/tmp/differ/postgresql.sql',]'mysql':['/tmp/differ/mysql.sql',]'oracle':['/tmp/differ/oracle.sql',]'postgresql':['/tmp/differ/postgresql.sql',]}");
+  EXPECT_EQ(locationString, "{'oracle':['/tmp/differ/oracle.sql',]'postgresql':['/tmp/differ/postgresql.sql',]'mysql':['/tmp/differ/mysql.sql',]'opensource':['/tmp/differ/mysql.sql','/tmp/differ/postgresql.sql',]}");
 
   list<string> fullList = locationParser->getFullList();
   string fullListString = "[";
   for (auto it = fullList.begin(); it != fullList.end(); it++) {
     int index = distance(fullList.begin(), it);
-    if (index != fullList.size() - 1) {
+    if (index != static_cast<int>(fullList.size() - 1)) {
       fullListString.append("'" + *it + "',");
     } else {
       fullListString.append("'" + *it + "'");
