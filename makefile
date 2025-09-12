@@ -82,7 +82,7 @@ clean:
 	-@rm -rvf $(BUILDS)/*
 
 # Rule to installing the software
-install:
+install: $(BUILDS)/application/$(TARGET)
 	@cp $(BUILDS)/application/$(TARGET) $(INSTALLS)/$(NAME)
 
 # Rule to uninstall software

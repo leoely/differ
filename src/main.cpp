@@ -15,13 +15,13 @@ int main(int argc, const char *argv[]) {
     help();
     return 0;
   }
-  vector<string> args;
-  for (int i = 2; i < argc; i += 1) {
-    string arg = argv[i];
-    args.push_back(arg);
+  const char *subArgv[argc - 1];
+  for (int i = 1; i < argc; i += 1) {
+    subArgv[i - 1] = argv[i];
   }
+  argc -= 1;
   if (argv1 == "generate") {
-    generate(args);
+    generate(argc, subArgv);
     return 0;
   }
 }

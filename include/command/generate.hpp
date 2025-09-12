@@ -12,4 +12,4 @@
 
 using namespace std;
 
-void generate(const vector<string> &args);
+void generate(const int argc, const char *argv[]);

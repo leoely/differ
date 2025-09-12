@@ -7,6 +7,7 @@
 #include <fstream>
 #include <filesystem>
 #include <termcolor/termcolor.hpp>
+#include <argparse/argparse.hpp>
 #include <Parser/LocationParser.hpp>
 #include <Parser/DifferParser.hpp>
 #include <command/help.hpp>
@@ -23,10 +24,28 @@ const string dealBlankLine(const string &textLine) {
   }
 }
 
-void generate(const vector<string> &args) {
+void generate(const int argc, const char *argv[]) {
+  argparse::ArgumentParser program("generate");
+  program.add_argument("-f", "--file")
+    .required()
+    .help("specify the location of the differ template file.");
   try {
-    if (args[0] == "-f" || args[0] == "--file") {
-      string differFilePathString = args[1];
+    program.parse_args(argc, argv);
+  } catch (const exception &err) {
+    std::cerr << err.what() << std::endl;
+    std::cerr << program;
+    std::exit(1);
+  }
+  try {
+    if (program.is_used("-f") || program.is_used("--file")) {
+      string fOption = program.get<string>("-f");
+      string fileOption = program.get<string>("--file");
+      string differFilePathString;
+      if (fOption.size() > 0) {
+        differFilePathString = fOption;
+      } else {
+        differFilePathString = fileOption;
+      }
       fs::path differFilePath = differFilePathString;
       if (differFilePath.is_absolute()) {
         differFilePath = differFilePathString;
