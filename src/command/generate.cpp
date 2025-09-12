@@ -6,6 +6,7 @@
 #include <memory>
 #include <fstream>
 #include <filesystem>
+#include <termcolor/termcolor.hpp>
 #include <Parser/LocationParser.hpp>
 #include <Parser/DifferParser.hpp>
 #include <command/help.hpp>
@@ -33,7 +34,7 @@ void generate(const vector<string> &args) {
         differFilePath = fs::absolute(differFilePath);
       }
       if (fs::exists(differFilePath) == false) {
-        throw 4;
+        throw 2;
       }
       fs::path differFileName = differFilePath.filename();
       string differFileNameString(differFileName.string());
@@ -88,7 +89,7 @@ void generate(const vector<string> &args) {
         }
         file.close();
       }
-      cout << "[Successfully]:: generate the target file according to the template file;" << endl;
+      cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " Generate the target file according to the template file." << endl;
     } else {
       help();
       return;
@@ -96,16 +97,13 @@ void generate(const vector<string> &args) {
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << "[Error] The path of the specified file \".loc\" does not exist;" << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "] The path of the specified file \".loc\" does not exist" << endl;
         exit(errorCode);
       case 2:
-        cout << "[Error] The path of the specified file \".differ\" does not exist;" << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "] The path of the specified file \".differ\" does not exist." << endl;
         exit(errorCode);
       case 3:
-        cout << "[Error] The extension of the differ file should be \".differ\";" << endl;
-        exit(errorCode);
-      case 4:
-        cout << "[Error] The path of the specified file \".differ\" does not exist;" << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "] The extension of the differ file should be \".differ\"." << endl;
         exit(errorCode);
     }
   }

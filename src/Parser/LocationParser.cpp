@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <termcolor/termcolor.hpp>
 #include <Parser/Parser.hpp>
 
 using namespace std;
@@ -53,7 +54,7 @@ void LocationParser::scanLine(const string &lineText) {
             showError(lineText, "[Error] This position should be the character \"[\";");
             exit(errorCode);
           case 4:
-            cout << "[Error] The LocationParser internal state is abnormal;" << endl;;
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "[ The LocationParser internal state is abnormal." << endl;
             exit(errorCode);
         }
       }

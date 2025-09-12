@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <termcolor/termcolor.hpp>
 
 using namespace std;
 
@@ -38,11 +39,13 @@ inline int getWidth(int position) {
 
 void Parser::showError(const string &lineText, const string &message) {
   cout << "" << endl;
-  cout << line << " " + lineText << endl;
+  cout << termcolor::dark << line << " " << termcolor::reset << termcolor::on_white << termcolor::color<0, 0, 0> << lineText << termcolor::reset << endl;
   int blankCount = getWidth(line) + position + 1;
-  for (int i = 0; i < blankCount; i += 1) {
+  for (int i = 0; i < blankCount - 2; i += 1) {
     cout << " ";
   }
-  cout << "|" << endl;
+  cout << termcolor::dark << "[[" << termcolor::reset<< termcolor::bold << "|" << termcolor::reset << termcolor::dark << "]]" << termcolor::reset << endl;
+  cout << "" << endl;
+  cout << termcolor::bold << "Line: " << termcolor::reset << line << "," << termcolor::bold << " Pos: " << termcolor::reset << position << ";" << endl;
   cout << message << endl;
 }
