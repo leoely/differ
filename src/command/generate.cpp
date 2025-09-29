@@ -67,13 +67,12 @@ void generate(const int argc, const char *argv[]) {
       string locFileNameString(differFileName.string());
       size_t lastIndex2 = locFileNameString.find_last_of(".");
       string locFileString = locFileNameString.substr(0, lastIndex2);
-      string locFilePathString = parentPathString + '/' + locFileString + ".loc";
+      fs::path locFilePath = fs::path(parentPathString) / (locFileString + ".loc");
       shared_ptr<LocationParser> locationParser(new LocationParser());
-      fs::path locFilePath = locFilePathString;
       if (fs::exists(locFilePath) == false) {
         throw 1;
       }
-      ifstream file1(locFilePathString);
+      ifstream file1(locFilePath);
       string str1;
       while (getline(file1, str1)) {
         locationParser->scanLine(str1);
