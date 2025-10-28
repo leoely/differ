@@ -1,7 +1,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
-#include <Parser/Parser.hpp>
+#include <Parser.hpp>
 
 using namespace std;
 

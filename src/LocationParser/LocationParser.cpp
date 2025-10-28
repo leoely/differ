@@ -3,7 +3,7 @@
 #include <list>
 #include <string>
 #include <termcolor/termcolor.hpp>
-#include <Parser/Parser.hpp>
+#include <Parser.hpp>
 
 using namespace std;
 

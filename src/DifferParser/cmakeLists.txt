@@ -1,1 +1,2 @@
 add_library(DifferParser STATIC help.cpp)
+target_include_directories(generate PUBLIC include)

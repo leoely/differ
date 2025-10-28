@@ -4,5 +4,6 @@ set(CAMKE_CXX_STANDARD 23)
 set(CAMKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
-add_subdirectory(include)
 add_subdirectory(test)
+
+enable_testing()

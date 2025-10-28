@@ -1,1 +1,2 @@
 add_library(help STATIC help.cpp)
+target_include_directories(help PUBLIC include)
