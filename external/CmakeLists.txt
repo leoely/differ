@@ -1,0 +1,10 @@
+include(ExternalProject)
+ExternalProject_add(
+  termcolor
+  GIT_RESPOSITORY https://github.com/ikalnytskyi/termcolor
+  GIT_TAG master
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  INSTALL_COMMAND ""
+  SOURCE_DIR "."
+)
