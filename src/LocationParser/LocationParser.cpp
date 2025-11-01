@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
-#include <termcolor/termcolor.hpp>
+#include <termcolor.hpp>
 #include <Parser.hpp>
 
 using namespace std;

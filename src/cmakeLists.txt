@@ -7,3 +7,9 @@ FetchContent_MakeAvailable(argparse)
 
 add_executable(differ main.cpp)
 target_link_libraries(differ DifferParser LocationParser Parser generate help argparse termcolor)
+
+add_subdirectory(DifferParser)
+add_subdirectory(generate)
+add_subdirectory(help)
+add_subdirectory(LocationParser)
+add_subdirectory(Parser)

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <termcolor/termcolor.hpp>
+#include <termcolor.hpp>
 
 using namespace std;
 

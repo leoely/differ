@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include <termcolor/termcolor.hpp>
+#include <termcolor.hpp>
 
 using namespace std;
 
