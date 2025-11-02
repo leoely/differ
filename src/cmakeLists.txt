@@ -3,13 +3,17 @@ FetchContent_Declare(
   argparse
   GIT_REPOSITORY https://github.com/p-ranav/argparse.git
 )
-FetchContent_MakeAvailable(argparse)
+FetchContent_Declare(
+  termcolor
+  GIT_REPOSITORY https://github.com/ikalnytskyi/termcolor.git
+)
+FetchContent_MakeAvailable(argparse termcolor)
 
 add_executable(differ main.cpp)
-target_link_libraries(differ DifferParser LocationParser Parser generate help argparse termcolor)
+target_link_libraries(differ DifferParser LocationParser Parser generate assist)
 
+add_subdirectory(Parser)
+add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)
 add_subdirectory(generate)
 add_subdirectory(help)
-add_subdirectory(LocationParser)
-add_subdirectory(Parser)

@@ -1,2 +1,4 @@
-add_library(DifferParser STATIC help.cpp)
-target_include_directories(DifferParser PUBLIC include)
+add_library(DifferParser STATIC DifferParser.cpp)
+target_include_directories(DifferParser PUBLIC
+  "${CMAKE_SOURCE_DIR}/include"
+)

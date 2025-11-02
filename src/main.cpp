@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
-#include <help.hpp>
-#include <generate.hpp>
+#include <help/help.hpp>
+#include <generate/generate.hpp>
 
 using namespace std;
 

@@ -8,9 +8,9 @@
 #include <filesystem>
 #include <termcolor/termcolor.hpp>
 #include <argparse/argparse.hpp>
-#include <LocationParser.hpp>
-#include <DifferParser.hpp>
-#include <help.hpp>
+#include <LocationParser/LocationParser.hpp>
+#include <DifferParser/DifferParser.hpp>
+#include <help/help.hpp>
 
 using namespace std;
 

@@ -1,2 +1,4 @@
-add_library(help STATIC help.cpp)
-target_include_directories(help PUBLIC include)
+add_library(assist STATIC help.cpp)
+target_include_directories(assist PUBLIC
+  "${FETCHCONTENT_BASE_DIR}/termcolor-src/include"
+)

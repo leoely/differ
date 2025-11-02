@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include <list>
 #include <string>
-#include <termcolor.hpp>
-#include <Parser.hpp>
+#include <termcolor/termcolor.hpp>
+#include <Parser/Parser.hpp>
 
 using namespace std;
 

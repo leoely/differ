@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.31.7)
 set(CMAKE_CXX_COMPILER "/opt/local/bin/g++")
-project(differ VERSION 0.0.1 LANGUAGES CXX)
+project(
+  differ VERSION 0.0.1
+  DESCRIPTION "Differential file generation tool."
+  LANGUAGES CXX
+)
 set(CAMKE_CXX_STANDARD 23)
 set(CAMKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(external)
-
-enable_testing()

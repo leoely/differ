@@ -1,7 +1,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
-#include <Parser.hpp>
+#include <Parser/Parser.hpp>
 
 using namespace std;
 
@@ -119,7 +119,7 @@ bool DifferParser::dealChar(const char c, const string &lineText) {
       break;
     case 6:
       if (c == ' ') {
-        if (location.contains(key) == true) {
+        if (location.find(key) == location.end()) {
           list<string> aloneList = location[key];
           string sub = lineText.substr(2, lineText.size() - 2);
           appendLine(aloneList, sub);
@@ -152,7 +152,7 @@ bool DifferParser::dealChar(const char c, const string &lineText) {
 
 void DifferParser::appendLine(const list<string> &stringList, const string &lineText) {
   for (auto e : stringList) {
-    if (differ.contains(e) == true) {
+    if (differ.find(e) == differ.end()) {
       differ[e].push_back(lineText);
     } else {
       list<string> newList = {lineText};
