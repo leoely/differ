@@ -1,5 +1,5 @@
 add_library(LocationParser STATIC LocationParser.cpp)
 target_include_directories(LocationParser PUBLIC
-  "${FETCHCONTENT_BASE_DIR}/termcolor-src/include"
   "${CMAKE_SOURCE_DIR}/include"
+  ${TERMCOLOR_INCLUDE_DIRS}
 )

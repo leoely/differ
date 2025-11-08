@@ -1,4 +1,2 @@
 add_library(Parser STATIC Parser.cpp)
-target_include_directories(Parser PUBLIC
-  "${FETCHCONTENT_BASE_DIR}/termcolor-src/include"
-)
+target_include_directories(Parser PRIVATE ${TERMCOLOR_INCLUDE_DIRS})

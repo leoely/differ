@@ -1,0 +1,11 @@
+enable_testing()
+
+find_package(Threads REQUIRED)
+find_package(GTest CONFIG REQUIRED)
+
+include(GoogleTest)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+add_subdirectory(serializeStringListMap)
+add_subdirectory(LocationParser)
+add_subdirectory(DifferParser)
