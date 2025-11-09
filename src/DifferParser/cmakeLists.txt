@@ -1,5 +1,5 @@
 add_library(DifferParser STATIC DifferParser.cpp)
 target_include_directories(DifferParser PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
-  "${FETCHCONTENT_BASE_DIR}/termcolor-src/include"
+  ${TERMCOLOR_INCLUDE_DIRS}
 )
