@@ -1,7 +1,0 @@
-{
-  "dependencies": [
-    "argparse",
-    "gtest",
-    "termcolor"
-  ]
-}

@@ -1,5 +1,6 @@
 add_library(generate STATIC generate.cpp)
 target_include_directories(generate PUBLIC
+  "${FETCHCONTENT_BASE_DIR}/termcolor-src/include"
+  "${FETCHCONTENT_BASE_DIR}/argparse-src/include"
   "${CMAKE_SOURCE_DIR}/include"
-  ${TERMCOLOR_INCLUDE_DIRS}
 )

@@ -1,14 +1,22 @@
 cmake_minimum_required(VERSION 3.31.7)
+set(CAMKE_CXX_STANDARD 23)
+set(CAMKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_LIBRARY "libc++")
 set(CMAKE_CXX_COMPILER "/opt/local/bin/g++")
 project(
   differ VERSION 0.0.1
   DESCRIPTION "Differential file generation tool."
   LANGUAGES CXX
 )
-set(CAMKE_CXX_STANDARD 23)
-set(CAMKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_LIBRARY "libc++")
+
+set(CPACK_PACKAGE_NAME "differ")
+set(CPACK_PACKAGE_VERSION "0.0.1")
+set(CPACK_PACKAGE_VENDOR "Leo Ely")
+set(CPACK_PACKAGE_DESCIPTION "Differential file generation tool.")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+include(CPack)
+include(InstallRequiredSystemLibraries)
 
 add_subdirectory(src)
 add_subdirectory(test)
