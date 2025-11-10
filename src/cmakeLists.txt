@@ -6,6 +6,8 @@ find_path(TERMCOLOR_INCLUDE_DIRS "termcolor/termcolor.hpp")
 add_executable(differ main.cpp)
 target_link_libraries(differ DifferParser LocationParser Parser generate assist termcolor::termcolor argparse::argparse)
 
+install(TARGETS differ DESTINATION bin)
+
 add_subdirectory(Parser)
 add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)

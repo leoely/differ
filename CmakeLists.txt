@@ -18,5 +18,9 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 include(CPack)
 include(InstallRequiredSystemLibraries)
 
+set(CPACK_GENERATOR "DragNDrop")
+set(CPACK_DMG_VOLUME_NAME "differ")
+set(CPACK_DMG_APPLICATIONS_LINK_DIR "/Applications") # Link to Applications folder
+
 add_subdirectory(src)
 add_subdirectory(test)
