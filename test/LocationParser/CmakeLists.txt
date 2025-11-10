@@ -3,4 +3,5 @@ target_link_libraries(LocationParser_test PUBLIC gtest gtest_main Parser Locatio
 target_include_directories(LocationParser_test PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
 )
+addCoverage(LocationParser_test_coverage)
 gtest_discover_tests(LocationParser_test)

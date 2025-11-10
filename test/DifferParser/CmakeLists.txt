@@ -3,4 +3,5 @@ target_link_libraries(DifferParser_test gtest gtest_main Parser DifferParser Loc
 target_include_directories(DifferParser_test PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
 )
+addCoverage(DifferParser_test_coverage)
 gtest_discover_tests(DifferParser_test)
