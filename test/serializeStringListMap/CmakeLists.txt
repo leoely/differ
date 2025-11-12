@@ -1,1 +1,6 @@
 add_library(serializeStringListMap STATIC serializeStringListMap.cpp)
+if (BUILD_COVERAGE)
+  target_compile_options(serializeStringListMap PRIVATE -coverage)
+  target_link_options(serializeStringListMap PRIVATE -coverage)
+  addCoverage(serializeStringListMap_test_coverage)
+endif()

@@ -10,6 +10,11 @@ project(
   LANGUAGES CXX
 )
 
+option(BUILD_COVERAGE "Generate code coverage file" ON)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(Coverage)
+
 set(CPACK_PACKAGE_NAME "differ")
 set(CPACK_PACKAGE_VERSION "0.0.1")
 set(CPACK_PACKAGE_VENDOR "Leo Ely")

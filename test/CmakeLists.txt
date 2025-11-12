@@ -10,9 +10,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-include(Coverage)
-
 add_subdirectory(serializeStringListMap)
 add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)

@@ -3,3 +3,8 @@ target_include_directories(generate PUBLIC
   ${TERMCOLOR_INCLUDE_DIRS}
   "${CMAKE_SOURCE_DIR}/include"
 )
+if (BUILD_COVERAGE)
+  target_compile_options(generate PRIVATE -coverage)
+  target_link_options(generate PRIVATE -coverage)
+  addCoverage(generate_coverage)
+endif()
