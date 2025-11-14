@@ -10,12 +10,14 @@ project(
   LANGUAGES CXX
 )
 
-option(BUILD_COVERAGE "Generate code coverage file" ON)
+option(DEBUG "Generate code coverage file" ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(Coverage)
 include(CopyAsset)
 include(Package)
+include(MemoryCheck)
+include(Lint)
 
 set(CPACK_PACKAGE_NAME "differ")
 set(CPACK_PACKAGE_VERSION "0.0.1")

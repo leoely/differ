@@ -3,7 +3,10 @@
 #include <list>
 #include <termcolor/termcolor.hpp>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::list;
 
 class Parser {
   protected:
@@ -18,7 +21,6 @@ class Parser {
 };
 
 Parser::Parser() : key(""), line(0), position(0) {}
-
 Parser::~Parser() {}
 void Parser::obtainKey() {
   for (auto e: this->chars) {

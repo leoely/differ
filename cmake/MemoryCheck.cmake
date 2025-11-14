@@ -1,0 +1,6 @@
+function(MemoryCheck target)
+  if (DEBUG)
+    target_compile_options(${target} PRIVATE -fsanitize=address)
+    target_link_options(${target} PRIVATE -fsanitize=address)
+  endif()
+endfunction()

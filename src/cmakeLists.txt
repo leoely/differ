@@ -4,11 +4,8 @@ find_package(argparse CONFIG REQUIRED)
 find_path(TERMCOLOR_INCLUDE_DIRS "termcolor/termcolor.hpp")
 
 add_executable(differ main.cpp)
-if (BUILD_COVERAGE)
-  target_compile_options(differ PRIVATE -coverage)
-  target_link_options(differ PRIVATE -coverage)
-  addCoverage(differ_coverage)
-endif()
+memoryCheck(differ)
+addCoverage(differ)
 
 target_link_libraries(differ DifferParser LocationParser Parser generate assist termcolor::termcolor argparse::argparse)
 

@@ -2,9 +2,6 @@ add_library(Parser STATIC Parser.cpp)
 target_include_directories(Parser PUBLIC
   ${TERMCOLOR_INCLUDE_DIRS}
 )
-if (BUILD_COVERAGE)
-  target_compile_options(Parser PRIVATE -coverage)
-  target_link_options(Parser PRIVATE -coverage)
-  addCoverage(Parser_coverage)
-endif()
+memoryCheck(Parser)
+addCoverage(Parser)
 
