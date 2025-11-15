@@ -1,0 +1,5 @@
+function(Optimize target)
+  if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_options(${target} PRIVATE -O3)
+  endif()
+endfunction()

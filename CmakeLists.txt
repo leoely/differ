@@ -10,14 +10,17 @@ project(
   LANGUAGES CXX
 )
 
-option(DEBUG "Generate code coverage file" ON)
+set(CMAKE_BUILD_TYPE "Release")
 
+find_package(doxygen REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(Coverage)
 include(CopyAsset)
 include(Package)
 include(MemoryCheck)
 include(Lint)
+include(Document)
+include(Optimize)
 
 set(CPACK_PACKAGE_NAME "differ")
 set(CPACK_PACKAGE_VERSION "0.0.1")

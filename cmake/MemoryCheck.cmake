@@ -1,5 +1,5 @@
 function(MemoryCheck target)
-  if (DEBUG)
+  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(${target} PRIVATE -fsanitize=address)
     target_link_options(${target} PRIVATE -fsanitize=address)
   endif()

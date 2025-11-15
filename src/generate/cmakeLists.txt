@@ -3,5 +3,5 @@ target_include_directories(generate PUBLIC
   ${TERMCOLOR_INCLUDE_DIRS}
   "${CMAKE_SOURCE_DIR}/include"
 )
-memoryCheck(generate)
-addCoverage(generate)
+MemoryCheck(generate)
+AddCoverage(generate)

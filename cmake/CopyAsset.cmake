@@ -1,5 +1,5 @@
 function(CopyAsset target)
-  if (DEBUG)
+  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(
       TARGET ${target}
       POST_BUILD

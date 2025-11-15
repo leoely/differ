@@ -3,5 +3,5 @@ target_include_directories(LocationParser PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
   ${TERMCOLOR_INCLUDE_DIRS}
 )
-memoryCheck(LocationParser)
-addCoverage(LocationParser)
+MemoryCheck(LocationParser)
+AddCoverage(LocationParser)

@@ -3,11 +3,7 @@ target_link_libraries(DifferParser_test gtest gtest_main Parser DifferParser Loc
 target_include_directories(DifferParser_test PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
 )
-if (BUILD_COVERAGE)
-  target_compile_options(DifferParser_test PRIVATE -coverage)
-  target_link_options(DifferParser_test PRIVATE -coverage)
-endif()
-copyAsset(DifferParser_test)
-memoryCheck(DifferParser_test)
-addCoverage(DifferParser_test)
+CopyAsset(DifferParser_test)
+MemoryCheck(DifferParser_test)
+AddCoverage(DifferParser_test)
 gtest_discover_tests(DifferParser_test)

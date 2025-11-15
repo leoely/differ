@@ -1,5 +1,5 @@
 function(AddCoverage target)
-  if (DEBUG)
+  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(${target} PRIVATE -coverage)
     target_link_options(${target} PRIVATE -coverage)
 

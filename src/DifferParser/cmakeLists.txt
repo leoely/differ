@@ -3,5 +3,5 @@ target_include_directories(DifferParser PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
   ${TERMCOLOR_INCLUDE_DIRS}
 )
-memoryCheck(DifferParser)
-addCoverage(DifferParser)
+MemoryCheck(DifferParser)
+AddCoverage(DifferParser)

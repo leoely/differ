@@ -3,11 +3,7 @@ target_link_libraries(LocationParser_test PUBLIC gtest gtest_main Parser Locatio
 target_include_directories(LocationParser_test PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
 )
-if (BUILD_COVERAGE)
-  target_compile_options(LocationParser_test PRIVATE -coverage)
-  target_link_options(LocationParser_test PRIVATE -coverage)
-endif()
-copyAsset(LocationParser_test)
-memoryCheck(LocationParser_test)
-addCoverage(LocationParser_test)
+CopyAsset(LocationParser_test)
+MemoryCheck(LocationParser_test)
+AddCoverage(LocationParser_test)
 gtest_discover_tests(LocationParser_test)

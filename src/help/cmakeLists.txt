@@ -2,5 +2,5 @@ add_library(assist STATIC help.cpp)
 target_include_directories(assist PUBLIC
   ${TERMCOLOR_INCLUDE_DIRS}
 )
-memoryCheck(assist)
-addCoverage(assist)
+MemoryCheck(assist)
+AddCoverage(assist)
