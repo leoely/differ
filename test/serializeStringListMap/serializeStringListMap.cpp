@@ -2,7 +2,9 @@
 #include <unordered_map>
 #include <string>
 
-using namespace std;
+using std::list;
+using std::unordered_map;
+using std::string;
 
 string serializeStringListMap(unordered_map<string, list<string>> &stringListMap) {
   string string = "{";

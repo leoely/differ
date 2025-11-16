@@ -7,7 +7,9 @@
 #include <LocationParser/LocationParser.hpp>
 #include <serializeStringListMap/serializeStringListMap.hpp>
 
-using namespace std;
+using std::list;
+using std::unordered_map;
+using std::ifstream;
 
 TEST(Class_LocationParser, test_that_the_loc_file_is_parsed_correctly) {
   shared_ptr<LocationParser> locationParser(new LocationParser());

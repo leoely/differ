@@ -3,7 +3,9 @@
 #include <string>
 #include <Parser/Parser.hpp>
 
-using namespace std;
+using std::list;
+using std::string;
+using std::unordered_map;
 
 class DifferParser : virtual public Parser {
   using Parser::Parser;

@@ -10,9 +10,9 @@ project(
   LANGUAGES CXX
 )
 
-set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_BUILD_TYPE "Debug")
 
-find_package(doxygen REQUIRED)
+find_package(Doxygen REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(Coverage)
 include(CopyAsset)
