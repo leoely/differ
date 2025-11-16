@@ -1,7 +1,8 @@
 #include <iostream>
 #include <termcolor/termcolor.hpp>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 void help() {
   cout << "" << endl;

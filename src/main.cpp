@@ -3,7 +3,8 @@
 #include <help/help.hpp>
 #include <generate/generate.hpp>
 
-using namespace std;
+using std::vector;
+using std::string;
 
 int main(int argc, const char *argv[]) {
   if (argc == 1) {

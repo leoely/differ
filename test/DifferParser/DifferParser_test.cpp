@@ -1,17 +1,19 @@
-#include <iostream>
 #include <list>
 #include <unordered_map>
 #include <string>
 #include <memory>
 #include <fstream>
-#include <iterator>
 #include <regex>
 #include <gtest/gtest.h>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <serializeStringListMap/serializeStringListMap.hpp>
 
-using namespace std;
+using std::list;
+using std::unordered_map;
+using std::string;
+using std::ifstream;
+using std::regex;
 
 TEST(Class_DifferParser, differ_files_can_be_parsed_correctly) {
   shared_ptr<LocationParser> locationParser(new LocationParser());

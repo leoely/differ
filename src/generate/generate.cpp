@@ -12,7 +12,11 @@
 #include <DifferParser/DifferParser.hpp>
 #include <help/help.hpp>
 
-using namespace std;
+using std::list;
+using std::unordered_map;
+using std::string;
+using std::cout;
+using std::endl;
 
 namespace fs = filesystem;
 
