@@ -4,7 +4,10 @@
 #include <string>
 #include <list>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::list;
 
 class Parser {
   protected:

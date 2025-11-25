@@ -10,6 +10,10 @@
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
 
-using namespace std;
+using std::list;
+using std::unordered_map;
+using std::string;
+using std::cout;
+using std::endl;
 
 void generate(const int argc, const char *argv[]);

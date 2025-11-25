@@ -5,7 +5,11 @@
 #include <string>
 #include <Parser/Parser.hpp>
 
-using namespace std;
+using std::list;
+using std::string;
+using std::unordered_map;
+using std::cout;
+using std::endl;
 
 class LocationParser : virtual public Parser {
   using Parser::Parser;
