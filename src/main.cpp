@@ -24,5 +24,8 @@ int main(int argc, const char *argv[]) {
   if (argv1 == "generate") {
     generate(argc, subArgv);
     return 0;
+  } else {
+    help();
+    return 0;
   }
 }
