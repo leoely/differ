@@ -17,8 +17,12 @@ using std::unordered_map;
 using std::string;
 using std::cout;
 using std::endl;
+using std::shared_ptr;
+using std::ifstream;
+using std::ofstream;
+using std::exception;
 
-namespace fs = filesystem;
+namespace fs = std::filesystem;
 
 const string dealBlankLine(const string &textLine) {
   if (textLine == " ") {

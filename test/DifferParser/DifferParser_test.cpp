@@ -14,6 +14,7 @@ using std::unordered_map;
 using std::string;
 using std::ifstream;
 using std::regex;
+using std::shared_ptr;
 
 TEST(Class_DifferParser, differ_files_can_be_parsed_correctly) {
   shared_ptr<LocationParser> locationParser(new LocationParser());

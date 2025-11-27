@@ -15,5 +15,11 @@ using std::unordered_map;
 using std::string;
 using std::cout;
 using std::endl;
+using std::shared_ptr;
+using std::ifstream;
+using std::ofstream;
+using std::exception;
+
+namespace fs = std::filesystem;
 
 void generate(const int argc, const char *argv[]);

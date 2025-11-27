@@ -10,6 +10,7 @@
 using std::list;
 using std::unordered_map;
 using std::ifstream;
+using std::shared_ptr;
 
 TEST(Class_LocationParser, test_that_the_loc_file_is_parsed_correctly) {
   shared_ptr<LocationParser> locationParser(new LocationParser());
