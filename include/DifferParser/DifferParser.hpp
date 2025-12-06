@@ -20,7 +20,7 @@ class DifferParser : virtual public Parser {
     void appendLine(const list<string> &stringList, const string &lineText);
   public:
     DifferParser(list<string> &fullList, unordered_map<string, list<string>> &location);
-    const unordered_map<string, list<string>> getDiffer() const;
+    const unordered_map<string, list<string>>& getDiffer() const;
     void initProperty();
     void scanLine(string &lineText);
 };

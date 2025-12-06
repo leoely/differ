@@ -23,7 +23,7 @@ class LocationParser : virtual public Parser {
     void dealChar(const char c);
   public:
     LocationParser();
-    const unordered_map<string, list<string>> getLocation() const;
+    const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
     const list<string> getFullList();
     void scanLine(const string &lineText);
@@ -120,7 +120,7 @@ void LocationParser::dealChar(char c) {
   }
 }
 
-const unordered_map<string, list<string>> LocationParser::getLocation() const {
+const unordered_map<string, list<string>>& LocationParser::getLocation() const {
   if (location.size() == 0) {
     throw 5;
   } else {
