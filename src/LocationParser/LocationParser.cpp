@@ -25,7 +25,7 @@ class LocationParser : virtual public Parser {
     LocationParser();
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
-    const list<string> getFullList();
+    const list<string>& getFullList();
     void scanLine(const string &lineText);
 };
 
@@ -141,7 +141,7 @@ void LocationParser::appendValue() {
   fullHash[value] = true;
 }
 
-const list<string> LocationParser::getFullList() {
+const list<string>& LocationParser::getFullList() {
   if (fullHash.size() == 0) {
     throw 6;
   } else {

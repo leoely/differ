@@ -25,6 +25,6 @@ class LocationParser : virtual public Parser {
     LocationParser();
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
-    const list<string> getFullList();
+    const list<string>& getFullList();
     void scanLine(const string &lineText);
 };

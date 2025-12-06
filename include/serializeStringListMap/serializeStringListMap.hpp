@@ -8,4 +8,4 @@ using std::list;
 using std::unordered_map;
 using std::string;
 
-string serializeStringListMap(unordered_map<string, list<string>> &stringListMap);
+string serializeStringListMap(const unordered_map<string, list<string>> &stringListMap);
