@@ -6,6 +6,7 @@
 #include <memory>
 #include <fstream>
 #include <filesystem>
+#include <exception>
 #include <termcolor/termcolor.hpp>
 #include <argparse/argparse.hpp>
 #include <LocationParser/LocationParser.hpp>
@@ -34,7 +35,8 @@ const string dealBlankLine(const string &textLine) {
 
 void generate(const int argc, const char *argv[]) {
   argparse::ArgumentParser program("generate");
-  program.add_argument("-f", "--file")
+  program
+    .add_argument("-f", "--file")
     .required()
     .help("specify the location of the differ template file.");
   try {

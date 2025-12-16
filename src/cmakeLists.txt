@@ -8,7 +8,7 @@ Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
-target_link_libraries(differ DifferParser LocationParser Parser generate assist termcolor::termcolor argparse::argparse)
+target_link_libraries(differ DifferParser LocationParser Parser generate assist validate termcolor::termcolor argparse::argparse)
 
 install(TARGETS differ DESTINATION bin)
 
@@ -17,3 +17,4 @@ add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)
 add_subdirectory(generate)
 add_subdirectory(help)
+add_subdirectory(validate)

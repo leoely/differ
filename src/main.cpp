@@ -2,6 +2,7 @@
 #include <string>
 #include <help/help.hpp>
 #include <generate/generate.hpp>
+#include <validate/validate.hpp>
 
 using std::vector;
 using std::string;
@@ -24,6 +25,8 @@ int main(int argc, const char *argv[]) {
   if (argv1 == "generate") {
     generate(argc, subArgv);
     return 0;
+  } else if (argv1 == "validate") {
+    validate(argc, subArgv);
   } else {
     help();
     return 0;
