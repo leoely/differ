@@ -10,15 +10,17 @@ using std::ifstream;
 using std::exception;
 using std::shared_ptr;
 using std::string;
+using std::exit;
 
 namespace fs = std::filesystem;
 
 void validate(const int argc, const char *argv[]) {
   argparse::ArgumentParser program("validate");
-  program
+  auto &group = program.add_mutually_exclusive_group(true);
+  group
     .add_argument("-d", "--differ")
     .help("check if the syntax of the differ file is correct.");
-  program
+  group
     .add_argument("-l", "--location")
     .help("check if the location file syntax is correct.");
   try {
@@ -28,9 +30,10 @@ void validate(const int argc, const char *argv[]) {
     std::cerr << program;
     std::exit(1);
   }
+  int status = 0;
   try {
     if (program.is_used("-d") || program.is_used("--differ")) {
-      shared_ptr<DifferParser> differParser(new DifferParser());
+      status = 1;
       string dOption = program.get<string>("-d");
       string differOption = program.get<string>("--differ");
       string differFilePathString;
@@ -52,23 +55,43 @@ void validate(const int argc, const char *argv[]) {
       string differFileNameString(differFileName.string());
       size_t lastIndex1 = differFileNameString.find_last_of(".");
       string differExtensionString = differFileNameString.substr(lastIndex1, differFileNameString.size() - lastIndex1);
-      if (differExtensionString != ".differ") {
+      if (differExtensionString != ".diff") {
         throw 2;
       }
+      string locationFilePathString = differFilePathString;
+      int differFilePathSize = differFilePathString.size();
+      locationFilePathString.replace(differFilePathSize - 4, 5, "loc");
+      fs::path locationFilePath = locationFilePathString;
+      if (fs::exists(locationFilePath) == false) {
+        throw 3;
+      }
+      shared_ptr<LocationParser> locationParser(new LocationParser());
+      ifstream locationFile(locationFilePathString);
+      string line1;
+      while (getline(locationFile, line1)) {
+        locationParser->scanLine(line1);
+      }
+      unordered_map<string, list<string>> location = locationParser->getLocation();
+      list<string> fullList = locationParser->getFullList();
       ifstream differFile(differFilePathString);
-      string line;
-      while (std::getline(differFile, line)) {
-        std::cout << line << std::endl;
-        differParser->scanLine(line);
+      string line2;
+      shared_ptr<DifferParser> differParser(new DifferParser(fullList, location));
+      while (std::getline(differFile, line2)) {
+        differParser->scanLine(line2);
       }
     }
+    cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " Location and Diff file validation successful." << endl;
+    exit(EXIT_SUCCESS);
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << "The location of the differ file doest not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The location of the \".diff\" file doest not exist." << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << "The file must have the .differ extension." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The file must have the \".diff\" extension." << endl;
+        exit(errorCode);
+      case 3:
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " Validating the \".diff\" file requires a position file,the \".loc\" file located in the same directory as \".diff\" does not exist." << endl;
         exit(errorCode);
     }
   }
@@ -96,7 +119,7 @@ void validate(const int argc, const char *argv[]) {
       string locationFileNameString(locationFileName.string());
       size_t lastIndex1 = locationFileNameString.find_last_of(".");
       string locationExtensionString = locationFileNameString.substr(lastIndex1, locationFileNameString.size() - lastIndex1);
-      if (locationExtensionString != ".differ") {
+      if (locationExtensionString != ".loc") {
         throw 2;
       }
       ifstream locationFile(locationFilePathString);
@@ -105,13 +128,15 @@ void validate(const int argc, const char *argv[]) {
         locationParser->scanLine(line);
       }
     }
+    cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " Location file validation successful." << endl;
+    exit(EXIT_SUCCESS);
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << "" << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".loc\" does not exist." << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".differ\" does not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The file must have the \".diff\" extension." << endl;
         exit(errorCode);
     }
   }

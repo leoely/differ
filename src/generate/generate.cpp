@@ -69,7 +69,7 @@ void generate(const int argc, const char *argv[]) {
       string differFileNameString(differFileName.string());
       size_t lastIndex1 = differFileNameString.find_last_of(".");
       string differExtensionString = differFileNameString.substr(lastIndex1, differFileNameString.size() - lastIndex1);
-      if (differExtensionString != ".differ") {
+      if (differExtensionString != ".diff") {
         throw 3;
       }
       fs::path parentPath = differFilePath.parent_path();
@@ -128,10 +128,10 @@ void generate(const int argc, const char *argv[]) {
         cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".loc\" does not exist." << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".differ\" does not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".diff\" does not exist." << endl;
         exit(errorCode);
       case 3:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The extension of the differ file should be \".differ\"." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The extension of the differ file should be \".diff\"." << endl;
         exit(errorCode);
     }
   }
