@@ -1,0 +1,12 @@
+x64-osx/
+x64-osx/include/
+x64-osx/include/termcolor/
+x64-osx/include/termcolor/termcolor.hpp
+x64-osx/share/
+x64-osx/share/termcolor/
+x64-osx/share/termcolor/copyright
+x64-osx/share/termcolor/termcolor/
+x64-osx/share/termcolor/termcolor/termcolor-config.cmake
+x64-osx/share/termcolor/termcolor/termcolor-targets.cmake
+x64-osx/share/termcolor/vcpkg.spdx.json
+x64-osx/share/termcolor/vcpkg_abi_info.txt

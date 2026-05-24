@@ -8,6 +8,7 @@ Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
+target_compile_features(differ PUBLIC cxx_std_26)
 target_link_libraries(differ DifferParser LocationParser Parser generate assist validate termcolor::termcolor argparse::argparse)
 
 install(TARGETS differ DESTINATION bin)

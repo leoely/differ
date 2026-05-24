@@ -79,19 +79,19 @@ void validate(const int argc, const char *argv[]) {
       while (std::getline(differFile, line2)) {
         differParser->scanLine(line2);
       }
+      cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location and Diff file validation successful." << termcolor::reset << endl;
+      exit(EXIT_SUCCESS);
     }
-    cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " Location and Diff file validation successful." << endl;
-    exit(EXIT_SUCCESS);
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The location of the \".diff\" file doest not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The location of the \".diff\" file doest not exist." << termcolor::reset << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The file must have the \".diff\" extension." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".diff\" extension." << termcolor::reset << endl;
         exit(errorCode);
       case 3:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " Validating the \".diff\" file requires a position file,the \".loc\" file located in the same directory as \".diff\" does not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " Validating the \".diff\" file requires a position file,the \".loc\" file located in the same directory as \".diff\" does not exist." << termcolor:: reset << endl;
         exit(errorCode);
     }
   }
@@ -119,6 +119,7 @@ void validate(const int argc, const char *argv[]) {
       string locationFileNameString(locationFileName.string());
       size_t lastIndex1 = locationFileNameString.find_last_of(".");
       string locationExtensionString = locationFileNameString.substr(lastIndex1, locationFileNameString.size() - lastIndex1);
+      cout << locationExtensionString << endl;
       if (locationExtensionString != ".loc") {
         throw 2;
       }
@@ -127,16 +128,16 @@ void validate(const int argc, const char *argv[]) {
       while (std::getline(locationFile, line)) {
         locationParser->scanLine(line);
       }
+      cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location file validation successful." << termcolor::reset << endl;
+      exit(EXIT_SUCCESS);
     }
-    cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " Location file validation successful." << endl;
-    exit(EXIT_SUCCESS);
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The path of the specified file \".loc\" does not exist." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".loc\" does not exist." << termcolor::reset << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The file must have the \".diff\" extension." << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".diff\" extension." << termcolor::reset << endl;
         exit(errorCode);
     }
   }

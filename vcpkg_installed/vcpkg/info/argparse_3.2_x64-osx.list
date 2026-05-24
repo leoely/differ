@@ -1,0 +1,11 @@
+x64-osx/
+x64-osx/include/
+x64-osx/include/argparse/
+x64-osx/include/argparse/argparse.hpp
+x64-osx/share/
+x64-osx/share/argparse/
+x64-osx/share/argparse/argparseConfig-version.cmake
+x64-osx/share/argparse/argparseConfig.cmake
+x64-osx/share/argparse/copyright
+x64-osx/share/argparse/vcpkg.spdx.json
+x64-osx/share/argparse/vcpkg_abi_info.txt
