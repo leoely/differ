@@ -1,15 +1,16 @@
 find_package(termcolor CONFIG REQUIRED)
 find_package(argparse CONFIG REQUIRED)
 
-find_path(TERMCOLOR_INCLUDE_DIRS "termcolor/termcolor.hpp")
-
 add_executable(differ main.cpp)
+
+find_path(TERMCOLOR_INCLUDE_DIRS "termcolor/termcolor.hpp")
+target_include_directories(differ PRIVATE ${TERMCOLOR_INCLUDE_DIRS})
+
 Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
-target_compile_features(differ PUBLIC cxx_std_26)
-target_link_libraries(differ DifferParser LocationParser Parser generate assist validate termcolor::termcolor argparse::argparse)
+target_link_libraries(differ DifferParser LocationParser Parser generate assist validate termcolor::termcolor)
 
 install(TARGETS differ DESTINATION bin)
 

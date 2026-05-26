@@ -3,13 +3,13 @@
   "spdxVersion": "SPDX-2.2",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "documentNamespace": "https://spdx.org/spdxdocs/termcolor-x64-osx-2.1.0-68eda4ab-2f00-43ef-93e3-a60a0fec9394",
-  "name": "termcolor:x64-osx@2.1.0 7117aef1ae5bda42be982e42da228f49c2988c7cd16771a03d13700c77da7879",
+  "documentNamespace": "https://spdx.org/spdxdocs/termcolor-x64-osx-2.1.0-836eb952-8b12-49ab-8011-38cb14a6a81f",
+  "name": "termcolor:x64-osx@2.1.0 848cf0983e2384d5c18c1ed1421571fcd89a25ca1891284d073041bf71ef42ac",
   "creationInfo": {
     "creators": [
-      "Tool: vcpkg-2025-10-16-71538f2694db93da4668782d094768ba74c45991"
+      "Tool: vcpkg-2026-04-08-e0612b42ce44e55a0e630f2ee9d3c533a63d8bc1"
     ],
-    "created": "2026-05-24T02:57:53Z"
+    "created": "2026-05-25T13:27:22Z"
   },
   "relationships": [
     {
@@ -74,7 +74,7 @@
     {
       "name": "termcolor:x64-osx",
       "SPDXID": "SPDXRef-binary",
-      "versionInfo": "7117aef1ae5bda42be982e42da228f49c2988c7cd16771a03d13700c77da7879",
+      "versionInfo": "848cf0983e2384d5c18c1ed1421571fcd89a25ca1891284d073041bf71ef42ac",
       "downloadLocation": "NONE",
       "licenseConcluded": "BSD-3-Clause",
       "licenseDeclared": "NOASSERTION",
@@ -151,7 +151,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "e0ef0218932b0d85e9f50c89e4981d02908161b122680437f9e47c1cd0a97722"
+          "checksumValue": "6f25d11e29dda0bead762f78f7d048c1a283f4a21d5790aa9045b9c84e2e9157"
         }
       ],
       "licenseConcluded": "NOASSERTION",

@@ -10,5 +10,17 @@
     "hash" : "420120e657f89693e348c3117e8f85b1cbd7f84d",
     "size" : 208593168,
     "timestamp" : 1668654937
+  },
+  "/opt/local/bin/clang" : 
+  {
+    "hash" : "4ff2c271c5b833d0d5e5ca6b9a924f8ff3324269",
+    "size" : 174,
+    "timestamp" : 1773299545
+  },
+  "/opt/local/bin/clang++" : 
+  {
+    "hash" : "36b656c059481a294841f72ee47e8b8547ae8aea",
+    "size" : 178,
+    "timestamp" : 1773299549
   }
 }
