@@ -1,0 +1,3 @@
+add_library(serializeStringListMap STATIC serializeStringListMap.cpp)
+MemoryCheck(serializeStringListMap)
+AddCoverage(serializeStringListMap)

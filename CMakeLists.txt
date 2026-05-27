@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 4.2.1)
+set(CAMKE_CXX_STANDARD 20)
+set(CAMKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+project(
+  differ VERSION 0.0.1
+  DESCRIPTION "Differential file generation tool."
+  LANGUAGES CXX
+)
+
+set(CMAKE_BUILD_TYPE "Debug")
+
+find_package(Doxygen REQUIRED)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(Coverage)
+include(CopyAsset)
+include(Package)
+include(MemoryCheck)
+include(Lint)
+include(Document)
+include(Optimize)
+
+set(CPACK_PACKAGE_NAME "differ")
+set(CPACK_PACKAGE_VERSION "0.0.1")
+set(CPACK_PACKAGE_VENDOR "Leo Ely")
+set(CPACK_PACKAGE_DESCIPTION "Differential file generation tool.")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+include(CPack)
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_GENERATOR "DragNDrop")
+set(CPACK_DMG_VOLUME_NAME "differ")
+set(CPACK_DMG_APPLICATIONS_LINK_DIR "/Applications") # Link to Applications folder
+
+add_subdirectory(src)
+add_subdirectory(test)

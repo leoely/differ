@@ -1,0 +1,7 @@
+add_library(Parser STATIC Parser.cpp)
+target_include_directories(Parser PUBLIC
+  ${TERMCOLOR_INCLUDE_DIRS}
+)
+MemoryCheck(Parser)
+AddCoverage(Parser)
+

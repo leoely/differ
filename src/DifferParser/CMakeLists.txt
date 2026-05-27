@@ -1,0 +1,7 @@
+add_library(DifferParser STATIC DifferParser.cpp)
+target_include_directories(DifferParser PUBLIC
+  "${CMAKE_SOURCE_DIR}/include"
+  ${TERMCOLOR_INCLUDE_DIRS}
+)
+MemoryCheck(DifferParser)
+AddCoverage(DifferParser)
