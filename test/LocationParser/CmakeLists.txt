@@ -1,9 +1,0 @@
-add_executable(LocationParser_test LocationParser_test.cpp)
-target_link_libraries(LocationParser_test PUBLIC gtest gtest_main Parser LocationParser serializeStringListMap)
-target_include_directories(LocationParser_test PUBLIC
-  "${CMAKE_SOURCE_DIR}/include"
-)
-CopyAsset(LocationParser_test)
-MemoryCheck(LocationParser_test)
-AddCoverage(LocationParser_test)
-gtest_discover_tests(LocationParser_test)

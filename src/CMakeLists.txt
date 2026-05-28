@@ -9,7 +9,7 @@ Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
-target_link_libraries(differ DifferParser LocationParser Parser generate assist validate)
+target_link_libraries(differ generate DifferParser LocationParser Parser assist validate)
 
 install(TARGETS differ DESTINATION bin)
 
