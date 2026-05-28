@@ -36,7 +36,7 @@ const string dealBlankLine(const string &textLine) {
 void generate(const int argc, const char *argv[]) {
   argparse::ArgumentParser program("generate");
   program
-    .add_argument("-f", "--file")
+    .add_argument("-d", "--diff")
     .required()
     .help("specify the location of the differ template file.");
   try {
@@ -47,9 +47,9 @@ void generate(const int argc, const char *argv[]) {
     std::exit(1);
   }
   try {
-    if (program.is_used("-f") || program.is_used("--file")) {
-      string fOption = program.get<string>("-f");
-      string fileOption = program.get<string>("--file");
+    if (program.is_used("-d") || program.is_used("--diff")) {
+      string fOption = program.get<string>("-d");
+      string fileOption = program.get<string>("--diff");
       string differFilePathString;
       if (fOption.size() > 0) {
         differFilePathString = fOption;

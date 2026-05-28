@@ -87,7 +87,7 @@ void LocationParser::dealChar(char c) {
       }
       break;
     case 2:
-      if (c == '=') {
+      if (c == '%') {
         status = 3;
       } else {
         throw 2;

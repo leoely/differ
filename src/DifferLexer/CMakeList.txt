@@ -1,0 +1,7 @@
+add_library(DifferLexer STATIC LocationLexer.cpp)
+target_include_directories(DifferLexer PUBLIC
+  "${CMAKE_SOURCE_DIR}/include"
+  ${TERMCOLOR_INCLUDE_DIRS}
+)
+MemoryCheck(DifferLexer)
+AddCoverage(DifferLexer)

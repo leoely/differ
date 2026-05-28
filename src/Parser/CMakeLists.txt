@@ -4,4 +4,3 @@ target_include_directories(Parser PUBLIC
 )
 MemoryCheck(Parser)
 AddCoverage(Parser)
-
