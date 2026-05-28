@@ -1,4 +1,3 @@
-find_package(termcolor CONFIG REQUIRED)
 find_package(argparse CONFIG REQUIRED)
 
 add_executable(differ main.cpp)
@@ -10,7 +9,7 @@ Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
-target_link_libraries(differ DifferParser LocationParser Parser generate assist validate termcolor::termcolor)
+target_link_libraries(differ DifferParser LocationParser Parser generate assist validate)
 
 install(TARGETS differ DESTINATION bin)
 
