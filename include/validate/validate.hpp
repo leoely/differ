@@ -1,3 +1,5 @@
+#pragma once
+
 #include <fstream>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>

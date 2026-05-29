@@ -1,5 +1,6 @@
 #include <string>
-#include <Lexer/Lexer>
+#include <LocationTokenType/LocationTokenType.hpp>
+#include <Lexer/Lexer.hpp>
 
 using std::string;
 
@@ -23,23 +24,14 @@ void LocationLexer::scanLine(const string& line) {
   position = 0;
   for (char c: line) {
     if (c != ' ') {
-      addToken("blank", "");
-      try {
-        dealChar(c);
-      } catch (int errorCode) {
-        switch (errorCode) {
-          case 1:
-            break;
-          case 2:
-            break;
-          case 3:
-            break;
-        }
-      }
+      dealChar(c);
+    } else {
+      addToken(LocationTokenType::BLANK, "");
     }
     position += 1;
   }
   line += 1;
+  addToken(LocationTokenType::LINE_BREAK, "\n");
 }
 
 
@@ -47,10 +39,10 @@ void LocationLexer::dealChar(char c) {
   switch (status) {
     case 0:
       if (c == '%') {
-        addToken("percentage", "%");
+        addToken(LocationTokenType::PERCENTAGE, "%");
         status = 2;
       } else {
-        throw 1;
+        exit(EXIT_FAILURE);
       }
       break;
     case 1:
@@ -59,8 +51,8 @@ void LocationLexer::dealChar(char c) {
         for (char c : this->chars) {
           key += c;
         }
-        addToken("key", key);
-        addToken("asterisk", "*");
+        addToken(LocationTokenType::KEY, key);
+        addToken(LocationTokenType::ASTERISK, "*");
         chars.empty();
         status = 2;
       } else {
@@ -69,15 +61,15 @@ void LocationLexer::dealChar(char c) {
       break;
     case 2:
       if (c == '=') {
-        addToken("equal", "=");
+        addToken(LocationTokenType::EQUAL, "=");
         status = 3;
       } else {
-        throw 2;
+        exit(EXIT_FAILURE);
       }
       break;
     case 3:
       if (c === '[') {
-        addToken("squareBracket", "[");
+        addToken(LocationTokenType::SQUARE_BRACKET, "[");
         status = 4;
       } else {
         throw 3;
@@ -87,16 +79,16 @@ void LocationLexer::dealChar(char c) {
       switch (c) {
         case ']':
           getValue();
-          addToken("value", value);
+          addToken(LocationTokenType::VALUE, value);
           value = "";
-          addToken("squareBracket", "]");
+          addToken(LocationTokenType::SQUARE_BRACKET, "]");
           status = 0;
           break;
         case '&':
           getValue();
-          addToken("value", value);
+          addToken(LocationTokenType::VALUE, value);
           value = "";
-          addToke("and", "&");
+          addToke(LocationTokenType::AND, "&");
           break;
         default:
           chars.push_back(c);

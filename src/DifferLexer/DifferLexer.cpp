@@ -1,5 +1,6 @@
 #include <string>
-#include <Lexer/Lexer>
+#include <Lexer/Lexer.hpp>
+#include <DifferTokenType/DifferTokenType.hpp>
 
 using std::string;
 
@@ -22,19 +23,14 @@ void DifferLexer::scanLine(string& line) {
   position = 0;
   for (char c: line) {
     if (c != ' ') {
-      addToken("blank", "");
-      try {
-        dealChar(c);
-      } catch (int errorCode) {
-        switch (errorCode) {
-          case 1:
-            break;
-        }
-      }
+      dealChar(c);
+    } else {
+      addToken(DifferTokenType::BLANK, "");
     }
     position += 1;
   }
   line += 1;
+  addToken(DifferTokenType::LINE_BREAK, "\n");
 }
 
 void LocationLexer::dealChar(char c) {
@@ -42,31 +38,35 @@ void LocationLexer::dealChar(char c) {
     case 0:
       switch (c) {
         case '=':
-          addToken("equal", "=");
+          addToken(DifferTokenType::EQUAL, "=");
           status = 1;
           break;
         case '"':
-          addToken("colon", "\"");
-          status = 6;
+          addToken(DifferTokenType::COLON, "\"");
+          status = 5;
+          break;
+        case '|':
+          addToken(DifferTokenType::DIVIDER, "|");
+          status = 4;
           break;
         default:
-          status = 7;
+          status = 6;
       }
       break;
     case 1:
       if (c == '{') {
-        addToken("curlyBrace", "{");
+        addToken(DifferTokenType::CURLY_BRACE, "{");
         status = 2;
       } else {
-        throw 1;
+        exit(EXIT_FAILURE);
       }
       break;
     case 2:
       if (c == '%') {
-        addToken("percentage", "%");
+        addToken(DifferTokenType::PERCENTAGE, "%");
         status = 3;
       } else {
-        throw 2;
+        exit(EXIT_FAILURE);
       }
       break;
     case 3:
@@ -76,37 +76,47 @@ void LocationLexer::dealChar(char c) {
           location += c;
         }
         chars.empty();
-        addToken("location", location);
-        addToken("curlyBrace", "}");
-        status = 4;
+        addToken(DifferTokenType::LOCATION, location);
+        addToken(DifferTokenType::CURLY_BRACE, "}");
+        status = 0;
       } else {
         chars.push_back(c);
       }
     case 4:
-      if (c == '|') {
-        addToken("divider", "|");
-        status = 5;
-      } else {
-        throw 3;
+      switch (c) {
+        case '|';
+          getValue();
+          addToken(DifferTokenType::SINGLE, value);
+          value = "";
+          addToken(DifferTokenType::DIVIDER, "|");
+          break;
+        case '"';
+          addToken(DifferTokenType::SINGLE, value);
+          value = "";
+          addToken(DifferTokenType::COLON, "\"");
+          break;
+        case '=':
+          addToken(DifferTokenType::SINGLE, value);
+          value = "";
+          addToken(DifferTokenType::EQUAL, "=");
+          break;
+        default:
+          chars.push_back(c);
       }
       break;
     case 5:
       switch (c) {
-        case '|';
-          getValue();
-          addToken("single", value);
-          value = "";
-          addToken("divider", "|");
-          break;
         case '"';
-          addToken("single", value);
+          addToken(DifferTokenType::COMMENT, value);
           value = "";
-          addToken("colon", "\"");
+          addToken(DifferTokenType::COLON, "\"");
+          status = 0;
           break;
         case '=':
-          addToken("single", value);
+          addToken(DifferTokenType::COMMENT, value);
           value = "";
-          addToken("equal", "=");
+          addToken(DifferTokenType::EQUAL, "=");
+          status = 0
           break;
         default:
           chars.push_back(c);
@@ -115,34 +125,20 @@ void LocationLexer::dealChar(char c) {
     case 6:
       switch (c) {
         case '"';
-          addToken("comment", value);
+          addToken(DifferTokenType::MULTIPLE, value);
           value = "";
-          addToken("colon", "\"");
+          addToken(DifferTokenType::COLON, "\"");
           status = 0;
           break;
         case '=':
-          addToken("comment", value);
+          addToken(DifferTokenType::MULTIPLE, value);
           value = "";
-          addToken("equal", "=");
-          status = 0
+          addToken(DifferTokenType::EQUAL, "=");
+          status = 1;
           break;
-        default:
-          chars.push_back(c);
-      }
-      break;
-    case 7:
-      switch (c) {
-        case '"';
-          addToken("multiple", value);
-          value = "";
-          addToken("colon", "\"");
-          status = 0;
-          break;
-        case '=':
-          addToken("multiple", value);
-          value = "";
-          addToken("equal", "=");
-          status = 0
+        case '|':
+          addToken(DifferTokenType::DIVIDER, "|");
+          status = 4;
           break;
         default:
           chars.push_back(c);
