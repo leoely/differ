@@ -1,10 +1,15 @@
 #pragma once
 
+#include <vector>
+#include <memory>
 #include <string>
 #include <Lexer/Lexer.hpp>
+#include <DifferToken/DifferToken.hpp>
 #include <DifferTokenType/DifferTokenType.hpp>
 
 using std::string;
+using std::vector;
+using std::shared_ptr;
 
 class DifferLexer : public virtual Lexer {
   using Lexer::Lexer;

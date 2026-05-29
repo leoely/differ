@@ -1,12 +1,8 @@
-#include <memory>
 #include <string>
-#include <vector>
 #include <list>
 
 using std::list;
 using std::string;
-using std::vector;
-using std::shared_ptr;
 
 class Lexer {
   protected:
@@ -18,6 +14,9 @@ class Lexer {
     ~Lexer();
     const string& getValue();
 };
+
+Lexer::Lexer() : line(0), position(0) {}
+Lexer::~Lexer() {}
 
 const string& Lexer::getValue() {
   for (char c : chars) {
