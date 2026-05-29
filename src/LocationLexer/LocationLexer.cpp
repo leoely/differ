@@ -80,14 +80,14 @@ void LocationLexer::dealChar(char c) {
         case ']':
           getValue();
           addToken(LocationTokenType::VALUE, value);
-          value = "";
+          value.empty();
           addToken(LocationTokenType::SQUARE_BRACKET, "]");
           status = 0;
           break;
         case '&':
           getValue();
           addToken(LocationTokenType::VALUE, value);
-          value = "";
+          value.empty();
           addToke(LocationTokenType::AND, "&");
           break;
         default:

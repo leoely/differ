@@ -78,6 +78,7 @@ void generate(const int argc, const char *argv[]) {
       size_t lastIndex2 = locFileNameString.find_last_of(".");
       string locFileString = locFileNameString.substr(0, lastIndex2);
       fs::path locFilePath = fs::path(parentPathString) / (locFileString + ".loc");
+      string locationFilePathString = locFilePath.string();
       shared_ptr<LocationParser> locationParser(new LocationParser());
       if (fs::exists(locFilePath) == false) {
         throw 1;
@@ -89,8 +90,8 @@ void generate(const int argc, const char *argv[]) {
       }
       unordered_map<string, list<string>> location = locationParser->getLocation();
       list<string> fullList = locationParser->getFullList();
-      shared_ptr<DifferParser> differParser(new DifferParser(fullList, location));
       ifstream file2(differFilePathString);
+      shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, fullList, location));
       if (fs::exists(differFilePath) == false) {
         throw 2;
       }

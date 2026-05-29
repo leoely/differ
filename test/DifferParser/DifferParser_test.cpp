@@ -26,7 +26,7 @@ TEST(Class_DifferParser, differ_files_can_be_parsed_correctly) {
   }
   unordered_map<string, list<string>> location = locationParser->getLocation();
   list<string> fullList = locationParser->getFullList();
-  shared_ptr<DifferParser> differParser(new DifferParser(fullList, location));
+  shared_ptr<DifferParser> differParser(new DifferParser("./asset/test.loc", fullList, location));
   ifstream file2("./asset/test.differ");
   string str2;
   while (getline(file2, str2)) {

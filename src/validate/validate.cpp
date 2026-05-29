@@ -65,7 +65,7 @@ void validate(const int argc, const char *argv[]) {
       if (fs::exists(locationFilePath) == false) {
         throw 3;
       }
-      shared_ptr<LocationParser> locationParser(new LocationParser());
+      shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
       ifstream locationFile(locationFilePathString);
       string line1;
       while (getline(locationFile, line1)) {
@@ -75,7 +75,7 @@ void validate(const int argc, const char *argv[]) {
       list<string> fullList = locationParser->getFullList();
       ifstream differFile(differFilePathString);
       string line2;
-      shared_ptr<DifferParser> differParser(new DifferParser(fullList, location));
+      shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, fullList, location));
       while (std::getline(differFile, line2)) {
         differParser->scanLine(line2);
       }

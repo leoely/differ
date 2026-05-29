@@ -7,6 +7,7 @@
 
 using std::string;
 using std::vector;
+using std::shared_ptr;
 
 class Lexer {
   protect:
@@ -22,7 +23,7 @@ class Lexer {
     const string& getValue();
 }
 
-Lexer::Lexer() : line(0) : position(0) {}
+Lexer::Lexer() : line(0), position(0) {}
 Lexer::~Lexer() {}
 
 const string& LocationLexer::getValue() {

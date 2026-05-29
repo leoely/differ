@@ -1,5 +1,6 @@
 #pragma once
 
+#include <print>
 #include <iostream>
 #include <unordered_map>
 #include <list>
@@ -12,6 +13,7 @@ using std::string;
 using std::unordered_map;
 using std::cout;
 using std::endl;
+using std::println;
 
 class LocationParser : virtual public Parser {
   using Parser::Parser;
@@ -26,10 +28,11 @@ class LocationParser : virtual public Parser {
     string lineText;
     string beforeLineText;
   public:
-    LocationParser();
+    string fullPath;
+    LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
     const list<string>& getFullList();
     void scanLine(const string& lineText);
-    void showError(const string& errorMessage);
+    void showError(const string& errormessage);
 };

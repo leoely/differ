@@ -13,6 +13,7 @@ class Parser {
     string key;
     int line, position;
     list<char> chars;
+    string fullPath;
     void obtainKey();
     void showError(const string &lineText, const string &message);
     int getWidth(int position);

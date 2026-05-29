@@ -87,17 +87,17 @@ void LocationLexer::dealChar(char c) {
         case '|';
           getValue();
           addToken(DifferTokenType::SINGLE, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::DIVIDER, "|");
           break;
         case '"';
           addToken(DifferTokenType::SINGLE, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::COLON, "\"");
           break;
         case '=':
           addToken(DifferTokenType::SINGLE, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::EQUAL, "=");
           break;
         default:
@@ -108,13 +108,13 @@ void LocationLexer::dealChar(char c) {
       switch (c) {
         case '"';
           addToken(DifferTokenType::COMMENT, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::COLON, "\"");
           status = 0;
           break;
         case '=':
           addToken(DifferTokenType::COMMENT, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::EQUAL, "=");
           status = 0
           break;
@@ -126,13 +126,13 @@ void LocationLexer::dealChar(char c) {
       switch (c) {
         case '"';
           addToken(DifferTokenType::MULTIPLE, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::COLON, "\"");
           status = 0;
           break;
         case '=':
           addToken(DifferTokenType::MULTIPLE, value);
-          value = "";
+          value.empty();
           addToken(DifferTokenType::EQUAL, "=");
           status = 1;
           break;

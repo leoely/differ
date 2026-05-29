@@ -26,15 +26,16 @@ class LocationParser : virtual public Parser {
     string lineText;
     string beforeLineText;
   public:
-    LocationParser();
+    string fullPath;
+    LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
     const list<string>& getFullList();
     void scanLine(const string& lineText);
-    void showError(const string& errorMessage);
+    void showError(const string& errormessage);
 };
 
-LocationParser::LocationParser() : status(0), value("") {}
+LocationParser::LocationParser(string& p) : status(0), value(""), fullPath(p) {}
 
 void LocationParser::initProperty() {
   position = 0;
@@ -49,17 +50,20 @@ void LocationParser::showError(const string& errorMessage) {
   string blanks1 = "";
   cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
   string blanks2 = "";
-  for (int i = 0; i < position + getWidth(line); i += 1) {
+  for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
     blanks2 += " ";
   }
   cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " :: [Error] " << errorMessage << termcolor::reset << endl;
+  cout << termcolor::dark << "[Location] :: Position: " << position << " Line: " << line << ";" << termcolor::reset << endl;
 }
 
 void LocationParser::scanLine(const string &lineText) {
   position = 0;
+  line += 1;
   this->beforeLineText = this->lineText;
   this->lineText = lineText;
   for (char c : lineText) {
+    position += 1;
     if (c != ' ') {
       try {
         dealChar(c);
@@ -80,9 +84,7 @@ void LocationParser::scanLine(const string &lineText) {
         }
       }
     }
-    position += 1;
   }
-  line += 1;
 }
 
 

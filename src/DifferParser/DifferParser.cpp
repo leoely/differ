@@ -20,30 +20,40 @@ class DifferParser : virtual public Parser {
     list<string> fullList;
     unordered_map<string, list<string>> location;
     bool dealChar(const char c, const string &lineText);
-    void appendLine(const list<string> &stringList, const string &lineText);
+    void appendLine(const list<string>& stringList, const string& lineText);
   public:
-    DifferParser(list<string> &fullList, unordered_map<string, list<string>> &location);
+    string fullPath;
+    DifferParser(const string& p, const list<string>& f, const unordered_map<string, list<string>>& l);
     const unordered_map<string, list<string>>& getDiffer() const;
     void initProperty();
-    void scan(string &text);
-    void scanLine(string &lineText);
+    void scan(const string& text);
+    void scanLine(string& lineText);
     void showError(const string& errorMessage);
 };
 
-DifferParser::DifferParser(list<string> &fullList, unordered_map<string, list<string>> &location) : status(0), fullList(fullList), location(location) {}
+DifferParser::DifferParser(const string& p, const list<string>& f, const unordered_map<string, list<string>>& l) : status(0), fullList(f), location(l), fullPath(p) {}
 
 void DifferParser::showError(const string& errorMessage) {
-  cout << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
+  string blanks1 = "";
+  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
+  string blanks2 = "";
+  for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
+    blanks2 += " ";
+  }
+  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " :: [Error] " << errorMessage << termcolor::reset << endl;
+  cout << termcolor::dark << "[Location] :: Position: " << position << " Line: " << line << ";" << termcolor::reset << endl;
 }
 
-void DifferParser::scanLine(string &lineText) {
+void DifferParser::scanLine(string& lineText) {
   position = 0;
+  line += 1;
   if (lineText == "") {
     lineText = " ";
   }
   this->beforeLineText = this->lineText;
   this->lineText = lineText;
   for (char c : lineText) {
+    position += 1;
     try {
       if (dealChar(c, lineText) == true) {
         break;
@@ -51,25 +61,23 @@ void DifferParser::scanLine(string &lineText) {
     } catch (int errorCode) {
       switch (errorCode) {
         case 1:
-          showError("[Error] This position should be the character \"{\";");
+          showError("This position should be the character \"{\";");
           exit(errorCode);
         case 2:
-          showError("[Error] This position should be the character \"%\";");
+          showError("This position should be the character \"%\";");
           exit(errorCode);
         case 3:
-          showError("[Error] This position should be the character \"|\";");
+          showError("This position should be the character \"|\";");
           exit(errorCode);
         case 4:
-          showError("[Error] This position should be the character \" \";");
+          showError("This position should be the character \" \";");
           exit(errorCode);
         case 5:
-          showError("[Error] This position should be the character \" \";");
+          showError("This position should be the character \" \";");
           exit(errorCode);
       }
     }
-    position += 1;
   }
-  line += 1;
 }
 
 const unordered_map<string, list<string>>& DifferParser::getDiffer() const {
@@ -165,7 +173,7 @@ bool DifferParser::dealChar(const char c, const string &lineText) {
   return false;
 }
 
-void DifferParser::appendLine(const list<string> &stringList, const string &lineText) {
+void DifferParser::appendLine(const list<string>& stringList, const string& lineText) {
   for (auto e : stringList) {
     if (differ.find(e) != differ.end()) {
       differ[e].push_back(lineText);
