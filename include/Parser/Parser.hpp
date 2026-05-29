@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <termcolor/termcolor.hpp>
 
 using std::cout;
 using std::endl;
@@ -15,7 +16,7 @@ class Parser {
     int line, position;
     list<char> chars;
     void obtainKey();
-    void showError(const string &lineText, const string &message);
+    int getWidth(int position);
   public:
     Parser();
     ~Parser();

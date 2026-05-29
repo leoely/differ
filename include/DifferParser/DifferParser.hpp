@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <iostream>
 #include <Parser/Parser.hpp>
 
 using std::list;
@@ -12,6 +13,8 @@ using std::unordered_map;
 class DifferParser : virtual public Parser {
   using Parser::Parser;
   private:
+    string lineText;
+    string beforeLineText;
     int status;
     unordered_map<string, list<string>> differ;
     list<string> fullList;
@@ -22,5 +25,7 @@ class DifferParser : virtual public Parser {
     DifferParser(list<string> &fullList, unordered_map<string, list<string>> &location);
     const unordered_map<string, list<string>>& getDiffer() const;
     void initProperty();
+    void scan(string &text);
     void scanLine(string &lineText);
+    void showError(const string& errorMessage);
 };

@@ -1,8 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <termcolor/termcolor.hpp>
 #include <Parser/Parser.hpp>
 
 using std::list;
@@ -21,10 +23,13 @@ class LocationParser : virtual public Parser {
     unordered_map<string, bool> fullHash;
     void appendValue();
     void dealChar(const char c);
+    string lineText;
+    string beforeLineText;
   public:
     LocationParser();
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
     const list<string>& getFullList();
-    void scanLine(const string &lineText);
+    void scanLine(const string& lineText);
+    void showError(const string& errorMessage);
 };

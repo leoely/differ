@@ -1,3 +1,4 @@
+#include <print>
 #include <iostream>
 #include <unordered_map>
 #include <list>
@@ -10,6 +11,7 @@ using std::string;
 using std::unordered_map;
 using std::cout;
 using std::endl;
+using std::println;
 
 class LocationParser : virtual public Parser {
   using Parser::Parser;
@@ -21,12 +23,15 @@ class LocationParser : virtual public Parser {
     unordered_map<string, bool> fullHash;
     void appendValue();
     void dealChar(const char c);
+    string lineText;
+    string beforeLineText;
   public:
     LocationParser();
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
     const list<string>& getFullList();
-    void scanLine(const string &lineText);
+    void scanLine(const string& lineText);
+    void showError(const string& errorMessage);
 };
 
 LocationParser::LocationParser() : status(0), value("") {}
@@ -40,8 +45,20 @@ void LocationParser::initProperty() {
   chars.clear();
 }
 
+void LocationParser::showError(const string& errorMessage) {
+  string blanks1 = "";
+  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
+  string blanks2 = "";
+  for (int i = 0; i < position + getWidth(line); i += 1) {
+    blanks2 += " ";
+  }
+  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " :: [Error] " << errorMessage << termcolor::reset << endl;
+}
+
 void LocationParser::scanLine(const string &lineText) {
   position = 0;
+  this->beforeLineText = this->lineText;
+  this->lineText = lineText;
   for (char c : lineText) {
     if (c != ' ') {
       try {
@@ -49,16 +66,16 @@ void LocationParser::scanLine(const string &lineText) {
       } catch (int errorCode) {
         switch (errorCode) {
           case 1:
-            showError(lineText, "[Error] This position should be the character \"%\";");
+            showError("This position should be the character \"%\";");
             exit(errorCode);
           case 2:
-            showError(lineText, "[Error] This position should be the character \"=\";");
+            showError("This position should be the character \"=\";");
             exit(errorCode);
           case 3:
-            showError(lineText, "[Error] This position should be the character \"[\";");
+            showError("This position should be the character \"[\";");
             exit(errorCode);
           case 4:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << " The LocationParser internal state is abnormal." << endl;
+            showError("The LocationParser internal state is abnormal.");
             exit(errorCode);
         }
       }

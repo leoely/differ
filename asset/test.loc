@@ -1,4 +1,4 @@
-%opensource*=[
++opensource*=[
   /tmp/differ/mysql.sql &
   /tmp/differ/postgresql.sql
 ]

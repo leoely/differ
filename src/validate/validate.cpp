@@ -119,7 +119,6 @@ void validate(const int argc, const char *argv[]) {
       string locationFileNameString(locationFileName.string());
       size_t lastIndex1 = locationFileNameString.find_last_of(".");
       string locationExtensionString = locationFileNameString.substr(lastIndex1, locationFileNameString.size() - lastIndex1);
-      cout << locationExtensionString << endl;
       if (locationExtensionString != ".loc") {
         throw 2;
       }
