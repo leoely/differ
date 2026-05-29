@@ -97,7 +97,6 @@ void validate(const int argc, const char *argv[]) {
   }
   try {
     if (program.is_used("-l") || program.is_used("--location")) {
-      shared_ptr<LocationParser> locationParser(new LocationParser());
       string lOption = program.get<string>("-l");
       string locationOption = program.get<string>("--location");
       string locationFilePathString;
@@ -122,6 +121,7 @@ void validate(const int argc, const char *argv[]) {
       if (locationExtensionString != ".loc") {
         throw 2;
       }
+      shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
       ifstream locationFile(locationFilePathString);
       string line;
       while (std::getline(locationFile, line)) {

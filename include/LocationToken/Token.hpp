@@ -13,10 +13,8 @@ class LocationLexer : public virtual Lexer {
     LocationLexer();
     ~LocationLexer();
     void scanLine(const string& lineText);
-    vector<shared_ptr<DifferToken>>& getTokens();
   private:
     void addToken(const LocationTokenType& type, const string& elem);
-    vector<shared_ptr<DifferToken>> tokens;
     string value;
     int status;
     void dealChar(char c);

@@ -1,14 +1,14 @@
 #include <print>
 #include <iostream>
 #include <termcolor/termcolor.hpp>
-#include <Token/Token.hpp>
+#include <DifferToken/DifferToken.hpp>
 #include <DifferTokenType/DifferTokenType.hpp>
 
 using std::print;
 using std::println;
 using std::cout;
 
-void differTemplate(Token& token) {
+void differTemplate(DifferToken& token) {
   switch (token.type) {
     case DifferTokenType::BLANK:
       print(" ");

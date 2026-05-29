@@ -1,14 +1,14 @@
 #include <print>
 #include <iostream>
 #include <termcolor/termcolor.hpp>
-#include <Token/Token.hpp>
+#include <LocationToken/LocationToken.hpp>
 #include <LocationTokenType/LocationTokenType.hpp>
 
 using std::println;
 using std::print;
 using std::cout;
 
-void locationTemplate(Token& token) {
+void locationTemplate(LocationToken& token) {
   switch (token.type) {
     case LocationTokenType::BLANK:
       print(" ");

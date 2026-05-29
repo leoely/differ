@@ -1,9 +1,13 @@
 #include <print>
+#include <memory>
 #include <iostream>
 #include <unordered_map>
 #include <list>
 #include <string>
 #include <termcolor/termcolor.hpp>
+#include <LocationLexer/LocationLexer.hpp>
+#include <locationTemplate/locationTemplate.hpp>
+#include <LocationToken/LocationToken.hpp>
 #include <Parser/Parser.hpp>
 
 using std::list;
@@ -12,6 +16,7 @@ using std::unordered_map;
 using std::cout;
 using std::endl;
 using std::println;
+using std::shared_ptr;
 
 class LocationParser : virtual public Parser {
   using Parser::Parser;
@@ -53,8 +58,18 @@ void LocationParser::showError(const string& errorMessage) {
   for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
     blanks2 += " ";
   }
-  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " :: [Error] " << errorMessage << termcolor::reset << endl;
-  cout << termcolor::dark << "[Location] :: Position: " << position << " Line: " << line << ";" << termcolor::reset << endl;
+  if (line != 1) {
+    shared_ptr<LocationLexer> locationLexer(new LocationLexer());
+    locationLexer->scanLine(beforeLineText);
+    vector<Token> tokens = locationLexer->getTokens();
+    for (auto token: tokens) {
+      locationTemplate(token);
+    }
+  }
+  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
+  cout << termcolor::dark << "[Type] :: "  << "Location file;" << termcolor::reset << endl;
+  cout << termcolor::dark << "[Path] :: \"" << fullPath << "\";" << termcolor::reset << endl;
+  cout << termcolor::dark << "[Location] :: Position: " << position << ", Line: " << line << ";" << termcolor::reset << endl;
 }
 
 void LocationParser::scanLine(const string &lineText) {

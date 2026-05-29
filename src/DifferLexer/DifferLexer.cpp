@@ -7,19 +7,31 @@ using std::string;
 class DifferLexer : public virtual Lexer {
   using Lexer::Lexer;
   public:
-    DifferLexer::DifferLexer();
-    DifferLexer::~DifferLexer();
-    void scanLine(string& line);
+    DifferLexer();
+    ~DifferLexer();
+    void scanLine(const string& line);
+    void addToken(DifferTokenType type, const string& elem);
+    vector<shared_ptr<DifferToken>>& getTokens();
   private:
+    vector<shared_ptr<DifferToken>> tokens;
     string value;
     int status;
     void dealChar(char c);
-}
+};
 
 DifferLexer::DifferLexer() : status(0) {}
 DifferLexer::~DifferLexer() {}
 
-void DifferLexer::scanLine(string& line) {
+vector<shared_ptr<LocationToken>>& getTokens() {
+  return tokens;
+}
+
+void DifferLexer::addToken(DifferTokenType type, const string& elem) {
+  shared_ptr<Token> token(new Token(type, elem));
+  tokens.push_back(token);
+}
+
+void DifferLexer::scanLine(const string& line) {
   position = 0;
   for (char c: line) {
     if (c != ' ') {

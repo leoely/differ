@@ -4,22 +4,19 @@
 #include <string>
 #include <vector>
 #include <list>
-#include <iostream>
-#include <Token/Token.hpp>
 
+using std::list;
 using std::string;
 using std::vector;
+using std::shared_ptr;
 
 class Lexer {
-  protect:
+  protected:
+    string value;
     int line, position;
     list<char> chars;
-    vector<Token> tokens;
-    void addToken(string type, string elem);
   public:
-    Lexer::Lexer();
-    Lexer::~Lexer();
-    const vector<Token>& Lexer::getTokens();
-    void showError(int errorCode);
+    Lexer();
+    ~Lexer();
     const string& getValue();
-}
+};

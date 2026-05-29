@@ -1,6 +1,0 @@
-add_library(DifferLexer STATIC LocationLexer.cpp)
-target_include_directories(LocationParser PUBLIC
-  "${CMAKE_SOURCE_DIR}/include"
-)
-MemoryCheck(DifferLexer)
-AddCoverage(DifferLexer)

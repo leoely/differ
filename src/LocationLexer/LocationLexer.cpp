@@ -1,5 +1,6 @@
 #include <string>
 #include <LocationTokenType/LocationTokenType.hpp>
+#include <LocationToken/LocationToken.hpp>
 #include <Lexer/Lexer.hpp>
 
 using std::string;
@@ -7,26 +8,38 @@ using std::string;
 class LocationLexer : public virtual Lexer {
   using Lexer::Lexer;
   public:
-    LocationLexer::LocationLexer();
-    LocationLexer::~LocationLexer();
-    void scanLine(string line);
+    LocationLexer();
+    ~LocationLexer();
+    void scanLine(const string& lineText);
+    vector<shared_ptr<DifferToken>>& getTokens();
   private:
+    void addToken(const LocationTokenType& type, const string& elem);
+    vector<shared_ptr<DifferToken>> tokens;
     string value;
     int status;
     void dealChar(char c);
     const string& getValue();
-}
+};
 
 LocationLexer::LocationLexer() : status(0) {}
 LocationLexer::~LocationLexer() {}
 
-void LocationLexer::scanLine(const string& line) {
+vector<shared_ptr<LocationToken>>& getTokens() {
+  return tokens;
+}
+
+void LocationLexer::addToken(const LocationTokenType& type, const string& elem) {
+  shared_ptr<Token> token(new Token(type, elem));
+  tokens.push_back(token);
+}
+
+void LocationLexer::scanLine(const string& lineText) {
   position = 0;
-  for (char c: line) {
+  for (char c: lineText) {
     if (c != ' ') {
       dealChar(c);
     } else {
-      addToken(LocationTokenType::BLANK, "");
+      addToken(LocationTokenType::BLANK, " ");
     }
     position += 1;
   }
@@ -68,7 +81,7 @@ void LocationLexer::dealChar(char c) {
       }
       break;
     case 3:
-      if (c === '[') {
+      if (c == '[') {
         addToken(LocationTokenType::SQUARE_BRACKET, "[");
         status = 4;
       } else {
@@ -88,7 +101,7 @@ void LocationLexer::dealChar(char c) {
           getValue();
           addToken(LocationTokenType::VALUE, value);
           value.empty();
-          addToke(LocationTokenType::AND, "&");
+          addToken(LocationTokenType::AND, "&");
           break;
         default:
           chars.push_back(c);

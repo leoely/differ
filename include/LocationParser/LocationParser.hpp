@@ -1,11 +1,14 @@
 #pragma once
 
 #include <print>
+#include <memory>
 #include <iostream>
 #include <unordered_map>
 #include <list>
 #include <string>
 #include <termcolor/termcolor.hpp>
+#include <LocationLexer/LocationLexer.hpp>
+#include <locationTemplate/locationTemplate.hpp>
 #include <Parser/Parser.hpp>
 
 using std::list;
@@ -14,6 +17,7 @@ using std::unordered_map;
 using std::cout;
 using std::endl;
 using std::println;
+using std::shared_ptr;
 
 class LocationParser : virtual public Parser {
   using Parser::Parser;

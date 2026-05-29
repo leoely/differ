@@ -1,5 +1,5 @@
 add_library(Lexer STATIC Lexer.cpp)
-target_include_directories(generate PUBLIC
+target_include_directories(Lexer PUBLIC
   "${CMAKE_SOURCE_DIR}/include"
 )
 MemoryCheck(Lexer)

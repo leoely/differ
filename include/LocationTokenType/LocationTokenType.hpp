@@ -10,4 +10,4 @@ enum class LocationTokenType {
   SQUARE_BRACKET,
   VALUE,
   AND
-}
+};

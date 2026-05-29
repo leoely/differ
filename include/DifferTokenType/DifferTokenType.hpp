@@ -12,4 +12,4 @@ enum class DifferTokenType {
   SINGLE,
   COMMENT,
   MULTIPLE
-}
+};
