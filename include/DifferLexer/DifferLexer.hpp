@@ -11,7 +11,7 @@ class DifferLexer : public virtual Lexer {
   public:
     DifferLexer();
     ~DifferLexer();
-    void scanLine(const string& line);
+    void scanLine(const string& lineText);
     void addToken(DifferTokenType type, const string& elem);
     vector<shared_ptr<DifferToken>>& getTokens();
   private:

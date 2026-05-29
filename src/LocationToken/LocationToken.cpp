@@ -7,9 +7,9 @@ class LocationToken {
   public:
     LocationTokenType type;
     string elem;
-    Token(LocationTokenType t, const string& e);
-    ~Token();
+    LocationToken(LocationTokenType t, const string& e);
+    ~LocationToken();
 };
 
-Token::Token(LocationTokenType t, const string& e) : type(t), elem(e) {}
-Token::~Token() {}
+LocationToken::LocationToken(LocationTokenType t, const string& e) : type(t), elem(e) {}
+LocationToken::~LocationToken() {}

@@ -1,5 +1,6 @@
 #include <string>
 #include <Lexer/Lexer.hpp>
+#include <DifferToken/DifferToken.hpp>
 #include <DifferTokenType/DifferTokenType.hpp>
 
 using std::string;
@@ -9,7 +10,7 @@ class DifferLexer : public virtual Lexer {
   public:
     DifferLexer();
     ~DifferLexer();
-    void scanLine(const string& line);
+    void scanLine(const string& lineText);
     void addToken(DifferTokenType type, const string& elem);
     vector<shared_ptr<DifferToken>>& getTokens();
   private:
@@ -22,18 +23,18 @@ class DifferLexer : public virtual Lexer {
 DifferLexer::DifferLexer() : status(0) {}
 DifferLexer::~DifferLexer() {}
 
-vector<shared_ptr<LocationToken>>& getTokens() {
+vector<shared_ptr<DifferToken>>& DifferLexer::getTokens() {
   return tokens;
 }
 
 void DifferLexer::addToken(DifferTokenType type, const string& elem) {
-  shared_ptr<Token> token(new Token(type, elem));
+  shared_ptr<DifferToken> token(new DifferToken(type, elem));
   tokens.push_back(token);
 }
 
-void DifferLexer::scanLine(const string& line) {
+void DifferLexer::scanLine(const string& lineText) {
   position = 0;
-  for (char c: line) {
+  for (char c: lineText) {
     if (c != ' ') {
       dealChar(c);
     } else {
@@ -45,7 +46,7 @@ void DifferLexer::scanLine(const string& line) {
   addToken(DifferTokenType::LINE_BREAK, "\n");
 }
 
-void LocationLexer::dealChar(char c) {
+void DifferLexer::dealChar(char c) {
   switch (status) {
     case 0:
       switch (c) {
@@ -96,13 +97,13 @@ void LocationLexer::dealChar(char c) {
       }
     case 4:
       switch (c) {
-        case '|';
+        case '|':
           getValue();
           addToken(DifferTokenType::SINGLE, value);
           value.empty();
           addToken(DifferTokenType::DIVIDER, "|");
           break;
-        case '"';
+        case '"':
           addToken(DifferTokenType::SINGLE, value);
           value.empty();
           addToken(DifferTokenType::COLON, "\"");
@@ -118,7 +119,7 @@ void LocationLexer::dealChar(char c) {
       break;
     case 5:
       switch (c) {
-        case '"';
+        case '"':
           addToken(DifferTokenType::COMMENT, value);
           value.empty();
           addToken(DifferTokenType::COLON, "\"");
@@ -128,7 +129,7 @@ void LocationLexer::dealChar(char c) {
           addToken(DifferTokenType::COMMENT, value);
           value.empty();
           addToken(DifferTokenType::EQUAL, "=");
-          status = 0
+          status = 0;
           break;
         default:
           chars.push_back(c);
@@ -136,7 +137,7 @@ void LocationLexer::dealChar(char c) {
       break;
     case 6:
       switch (c) {
-        case '"';
+        case '"':
           addToken(DifferTokenType::MULTIPLE, value);
           value.empty();
           addToken(DifferTokenType::COLON, "\"");

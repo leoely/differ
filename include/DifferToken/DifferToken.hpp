@@ -10,6 +10,3 @@ class DifferToken {
     DifferToken(DifferTokenType t, const string& e);
     ~DifferToken();
 };
-
-DifferToken::DifferToken(DifferTokenType t, const string& e) : type(t), elem(e) {}
-DifferToken::~DifferToken() {}

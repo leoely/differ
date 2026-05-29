@@ -11,10 +11,10 @@ class LocationLexer : public virtual Lexer {
     LocationLexer();
     ~LocationLexer();
     void scanLine(const string& lineText);
-    vector<shared_ptr<DifferToken>>& getTokens();
+    vector<shared_ptr<LocationToken>>& getTokens();
   private:
     void addToken(const LocationTokenType& type, const string& elem);
-    vector<shared_ptr<DifferToken>> tokens;
+    vector<shared_ptr<LocationToken>> tokens;
     string value;
     int status;
     void dealChar(char c);
@@ -24,12 +24,12 @@ class LocationLexer : public virtual Lexer {
 LocationLexer::LocationLexer() : status(0) {}
 LocationLexer::~LocationLexer() {}
 
-vector<shared_ptr<LocationToken>>& getTokens() {
+vector<shared_ptr<LocationToken>>& LocationLexer::getTokens() {
   return tokens;
 }
 
 void LocationLexer::addToken(const LocationTokenType& type, const string& elem) {
-  shared_ptr<Token> token(new Token(type, elem));
+  shared_ptr<LocationToken> token(new LocationToken(type, elem));
   tokens.push_back(token);
 }
 
