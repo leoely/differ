@@ -53,8 +53,6 @@ void LocationLexer::dealChar(char c) {
       if (c == '%') {
         addToken(LocationTokenType::PERCENTAGE, "%");
         status = 2;
-      } else {
-        exit(EXIT_FAILURE);
       }
       break;
     case 1:
@@ -75,16 +73,12 @@ void LocationLexer::dealChar(char c) {
       if (c == '=') {
         addToken(LocationTokenType::EQUAL, "=");
         status = 3;
-      } else {
-        exit(EXIT_FAILURE);
       }
       break;
     case 3:
       if (c == '[') {
         addToken(LocationTokenType::SQUARE_BRACKET, "[");
         status = 4;
-      } else {
-        throw 3;
       }
       break;
     case 4:

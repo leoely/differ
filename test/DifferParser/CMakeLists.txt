@@ -1,8 +1,8 @@
 add_executable(DifferParser_test DifferParser_test.cpp)
 target_link_libraries(
-  DifferParser_test gtest gtest_main
+  DifferParser_test gtest gtest_main serializeStringListMap
   Parser LocationParser DifferParser
-  Lexer DifferLexer LocationLexer serializeStringListMap
+  Lexer DifferLexer LocationLexer locationTemplate differTemplate
 )
 target_include_directories(DifferParser_test PUBLIC
   "${CMAKE_SOURCE_DIR}/include"

@@ -11,6 +11,7 @@
 #include <LocationToken/LocationToken.hpp>
 #include <Parser/Parser.hpp>
 
+using std::print;
 using std::list;
 using std::string;
 using std::unordered_map;
@@ -45,7 +46,6 @@ LocationParser::LocationParser(string& p) : status(0), value(""), fullPath(p) {}
 
 void LocationParser::initProperty() {
   position = 0;
-  line = 0;
   status = 0;
   key = "";
   value = "";
@@ -53,20 +53,22 @@ void LocationParser::initProperty() {
 }
 
 void LocationParser::showError(const string& errorMessage) {
+  int width = getWidth(line);
+  if (line != 1) {
+    shared_ptr<LocationLexer> locationLexer(new LocationLexer());
+    locationLexer->scanLine(beforeLineText);
+    vector<shared_ptr<LocationToken>> tokens = locationLexer->getTokens();
+    cout << termcolor::bold << termcolor::grey << line - 1 << " ";
+    for (auto token: tokens) {
+      locationTemplate(*token);
+    }
+  }
   string blanks1 = "";
-  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
+  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_color<184, 31, 40> << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
   string blanks2 = "";
-  for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
+  for (int i = 0; i < position + width - 1; i += 1) {
     blanks2 += " ";
   }
-  //if (line != 1) {
-    shared_ptr<LocationLexer> locationLexer(new LocationLexer());
-    //locationLexer->scanLine(beforeLineText);
-    //vector<shared_ptr<LocationToken>> tokens = locationLexer->getTokens();
-    //for (auto token: tokens) {
-      //locationTemplate(*token);
-    //}
-  //}
   cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
   cout << termcolor::dark << "[Type] :: "  << "Location file;" << termcolor::reset << endl;
   cout << termcolor::dark << "[Path] :: \"" << fullPath << "\";" << termcolor::reset << endl;
@@ -122,7 +124,7 @@ void LocationParser::dealChar(char c) {
       }
       break;
     case 2:
-      if (c == '%') {
+      if (c == '=') {
         status = 3;
       } else {
         throw 2;
