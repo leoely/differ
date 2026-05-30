@@ -11,8 +11,8 @@ class Lexer {
     string value;
     int line, position;
     list<char> chars;
+    const string& getValue();
   public:
     Lexer();
     ~Lexer();
-    const string& getValue();
 };

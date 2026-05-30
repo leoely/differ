@@ -6,6 +6,7 @@
 #include <string>
 #include <termcolor/termcolor.hpp>
 #include <LocationLexer/LocationLexer.hpp>
+#include <DifferLexer/DifferLexer.hpp>
 #include <locationTemplate/locationTemplate.hpp>
 #include <LocationToken/LocationToken.hpp>
 #include <Parser/Parser.hpp>
@@ -58,14 +59,14 @@ void LocationParser::showError(const string& errorMessage) {
   for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
     blanks2 += " ";
   }
-  if (line != 1) {
+  //if (line != 1) {
     shared_ptr<LocationLexer> locationLexer(new LocationLexer());
-    locationLexer->scanLine(beforeLineText);
-    vector<shared_ptr<LocationToken>> tokens = locationLexer->getTokens();
-    for (auto token: tokens) {
-      locationTemplate(*token);
-    }
-  }
+    //locationLexer->scanLine(beforeLineText);
+    //vector<shared_ptr<LocationToken>> tokens = locationLexer->getTokens();
+    //for (auto token: tokens) {
+      //locationTemplate(*token);
+    //}
+  //}
   cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
   cout << termcolor::dark << "[Type] :: "  << "Location file;" << termcolor::reset << endl;
   cout << termcolor::dark << "[Path] :: \"" << fullPath << "\";" << termcolor::reset << endl;

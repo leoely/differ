@@ -31,7 +31,7 @@ vector<shared_ptr<DifferToken>>& DifferLexer::getTokens() {
 }
 
 void DifferLexer::addToken(DifferTokenType type, const string& elem) {
-  shared_ptr<DifferToken> token(new DifferToken(type, elem));
+  shared_ptr<DifferToken> token(new DifferToken{ type, elem, });
   tokens.push_back(token);
 }
 
@@ -91,7 +91,7 @@ void DifferLexer::dealChar(char c) {
         for (char c : this->chars) {
           location += c;
         }
-        chars.empty();
+        chars.clear();
         addToken(DifferTokenType::LOCATION, location);
         addToken(DifferTokenType::CURLY_BRACE, "}");
         status = 0;
@@ -101,19 +101,18 @@ void DifferLexer::dealChar(char c) {
     case 4:
       switch (c) {
         case '|':
-          getValue();
-          addToken(DifferTokenType::SINGLE, value);
-          value.empty();
+          addToken(DifferTokenType::SINGLE, getValue());
+          value.clear();
           addToken(DifferTokenType::DIVIDER, "|");
           break;
         case '"':
-          addToken(DifferTokenType::SINGLE, value);
-          value.empty();
+          addToken(DifferTokenType::SINGLE, getValue());
+          value.clear();
           addToken(DifferTokenType::COLON, "\"");
           break;
         case '=':
-          addToken(DifferTokenType::SINGLE, value);
-          value.empty();
+          addToken(DifferTokenType::SINGLE, getValue());
+          value.clear();
           addToken(DifferTokenType::EQUAL, "=");
           break;
         default:
@@ -123,14 +122,14 @@ void DifferLexer::dealChar(char c) {
     case 5:
       switch (c) {
         case '"':
-          addToken(DifferTokenType::COMMENT, value);
-          value.empty();
+          addToken(DifferTokenType::COMMENT, getValue());
+          value.clear();
           addToken(DifferTokenType::COLON, "\"");
           status = 0;
           break;
         case '=':
-          addToken(DifferTokenType::COMMENT, value);
-          value.empty();
+          addToken(DifferTokenType::COMMENT, getValue());
+          value.clear();
           addToken(DifferTokenType::EQUAL, "=");
           status = 0;
           break;
@@ -141,14 +140,14 @@ void DifferLexer::dealChar(char c) {
     case 6:
       switch (c) {
         case '"':
-          addToken(DifferTokenType::MULTIPLE, value);
-          value.empty();
+          addToken(DifferTokenType::MULTIPLE, getValue());
+          value.clear();
           addToken(DifferTokenType::COLON, "\"");
           status = 0;
           break;
         case '=':
-          addToken(DifferTokenType::MULTIPLE, value);
-          value.empty();
+          addToken(DifferTokenType::MULTIPLE, getValue());
+          value.clear();
           addToken(DifferTokenType::EQUAL, "=");
           status = 1;
           break;

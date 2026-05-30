@@ -1,12 +1,9 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <list>
 #include <termcolor/termcolor.hpp>
 
-using std::cout;
-using std::endl;
 using std::string;
 using std::list;
 

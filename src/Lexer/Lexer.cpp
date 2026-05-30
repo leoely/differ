@@ -9,10 +9,10 @@ class Lexer {
     string value;
     int line, position;
     list<char> chars;
+    const string& getValue();
   public:
     Lexer();
     ~Lexer();
-    const string& getValue();
 };
 
 Lexer::Lexer() : line(0), position(0) {}
@@ -22,5 +22,6 @@ const string& Lexer::getValue() {
   for (char c : chars) {
     value += c;
   }
-  chars.empty();
+  chars.clear();
+  return value;
 }

@@ -7,6 +7,8 @@
 #include <iostream>
 #include <Parser/Parser.hpp>
 
+using std::cout;
+using std::endl;
 using std::list;
 using std::string;
 using std::unordered_map;

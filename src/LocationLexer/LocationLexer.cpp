@@ -9,30 +9,26 @@ using std::string;
 using std::vector;
 using std::shared_ptr;
 
-class LocationLexer : public virtual Lexer {
-  using Lexer::Lexer;
+class LocationLexer : virtual public Lexer {
   public:
     LocationLexer();
-    ~LocationLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
-    void addToken(const LocationTokenType& type, const string& elem);
+    void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;
     void dealChar(char c);
-    const string& getValue();
 };
 
-LocationLexer::LocationLexer() : status(0) {}
-LocationLexer::~LocationLexer() {}
+LocationLexer::LocationLexer() : Lexer(), status(0) {}
 
 vector<shared_ptr<LocationToken>>& LocationLexer::getTokens() {
   return tokens;
 }
 
-void LocationLexer::addToken(const LocationTokenType& type, const string& elem) {
-  shared_ptr<LocationToken> token(new LocationToken(type, elem));
+void LocationLexer::addToken(LocationTokenType type, string elem) {
+  shared_ptr<LocationToken> token(new LocationToken{type, elem});
   tokens.push_back(token);
 }
 
@@ -69,7 +65,7 @@ void LocationLexer::dealChar(char c) {
         }
         addToken(LocationTokenType::KEY, key);
         addToken(LocationTokenType::ASTERISK, "*");
-        chars.empty();
+        chars.clear();
         status = 2;
       } else {
         chars.push_back(c);
@@ -94,16 +90,14 @@ void LocationLexer::dealChar(char c) {
     case 4:
       switch (c) {
         case ']':
-          getValue();
-          addToken(LocationTokenType::VALUE, value);
-          value.empty();
+          addToken(LocationTokenType::VALUE, getValue());
+          value.clear();
           addToken(LocationTokenType::SQUARE_BRACKET, "]");
           status = 0;
           break;
         case '&':
-          getValue();
-          addToken(LocationTokenType::VALUE, value);
-          value.empty();
+          addToken(LocationTokenType::VALUE, getValue());
+          value.clear();
           addToken(LocationTokenType::AND, "&");
           break;
         default:

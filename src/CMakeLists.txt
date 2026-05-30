@@ -9,12 +9,10 @@ Optimize(differ)
 MemoryCheck(differ)
 AddCoverage(differ)
 
-target_link_libraries(differ assist validate generate Parser DifferParser LocationParser DifferToken LocationToken Lexer LocationLexer DifferLexer locationTemplate differTemplate)
+target_link_libraries(differ assist validate generate Parser DifferParser LocationParser Lexer LocationLexer DifferLexer locationTemplate differTemplate)
 
 install(TARGETS differ DESTINATION bin)
 
-add_subdirectory(LocationToken)
-add_subdirectory(DifferToken)
 add_subdirectory(Lexer)
 add_subdirectory(LocationLexer)
 add_subdirectory(DifferLexer)

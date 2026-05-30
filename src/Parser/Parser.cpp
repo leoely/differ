@@ -1,10 +1,7 @@
-#include <iostream>
 #include <string>
 #include <list>
 #include <termcolor/termcolor.hpp>
 
-using std::cout;
-using std::endl;
 using std::string;
 using std::list;
 
@@ -15,7 +12,6 @@ class Parser {
     list<char> chars;
     string fullPath;
     void obtainKey();
-    void showError(const string &lineText, const string &message);
     int getWidth(int position);
   public:
     Parser();
@@ -24,6 +20,7 @@ class Parser {
 
 Parser::Parser() : key(""), line(0), position(0) {}
 Parser::~Parser() {}
+
 void Parser::obtainKey() {
   for (auto e: this->chars) {
     this->key += e;
