@@ -24,10 +24,10 @@ void differTemplate(DifferToken& token) {
       cout << termcolor::color<53, 62, 100> << token.elem << termcolor::reset;
       break;
     case DifferTokenType::DIVIDER:
-      cout << termcolor::bold << termcolor::color<157, 40, 25> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<192, 40, 25> << token.elem << termcolor::reset;
       break;
     case DifferTokenType::SINGLE:
-      cout << termcolor::bold << termcolor::color<72, 68, 240> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<102, 138, 255> << token.elem << termcolor::reset;
       break;
     case DifferTokenType::CURLY_BRACE:
       cout << termcolor::color<123, 252, 42> << token.elem << termcolor::reset;

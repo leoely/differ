@@ -26,7 +26,7 @@ void locationTemplate(LocationToken& token) {
       cout << termcolor::color<50, 50, 100> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::EQUAL:
-      cout << termcolor::bold << termcolor::color<34, 105, 255> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<34, 105, 245> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::SQUARE_BRACKET:
       cout << termcolor::bold << termcolor::color<155, 105, 50> << token.elem << termcolor::reset;
