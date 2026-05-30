@@ -3,5 +3,5 @@
   /tmp/differ/postgresql.sql
 ]
 %mysql*=[/tmp/differ/mysql.sql]
-+%postgresql*=[/tmp/differ/postgresql.sql]
+%postgresql*=[/tmp/differ/postgresql.sql]
 %oracle*=[/tmp/differ/oracle.sql]

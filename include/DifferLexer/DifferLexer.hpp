@@ -20,6 +20,7 @@ class DifferLexer : public virtual Lexer {
     void addToken(DifferTokenType type, const string& elem);
     vector<shared_ptr<DifferToken>>& getTokens();
   private:
+    bool flag;
     vector<shared_ptr<DifferToken>> tokens;
     int status;
     void dealChar(char c);

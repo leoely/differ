@@ -10,4 +10,4 @@ using std::print;
 using std::println;
 using std::cout;
 
-void differTemplate(DifferToken& token) {
+void differTemplate(DifferToken& token);

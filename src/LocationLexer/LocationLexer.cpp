@@ -11,10 +11,12 @@ using std::shared_ptr;
 
 class LocationLexer : virtual public Lexer {
   public:
+    string key;
     LocationLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
+    string& getKey();
     void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;
@@ -22,6 +24,14 @@ class LocationLexer : virtual public Lexer {
 };
 
 LocationLexer::LocationLexer() : Lexer(), status(0) {}
+
+string& LocationLexer::getKey() {
+  for (char c : this->chars) {
+    key += c;
+  }
+  chars.clear();
+  return key;
+}
 
 vector<shared_ptr<LocationToken>>& LocationLexer::getTokens() {
   return tokens;
@@ -43,7 +53,7 @@ void LocationLexer::scanLine(const string& lineText) {
     position += 1;
   }
   line += 1;
-  addToken(LocationTokenType::LINE_BREAK, "\n");
+  dealChar('\n');
 }
 
 
@@ -57,14 +67,12 @@ void LocationLexer::dealChar(char c) {
       break;
     case 1:
       if (c == '*') {
-        string key;
-        for (char c : this->chars) {
-          key += c;
-        }
-        addToken(LocationTokenType::KEY, key);
+        addToken(LocationTokenType::KEY, getKey());
         addToken(LocationTokenType::ASTERISK, "*");
-        chars.clear();
         status = 2;
+      } else if (c == '\n') {
+        addToken(LocationTokenType::KEY, getKey());
+        addToken(LocationTokenType::LINE_BREAK, "\n");
       } else {
         chars.push_back(c);
       }
@@ -93,6 +101,11 @@ void LocationLexer::dealChar(char c) {
           addToken(LocationTokenType::VALUE, getValue());
           value.clear();
           addToken(LocationTokenType::AND, "&");
+          break;
+        case '\n':
+          addToken(LocationTokenType::VALUE, getValue());
+          addToken(LocationTokenType::LINE_BREAK, "\n");
+          value.clear();
           break;
         default:
           chars.push_back(c);

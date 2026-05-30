@@ -6,7 +6,6 @@
 #include <string>
 #include <termcolor/termcolor.hpp>
 #include <LocationLexer/LocationLexer.hpp>
-#include <DifferLexer/DifferLexer.hpp>
 #include <locationTemplate/locationTemplate.hpp>
 #include <LocationToken/LocationToken.hpp>
 #include <Parser/Parser.hpp>

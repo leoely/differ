@@ -11,6 +11,7 @@ using std::exception;
 using std::shared_ptr;
 using std::string;
 using std::exit;
+using std::getline;
 
 namespace fs = std::filesystem;
 
@@ -76,10 +77,10 @@ void validate(const int argc, const char *argv[]) {
       ifstream differFile(differFilePathString);
       string line2;
       shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, fullList, location));
-      while (std::getline(differFile, line2)) {
+      while (getline(differFile, line2)) {
         differParser->scanLine(line2);
       }
-      cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location and Diff file validation successful." << termcolor::reset << endl;
+      cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location and Differ file validation successful." << termcolor::reset << endl;
       exit(EXIT_SUCCESS);
     }
   } catch (int errorCode) {
@@ -124,7 +125,7 @@ void validate(const int argc, const char *argv[]) {
       shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
       ifstream locationFile(locationFilePathString);
       string line;
-      while (std::getline(locationFile, line)) {
+      while (getline(locationFile, line)) {
         locationParser->scanLine(line);
       }
       cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location file validation successful." << termcolor::reset << endl;
@@ -136,7 +137,7 @@ void validate(const int argc, const char *argv[]) {
         cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".loc\" does not exist." << termcolor::reset << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".diff\" extension." << termcolor::reset << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".loc\" extension." << termcolor::reset << endl;
         exit(errorCode);
     }
   }

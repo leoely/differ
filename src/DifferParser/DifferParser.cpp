@@ -3,6 +3,9 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <DifferLexer/DifferLexer.hpp>
+#include <differTemplate/differTemplate.hpp>
+#include <DifferToken/DifferToken.hpp>
 #include <Parser/Parser.hpp>
 
 using std::cout;
@@ -36,14 +39,26 @@ class DifferParser : virtual public Parser {
 DifferParser::DifferParser(const string& p, const list<string>& f, const unordered_map<string, list<string>>& l) : status(0), fullList(f), location(l), fullPath(p) {}
 
 void DifferParser::showError(const string& errorMessage) {
+  int width = getWidth(line);
+  if (line != 1) {
+    shared_ptr<DifferLexer> differLexer(new DifferLexer());
+    differLexer->scanLine(beforeLineText);
+    vector<shared_ptr<DifferToken>> tokens = differLexer->getTokens();
+    cout << termcolor::bold << termcolor::grey << line - 1 << " ";
+    for (auto token: tokens) {
+      differTemplate(*token);
+    }
+  }
   string blanks1 = "";
-  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_red << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
+  cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_color<184, 31, 40> << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
   string blanks2 = "";
-  for (int i = 0; i < position + getWidth(line) - 1; i += 1) {
+  for (int i = 0; i < position + width - 1; i += 1) {
     blanks2 += " ";
   }
-  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " :: [Error] " << errorMessage << termcolor::reset << endl;
-  cout << termcolor::dark << "[Location] :: Position: " << position << " Line: " << line << ";" << termcolor::reset << endl;
+  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
+  cout << termcolor::dark << "[Type] :: "  << "Differ file;" << termcolor::reset << endl;
+  cout << termcolor::dark << "[Path] :: \"" << fullPath << "\";" << termcolor::reset << endl;
+  cout << termcolor::dark << "[Location] :: Position: " << position << ", Line: " << line << ";" << termcolor::reset << endl;
 }
 
 void DifferParser::scanLine(string& lineText) {
@@ -65,18 +80,23 @@ void DifferParser::scanLine(string& lineText) {
         case 1:
           showError("This position should be the character \"{\";");
           exit(errorCode);
+          break;
         case 2:
           showError("This position should be the character \"%\";");
           exit(errorCode);
+          break;
         case 3:
           showError("This position should be the character \"|\";");
           exit(errorCode);
+          break;
         case 4:
           showError("This position should be the character \" \";");
           exit(errorCode);
+          break;
         case 5:
           showError("This position should be the character \" \";");
           exit(errorCode);
+          break;
       }
     }
   }
