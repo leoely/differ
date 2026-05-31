@@ -7,6 +7,7 @@
 #include <termcolor/termcolor.hpp>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
+#include <ArgumentsResolver/ArgumentsResolver.hpp>
 
 using std::ifstream;
 using std::exception;
@@ -17,4 +18,4 @@ using std::getline;
 
 namespace fs = std::filesystem;
 
-void validate(const int argc, const char *argv[]);
+void validate(list<string> parameters);

@@ -1,9 +1,12 @@
+#include <iostream>
 #include <regex>
 #include <list>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
 
+using std::cout;
+using std::endl;
 using std::regex;
 using std::regex_match;
 using std::unordered_set;
@@ -11,7 +14,20 @@ using std::list;
 using std::unordered_map;
 using std::string;
 
-int getType(string key) {
+class ArgumentsResolver {
+  private:
+    unordered_map<string, list<string>> argument;
+    unordered_set<string> paramSet;
+    int getType(string key);
+    int status;
+  public:
+    unordered_map<string, list<string>>& parseArguments(list<string>& params);
+    ArgumentsResolver();
+};
+
+ArgumentsResolver::ArgumentsResolver() {}
+
+int ArgumentsResolver::getType(string key) {
   int type = 0;
   if (key == "v") {
     type = 1;
@@ -34,30 +50,26 @@ int getType(string key) {
   return type;
 }
 
-unordered_map<string, list<string>> parseArguments(int argc, const char* argv[]) {
-  unordered_map<string, list<string>> argument;
-  unordered_set<string> paramSet;
+unordered_map<string, list<string>>& ArgumentsResolver::parseArguments(list<string>& params) {
   regex pattern1("^\\-[a-z]+$");
   regex pattern2("^\\-\\-[a-z]+$");
   int status = 0;
   int type;
   string key;
-  for (int i = 0; i < argc; i += 1) {
-    const char* arg = argv[i];
-    string param;
-    param = arg;
+  for (const auto &param : params) {
     switch (status) {
       case 0:
         if (regex_match(param, pattern1)) {
           key = param.substr(1);
+          type = getType(key);
           status = 1;
         } else if (regex_match(param, pattern2)) {
           key = param.substr(2);
+          type = getType(key);
           status = 1;
         } else {
           throw 1;
         }
-        type = getType(key);
         switch (type) {
           case 0:
             throw 2;
@@ -65,36 +77,38 @@ unordered_map<string, list<string>> parseArguments(int argc, const char* argv[])
           case 1:
           case 2:
             if (paramSet.contains("v")) {
-              paramSet.insert("v");
-            } else {
               throw 3;
+            } else {
+              paramSet.insert("v");
             }
             break;
           case 3:
           case 4:
             if (paramSet.contains("l")) {
-              paramSet.insert("l");
-            } else {
               throw 3;
+            } else {
+              paramSet.insert("l");
             }
             break;
           case 5:
           case 6:
             if (paramSet.contains("d")) {
-              paramSet.insert("d");
-            } else {
               throw 3;
+            } else {
+              paramSet.insert("d");
             }
             break;
         }
         break;
       case 1:
-        if (regex_match(arg, pattern1)) {
+        if (regex_match(param, pattern1)) {
           key = param.substr(1);
           status = 1;
-        } else if (regex_match(arg, pattern2)) {
+          type = getType(key);
+        } else if (regex_match(param, pattern2)) {
           key = param.substr(2);
           status = 1;
+          type = getType(key);
         } else {
           switch (type) {
             case 0:

@@ -5,7 +5,7 @@
 #include <termcolor/termcolor.hpp>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
-#include <parseArguments/parseArguments.hpp>
+#include <ArgumentsResolver/ArgumentsResolver.hpp>
 
 using std::ifstream;
 using std::exception;
@@ -16,8 +16,9 @@ using std::getline;
 
 namespace fs = std::filesystem;
 
-void validate(const int argc, const char *argv[]) {
-  unordered_map<string, list<string>> argument = parseArguments(argc, argv);
+void validate(list<string> arguments) {
+  shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
+  unordered_map<string, list<string>> argument = argumentsResolver->parseArguments(arguments);
   if (argument["d"].size() == 0) {
     list<string> locationOptions = argument["l"];
     for (const auto& locationOption: locationOptions) {

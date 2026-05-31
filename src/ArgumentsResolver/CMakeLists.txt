@@ -1,0 +1,3 @@
+add_library(ArgumentsResolver STATIC ArgumentsResolver.cpp)
+MemoryCheck(ArgumentsResolver)
+AddCoverage(ArgumentsResolver)

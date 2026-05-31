@@ -1,10 +1,10 @@
-#include <vector>
+#include <list>
 #include <string>
 #include <help/help.hpp>
 #include <generate/generate.hpp>
 #include <validate/validate.hpp>
 
-using std::vector;
+using std::list;
 using std::string;
 
 int main(int argc, const char *argv[]) {
@@ -17,16 +17,17 @@ int main(int argc, const char *argv[]) {
     help();
     exit(EXIT_SUCCESS);
   }
-  const char *remainArgv[argc - 1];
-  for (int i = 1; i < argc; i += 1) {
-    remainArgv[i - 1] = argv[i];
+  list<string> remainArguments;
+  for (int i = 2; i < argc; i += 1) {
+    string argument = argv[i];
+    remainArguments.push_back(argument);
   }
-  argc -= 1;
+  argc -= 2;
   if (argument1 == "generate") {
-    generate(argc, remainArgv);
+    //generate(remainArguments);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "validate") {
-    validate(argc, remainArgv);
+    validate(remainArguments);
     exit(EXIT_SUCCESS);
   } else {
     help();
