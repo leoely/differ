@@ -3,18 +3,14 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include <LocationTokenType/LocationTokenType.hpp>
-#include <LocationToken/LocationToken.hpp>
+#include <VariableTokenType/VariableTokenType.hpp>
+#include <VariableToken/VaraibleToken.hpp>
 #include <Lexer/Lexer.hpp>
 
-using std::string;
-using std::vector;
-using std::shared_ptr;
-
-class LocationLexer : virtual public Lexer {
+class VariableLexer : public virtual Lexer {
   public:
     string key;
-    LocationLexer();
+    VariableLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
@@ -22,4 +18,4 @@ class LocationLexer : virtual public Lexer {
     vector<shared_ptr<LocationToken>> tokens;
     int status;
     void dealChar(char c);
-};
+}

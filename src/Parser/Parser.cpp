@@ -22,10 +22,11 @@ Parser::Parser() : key(""), line(0), position(0) {}
 Parser::~Parser() {}
 
 void Parser::obtainKey() {
-  for (auto e: this->chars) {
-    this->key += e;
+  key = "";
+  for (auto e: chars) {
+    key += e;
   }
-  this->chars.clear();
+  chars.clear();
 }
 
 int Parser::getWidth(int position) {

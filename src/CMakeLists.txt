@@ -12,7 +12,8 @@ AddCoverage(differ)
 target_link_libraries(
   differ assist validate generate
   Parser DifferParser LocationParser
-  Lexer LocationLexer DifferLexer locationTemplate differTemplate
+  Lexer LocationLexer DifferLexer VariableLexer
+  locationTemplate differTemplate variableLexer
 )
 
 install(TARGETS differ DESTINATION bin)

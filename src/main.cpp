@@ -10,25 +10,26 @@ using std::string;
 int main(int argc, const char *argv[]) {
   if (argc == 1) {
     help();
-    return 0;
+    exit(EXIT_SUCCESS);
   }
   string argv1 = argv[1];
   if (argv1 == "--help") {
     help();
-    return 0;
+    exit(EXIT_SUCCESS);
   }
-  const char *subArgv[argc - 1];
+  const char *remianArgv[argc - 1];
   for (int i = 1; i < argc; i += 1) {
-    subArgv[i - 1] = argv[i];
+    remainArgv[i - 1] = argv[i];
   }
   argc -= 1;
   if (argv1 == "generate") {
-    generate(argc, subArgv);
-    return 0;
+    generate(argc, remainArgv);
+    exit(EXIT_SUCCESS);
   } else if (argv1 == "validate") {
-    validate(argc, subArgv);
+    validate(argc, remainArgv);
+    exit(EXIT_SUCCESS);
   } else {
     help();
-    return 0;
+    exit(EXIT_FAILURE);
   }
 }

@@ -25,7 +25,7 @@ using std::exception;
 
 namespace fs = std::filesystem;
 
-const string dealBlankLine(const string &textLine) {
+const string dealBlankLine(const string& textLine) {
   if (textLine == " ") {
     return "";
   } else {

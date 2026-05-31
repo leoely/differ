@@ -5,6 +5,9 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <DifferLexer/DifferLexer.hpp>
+#include <differTemplate/differTemplate.hpp>
+#include <DifferToken/DifferToken.hpp>
 #include <Parser/Parser.hpp>
 
 using std::cout;
@@ -23,7 +26,7 @@ class DifferParser : virtual public Parser {
     unordered_map<string, list<string>> differ;
     list<string> fullList;
     unordered_map<string, list<string>> location;
-    bool dealChar(const char c, const string &lineText);
+    bool dealChar(const char c, const string& lineText);
     void appendLine(const list<string>& stringList, const string& lineText);
   public:
     string fullPath;

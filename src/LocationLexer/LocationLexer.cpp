@@ -11,12 +11,10 @@ using std::shared_ptr;
 
 class LocationLexer : virtual public Lexer {
   public:
-    string key;
     LocationLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
-    string& getKey();
     void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;
@@ -24,14 +22,6 @@ class LocationLexer : virtual public Lexer {
 };
 
 LocationLexer::LocationLexer() : Lexer(), status(0) {}
-
-string& LocationLexer::getKey() {
-  for (char c : this->chars) {
-    key += c;
-  }
-  chars.clear();
-  return key;
-}
 
 vector<shared_ptr<LocationToken>>& LocationLexer::getTokens() {
   return tokens;
@@ -67,11 +57,11 @@ void LocationLexer::dealChar(char c) {
       break;
     case 1:
       if (c == '*') {
-        addToken(LocationTokenType::KEY, getKey());
+        addToken(LocationTokenType::KEY, getValue());
         addToken(LocationTokenType::ASTERISK, "*");
         status = 2;
       } else if (c == '\n') {
-        addToken(LocationTokenType::KEY, getKey());
+        addToken(LocationTokenType::KEY, getValue());
         addToken(LocationTokenType::LINE_BREAK, "\n");
       } else {
         chars.push_back(c);

@@ -44,7 +44,6 @@ class LocationParser : virtual public Parser {
 LocationParser::LocationParser(string& p) : status(0), value(""), fullPath(p) {}
 
 void LocationParser::initProperty() {
-  position = 0;
   status = 0;
   key = "";
   value = "";
@@ -94,9 +93,6 @@ void LocationParser::scanLine(const string &lineText) {
             exit(errorCode);
           case 3:
             showError("This position should be the character \"[\";");
-            exit(errorCode);
-          case 4:
-            showError("The LocationParser internal state is abnormal.");
             exit(errorCode);
         }
       }
@@ -151,8 +147,6 @@ void LocationParser::dealChar(char c) {
           chars.push_back(c);
       }
       break;
-    default:
-      throw 4;
   }
 }
 
