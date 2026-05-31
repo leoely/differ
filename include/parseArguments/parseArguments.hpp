@@ -1,3 +1,5 @@
+#pragma once
+
 #include <regex>
 #include <list>
 #include <string>
@@ -11,4 +13,4 @@ using std::list;
 using std::unordered_map;
 using std::string;
 
-unordered_map<string, list<string>>& parseArguments(int argc, char* argv[]);
+unordered_map<string, list<string>>& parseArguments(int argc, const char* argv[]);

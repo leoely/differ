@@ -25,33 +25,34 @@ int getType(string key) {
   if (key == "location") {
     type = 4;
   }
-  if (key == 'd') {
+  if (key == "d") {
     type = 5;
   }
-  if (key === "differ") {
+  if (key == "differ") {
     type = 6;
   }
+  return type;
 }
 
-unordered_map<string, list<string>>& parseArguments(int argc, char* argv[]) {
+unordered_map<string, list<string>> parseArguments(int argc, const char* argv[]) {
   unordered_map<string, list<string>> argument;
   unordered_set<string> paramSet;
-  regex pattern1(R"^\-[a-z]+$")
-  regex pattern2(R"^\-\-[a-z]+$")
+  regex pattern1("^\\-[a-z]+$");
+  regex pattern2("^\\-\\-[a-z]+$");
   int status = 0;
   int type;
   string key;
   for (int i = 0; i < argc; i += 1) {
-    char* arg = argv[i];
+    const char* arg = argv[i];
     string param;
     param = arg;
     switch (status) {
       case 0:
-        if (regex_match(arg, pattern1)) {
-          key = arg.substring(1);
+        if (regex_match(param, pattern1)) {
+          key = param.substr(1);
           status = 1;
-        } else if (regex_match(arg, pattern2)) {
-          key = arg.substring(2);
+        } else if (regex_match(param, pattern2)) {
+          key = param.substr(2);
           status = 1;
         } else {
           throw 1;
@@ -89,10 +90,10 @@ unordered_map<string, list<string>>& parseArguments(int argc, char* argv[]) {
         break;
       case 1:
         if (regex_match(arg, pattern1)) {
-          key = arg.substring(1);
+          key = param.substr(1);
           status = 1;
         } else if (regex_match(arg, pattern2)) {
-          key = arg.substring(2);
+          key = param.substr(2);
           status = 1;
         } else {
           switch (type) {

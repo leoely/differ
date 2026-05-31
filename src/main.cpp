@@ -12,20 +12,20 @@ int main(int argc, const char *argv[]) {
     help();
     exit(EXIT_SUCCESS);
   }
-  string argv1 = argv[1];
-  if (argv1 == "--help") {
+  string argument1 = argv[1];
+  if (argument1 == "--help") {
     help();
     exit(EXIT_SUCCESS);
   }
-  const char *remianArgv[argc - 1];
+  const char *remainArgv[argc - 1];
   for (int i = 1; i < argc; i += 1) {
     remainArgv[i - 1] = argv[i];
   }
   argc -= 1;
-  if (argv1 == "generate") {
+  if (argument1 == "generate") {
     generate(argc, remainArgv);
     exit(EXIT_SUCCESS);
-  } else if (argv1 == "validate") {
+  } else if (argument1 == "validate") {
     validate(argc, remainArgv);
     exit(EXIT_SUCCESS);
   } else {

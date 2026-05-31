@@ -10,10 +10,10 @@ MemoryCheck(differ)
 AddCoverage(differ)
 
 target_link_libraries(
-  differ assist validate generate
+  differ assist validate generate parseArguments
   Parser DifferParser LocationParser
   Lexer LocationLexer DifferLexer VariableLexer
-  locationTemplate differTemplate variableLexer
+  locationTemplate differTemplate variableTemplate
 )
 
 install(TARGETS differ DESTINATION bin)
@@ -21,11 +21,14 @@ install(TARGETS differ DESTINATION bin)
 add_subdirectory(Lexer)
 add_subdirectory(LocationLexer)
 add_subdirectory(DifferLexer)
+add_subdirectory(VariableLexer)
 add_subdirectory(locationTemplate)
 add_subdirectory(differTemplate)
+add_subdirectory(variableTemplate)
 add_subdirectory(Parser)
 add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)
+add_subdirectory(parseArguments)
 add_subdirectory(generate)
 add_subdirectory(help)
 add_subdirectory(validate)

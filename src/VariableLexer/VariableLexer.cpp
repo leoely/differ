@@ -2,21 +2,25 @@
 #include <vector>
 #include <string>
 #include <VariableTokenType/VariableTokenType.hpp>
-#include <VariableToken/VaraibleToken.hpp>
+#include <VariableToken/VariableToken.hpp>
 #include <Lexer/Lexer.hpp>
+
+using std::string;
+using std::vector;
+using std::shared_ptr;
 
 class VariableLexer : public virtual Lexer {
   public:
     string key;
     VariableLexer();
     void scanLine(const string& lineText);
-    vector<shared_ptr<LocationToken>>& getTokens();
+    vector<shared_ptr<VariableToken>>& getTokens();
   private:
-    void addToken(LocationTokenType type, string elem);
-    vector<shared_ptr<LocationToken>> tokens;
+    void addToken(VariableTokenType type, string elem);
+    vector<shared_ptr<VariableToken>> tokens;
     int status;
     void dealChar(char c);
-}
+};
 
 VariableLexer::VariableLexer() : Lexer(), status(0) {}
 
@@ -48,21 +52,21 @@ void VariableLexer::dealChar(char c) {
   switch (status) {
     case 0:
       if (c == '^') {
-        addToken(VariableToken::CARET, "^");
+        addToken(VariableTokenType::CARET, "^");
         status = 1;
       }
       break;
     case 1:
       if (c == '(') {
-        addToken(VariableToken::BRACKET, "(");
+        addToken(VariableTokenType::BRACKET, "(");
         status = 2;
       }
       break;
     case 2:
       if (c == ')') {
-        addToken(VaraibleToken::KEY, getValue());
+        addToken(VariableTokenType::KEY, getValue());
         key.clear();
-        addToken(VariableToken::BRACKET, "(");
+        addToken(VariableTokenType::BRACKET, "(");
         status = 3;
       } else {
         chars.push_back(c);
@@ -70,23 +74,23 @@ void VariableLexer::dealChar(char c) {
       break;
     case 3:
       if (c == '=') {
-        addToken(VariableToken::EQUAL, "=");
+        addToken(VariableTokenType::EQUAL, "=");
         status = 4;
       }
       break;
     case 4:
       if (c == '"') {
-        addToken(VariableToken::COLON, "\"");
+        addToken(VariableTokenType::COLON, "\"");
         status = 5;
       }
       break;
     case 5:
       if (c == '"') {
-        addToken(VariableToken::VALUE, getValue());
-        addToken(VariableToken::COLON, "\"");
+        addToken(VariableTokenType::VALUE, getValue());
+        addToken(VariableTokenType::COLON, "\"");
         status = 0;
       } else {
-        chars.push(c);
+        chars.push_back(c);
       }
       break;
   }
