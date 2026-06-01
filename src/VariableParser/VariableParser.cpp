@@ -5,7 +5,7 @@
 #include <string>
 #include <termcolor/termcolor.hpp>
 #include <VariableLexer/VariableLexer.hpp>
-#include <locationTemplate/locationTemplate.hpp>
+#include <variableTemplate/variableTemplate.hpp>
 #include <VariableToken/VariableToken.hpp>
 #include <Parser/Parser.hpp>
 
@@ -28,7 +28,7 @@ class VariableParser : virtual public Parser {
     string beforeLineText;
     unordered_map<string, string> variable;
   public:
-    unordered_map<string, string>& getVariable();
+    const unordered_map<string, string>& getVariable();
     explicit VariableParser(string& p);
     void scanLine(const string& lineText);
     void showError(const string& errormessage);
@@ -44,7 +44,7 @@ void VariableParser::showError(const string& errorMessage) {
     vector<shared_ptr<VariableToken>> tokens = locationLexer->getTokens();
     cout << termcolor::bold << termcolor::grey << line - 1 << " ";
     for (auto token: tokens) {
-      locationTemplate(*token);
+      variableTemplate(*token);
     }
   }
   string blanks1 = "";
@@ -73,16 +73,16 @@ void VariableParser::scanLine(const string &lineText) {
         switch (errorCode) {
           case 1:
             showError("This position should be the character \"^\";");
-            exit(EXIT_FAILURE);
+            exit(errorCode);
           case 2:
             showError("This position should be the character \"(\";");
-            exit(EXIT_FAILURE);
+            exit(errorCode);
           case 3:
             showError("This position should be the character \"=\";");
-            exit(EXIT_FAILURE);
+            exit(errorCode);
           case 4:
             showError("This position should be the character \"\"\";");
-            exit(EXIT_FAILURE);
+            exit(errorCode);
         }
       }
     }
@@ -125,7 +125,7 @@ void VariableParser::dealChar(char c) {
       if (c == '"') {
         status = 5;
       } else {
-        throw = 4;
+        throw 4;
       }
       break;
     case 5:
