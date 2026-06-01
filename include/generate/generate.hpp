@@ -22,4 +22,4 @@ using std::exception;
 
 namespace fs = std::filesystem;
 
-void generate(const int argc, const char *argv[]);
+void generate(list<string>& arguments);

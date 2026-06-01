@@ -17,17 +17,17 @@ int main(int argc, const char *argv[]) {
     help();
     exit(EXIT_SUCCESS);
   }
-  list<string> remainArguments;
+  list<string> arguments;
   for (int i = 2; i < argc; i += 1) {
     string argument = argv[i];
-    remainArguments.push_back(argument);
+    arguments.push_back(argument);
   }
   argc -= 2;
   if (argument1 == "generate") {
-    //generate(remainArguments);
+    generate(arguments);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "validate") {
-    validate(remainArguments);
+    validate(arguments);
     exit(EXIT_SUCCESS);
   } else {
     help();
