@@ -10,7 +10,7 @@ MemoryCheck(differ)
 AddCoverage(differ)
 
 target_link_libraries(
-  differ assist validate generate ArgumentsResolver
+  differ assist validate generate ArgumentsResolver FilePath
   Parser DifferParser LocationParser
   Lexer LocationLexer DifferLexer VariableLexer
   locationTemplate differTemplate variableTemplate
@@ -29,6 +29,7 @@ add_subdirectory(Parser)
 add_subdirectory(LocationParser)
 add_subdirectory(DifferParser)
 add_subdirectory(ArgumentsResolver)
+add_subdirectory(FilePath)
 add_subdirectory(generate)
 add_subdirectory(help)
 add_subdirectory(validate)

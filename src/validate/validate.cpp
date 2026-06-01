@@ -1,14 +1,12 @@
-#include <iostream>
+#include <string>
 #include <fstream>
-#include <exception>
-#include <argparse/argparse.hpp>
 #include <termcolor/termcolor.hpp>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <FilePath/FilePath.hpp>
 
 using std::ifstream;
-using std::exception;
 using std::shared_ptr;
 using std::string;
 using std::exit;
@@ -22,46 +20,18 @@ void validate(list<string> arguments) {
   if (argument["d"].size() == 0) {
     list<string> locationOptions = argument["l"];
     for (const auto& locationOption: locationOptions) {
-      try {
-        string locationFilePathString;
-        if (locationOption.size() > 0) {
-          locationFilePathString = locationOption;
-        }
-        fs::path locationFilePath = locationFilePathString;
-        if (locationFilePath.is_absolute()) {
-          locationFilePath = locationFilePathString;
-        } else {
-          locationFilePath = fs::absolute(locationFilePath);
-        }
-        if (fs::exists(locationFilePath) == false) {
-          throw 1;
-        }
-        fs::path locationFileName = locationFilePath.filename();
-        string locationFileNameString(locationFileName.string());
-        size_t lastIndex1 = locationFileNameString.find_last_of(".");
-        string locationExtensionString = locationFileNameString.substr(lastIndex1, locationFileNameString.size() - lastIndex1);
-        if (locationExtensionString != ".loc") {
-          throw 2;
-        }
-        shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
-        ifstream locationFile(locationFilePathString);
-        string line;
-        while (getline(locationFile, line)) {
-          locationParser->scanLine(line);
-        }
-        cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location file validation successful." << termcolor::reset << endl;
-        exit(EXIT_SUCCESS);
-      } catch (int errorCode) {
-        switch (errorCode) {
-          case 1:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".loc\" does not exist." << termcolor::reset << endl;
-            exit(errorCode);
-          case 2:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".loc\" extension." << termcolor::reset << endl;
-            exit(errorCode);
-        }
+      shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
+      filePath->dealPath();
+      string locationFilePathString = filePath->getFilePathString();
+      shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
+      ifstream locationFile(locationFilePathString);
+      string line;
+      while (getline(locationFile, line)) {
+        locationParser->scanLine(line);
       }
     }
+    cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Location file validation successful." << termcolor::reset << endl;
+    exit(EXIT_SUCCESS);
   }
   //try {
     //if (program.is_used("-d") || program.is_used("--differ")) {
