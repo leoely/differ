@@ -1,10 +1,11 @@
 add_executable(LocationParser_test LocationParser_test.cpp)
 target_link_libraries(
   LocationParser_test PUBLIC gtest gtest_main serializeStringListMap
+  Lexer LocationLexer locationTemplate
   Parser LocationParser
-  locationTemplate Lexer LocationLexer
 )
 target_include_directories(LocationParser_test PUBLIC
+  ${TERMCOLOR_INCLUDE_DIRS}
   "${CMAKE_SOURCE_DIR}/include"
 )
 CopyAsset(LocationParser_test)

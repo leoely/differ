@@ -11,7 +11,9 @@ using std::shared_ptr;
 
 class LocationLexer : virtual public Lexer {
   public:
+    string key;
     LocationLexer();
+    ~LocationLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
@@ -22,6 +24,7 @@ class LocationLexer : virtual public Lexer {
 };
 
 LocationLexer::LocationLexer() : Lexer(), status(0) {}
+LocationLexer::~LocationLexer() {}
 
 vector<shared_ptr<LocationToken>>& LocationLexer::getTokens() {
   return tokens;
@@ -53,6 +56,8 @@ void LocationLexer::dealChar(char c) {
       if (c == '%') {
         addToken(LocationTokenType::PERCENTAGE, "%");
         status = 2;
+      } else if (c == '\n') {
+        addToken(LocationTokenType::LINE_BREAK, "\n");
       }
       break;
     case 1:

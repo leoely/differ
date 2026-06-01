@@ -15,6 +15,7 @@ class LocationLexer : virtual public Lexer {
   public:
     string key;
     LocationLexer();
+    ~LocationLexer();
     void scanLine(const string& lineText);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:

@@ -10,7 +10,6 @@ using std::vector;
 using std::shared_ptr;
 
 class DifferLexer : public virtual Lexer {
-  using Lexer::Lexer;
   public:
     DifferLexer();
     ~DifferLexer();
@@ -24,7 +23,7 @@ class DifferLexer : public virtual Lexer {
     void dealChar(char c);
 };
 
-DifferLexer::DifferLexer() : status(0), flag(false) {}
+DifferLexer::DifferLexer() : Lexer(), status(0), flag(false) {}
 DifferLexer::~DifferLexer() {}
 
 vector<shared_ptr<DifferToken>>& DifferLexer::getTokens() {

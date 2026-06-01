@@ -37,12 +37,17 @@ class VariableParser : virtual public Parser {
 VariableParser::VariableParser(string& p) : status(0), value("") {}
 
 void VariableParser::showError(const string& errorMessage) {
-  int width = getWidth(line);
+  int width1 = getWidth(line - 1);
+  int width2 = getWidth(line);
   if (line != 1) {
     shared_ptr<VariableLexer> locationLexer(new VariableLexer());
     locationLexer->scanLine(beforeLineText);
     vector<shared_ptr<VariableToken>> tokens = locationLexer->getTokens();
-    cout << termcolor::bold << termcolor::grey << line - 1 << " ";
+    if (width2 == width1 + 1) {
+      cout << termcolor::bold << termcolor::grey << line - 1 << "  ";
+    } else {
+      cout << termcolor::bold << termcolor::grey << line - 1 << " ";
+    }
     for (auto token: tokens) {
       variableTemplate(*token);
     }
@@ -50,7 +55,7 @@ void VariableParser::showError(const string& errorMessage) {
   string blanks1 = "";
   cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_color<184, 31, 40> << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
   string blanks2 = "";
-  for (int i = 0; i < position + width - 1; i += 1) {
+  for (int i = 0; i < position + width2 - 1; i += 1) {
     blanks2 += " ";
   }
   cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;

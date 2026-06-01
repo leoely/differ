@@ -15,7 +15,7 @@ class Lexer {
     ~Lexer();
 };
 
-Lexer::Lexer() : line(0), position(0) {}
+Lexer::Lexer() : line(0), position(0), value("") {}
 Lexer::~Lexer() {}
 
 const string& Lexer::getValue() {
