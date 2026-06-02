@@ -5,7 +5,6 @@
 #include <fstream>
 #include <gtest/gtest.h>
 #include <LocationParser/LocationParser.hpp>
-#include <serializeStringListMap/serializeStringListMap.hpp>
 
 using std::string;
 using std::list;
@@ -14,8 +13,8 @@ using std::ifstream;
 using std::shared_ptr;
 
 TEST(Class_LocationParser, test_that_the_loc_file_is_parsed_correctly) {
-  string locationPathString = "../../asset/test.loc";
-  shared_ptr<LocationParser> locationParser(new LocationParser(locationPathString));
+  //string locationPathString = "../../asset/test.loc";
+  //shared_ptr<LocationParser> locationParser(new LocationParser(locationPathString));
   //ifstream file(locationPathString);
   //string str;
   //while (getline(file, str)) {

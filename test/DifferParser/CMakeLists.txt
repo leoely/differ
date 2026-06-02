@@ -1,6 +1,6 @@
 add_executable(DifferParser_test DifferParser_test.cpp)
 target_link_libraries(
-  DifferParser_test gtest gtest_main serializeStringListMap
+  DifferParser_test gtest gtest_main
   Lexer DifferLexer LocationLexer locationTemplate differTemplate
   Parser LocationParser DifferParser
 )

@@ -1,6 +1,5 @@
 {
   "dependencies": [
-    "argparse",
     "termcolor"
   ]
 }

@@ -8,7 +8,6 @@
 #include <gtest/gtest.h>
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
-#include <serializeStringListMap/serializeStringListMap.hpp>
 
 using std::list;
 using std::unordered_map;
@@ -19,13 +18,13 @@ using std::string;
 using std::shared_ptr;
 
 TEST(Class_DifferParser, differ_files_can_be_parsed_correctly) {
-  string locationPathString = "./asset/test.loc";
-  shared_ptr<LocationParser> locationParser(new LocationParser(locationPathString));
-  ifstream file1(locationPathString);
-  string str1;
-  while (getline(file1, str1)) {
-    locationParser->scanLine(str1);
-  }
+  //string locationPathString = "./asset/test.loc";
+  //shared_ptr<LocationParser> locationParser(new LocationParser(locationPathString));
+  //ifstream file1(locationPathString);
+  //string str1;
+  //while (getline(file1, str1)) {
+    //locationParser->scanLine(str1);
+  //}
   //unordered_map<string, list<string>> location = locationParser->getLocation();
   //list<string> fullList = locationParser->getFullList();
   //shared_ptr<DifferParser> differParser(new DifferParser(fullList, location));

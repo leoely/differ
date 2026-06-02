@@ -1,5 +1,3 @@
-find_package(argparse CONFIG REQUIRED)
-
 add_executable(differ main.cpp)
 
 find_path(TERMCOLOR_INCLUDE_DIRS "termcolor/termcolor.hpp")

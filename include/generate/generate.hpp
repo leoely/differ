@@ -9,7 +9,6 @@
 #include <filesystem>
 #include <exception>
 #include <termcolor/termcolor.hpp>
-#include <argparse/argparse.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
 #include <help/help.hpp>

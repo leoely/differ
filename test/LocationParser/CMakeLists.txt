@@ -1,6 +1,6 @@
 add_executable(LocationParser_test LocationParser_test.cpp)
 target_link_libraries(
-  LocationParser_test PUBLIC gtest gtest_main serializeStringListMap
+  LocationParser_test PUBLIC gtest gtest_main
   Lexer LocationLexer locationTemplate
   Parser LocationParser
 )
