@@ -18,7 +18,7 @@ class FilePath {
     void dealPath();
 };
 
-FilePath::FilePath(const string& p, const string& e) : pathString(p), extension(e) {}
+FilePath::FilePath(const string& pathString, const string& extension) : pathString(pathString), extension(extension) {}
 
 string& FilePath::getFilePathString() {
   return filePathString;

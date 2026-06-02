@@ -22,6 +22,7 @@ using std::shared_ptr;
 class LocationParser : virtual public Parser {
   using Parser::Parser;
   private:
+    string key, fullPath;
     int status;
     unordered_map<string, list<string>> location;
     list<string> fullList;
@@ -32,7 +33,6 @@ class LocationParser : virtual public Parser {
     string lineText;
     string beforeLineText;
   public:
-    string fullPath;
     explicit LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();
@@ -41,7 +41,7 @@ class LocationParser : virtual public Parser {
     void showError(const string& errormessage);
 };
 
-LocationParser::LocationParser(string& p) : status(0), value(""), fullPath(p) {}
+LocationParser::LocationParser(string& fullPath) : status(0), value(""), fullPath(fullPath) {}
 
 void LocationParser::initProperty() {
   status = 0;
@@ -117,7 +117,7 @@ void LocationParser::dealChar(char c) {
       break;
     case 1:
       if (c == '*') {
-        obtainKey();
+        key = obtainWord();
         status = 2;
       } else {
         chars.push_back(c);

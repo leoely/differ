@@ -66,7 +66,7 @@ void VariableLexer::dealChar(char c) {
       if (c == ')') {
         addToken(VariableTokenType::KEY, getValue());
         key.clear();
-        addToken(VariableTokenType::BRACKET, "(");
+        addToken(VariableTokenType::BRACKET, ")");
         status = 3;
       } else {
         chars.push_back(c);

@@ -9,12 +9,11 @@ using std::list;
 
 class Parser {
   protected:
-    string key;
+    string word;
     int line, position;
     list<char> chars;
     string fullPath;
-    void obtainKey();
-    void showError(const string &lineText, const string &message);
+    string& obtainWord();
     int getWidth(int position);
   public:
     Parser();

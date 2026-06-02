@@ -21,20 +21,19 @@ class VariableParser : virtual public Parser {
   using Parser::Parser;
   private:
     int status;
-    string value;
-    void obtainValue();
+    string key, value, fullPath;
     void dealChar(const char c);
     string lineText;
     string beforeLineText;
     unordered_map<string, string> variable;
   public:
     const unordered_map<string, string>& getVariable();
-    explicit VariableParser(string& p);
+    explicit VariableParser(string& fullPath);
     void scanLine(const string& lineText);
     void showError(const string& errormessage);
 };
 
-VariableParser::VariableParser(string& p) : status(0), value("") {}
+VariableParser::VariableParser(string& fullPath) : status(0), key(""), value(""), fullPath(fullPath) {}
 
 void VariableParser::showError(const string& errorMessage) {
   int width1 = getWidth(line - 1);
@@ -113,7 +112,7 @@ void VariableParser::dealChar(char c) {
       break;
     case 2:
       if (c == ')') {
-        obtainKey();
+        key = obtainWord();
         status = 3;
       } else {
         chars.push_back(c);
@@ -135,7 +134,7 @@ void VariableParser::dealChar(char c) {
       break;
     case 5:
       if (c == '"') {
-        obtainValue();
+        value = obtainWord();
         variable[key] = value;
         status = 0;
       } else {
@@ -143,14 +142,6 @@ void VariableParser::dealChar(char c) {
       }
       break;
   }
-}
-
-void VariableParser::obtainValue() {
-  value = "";
-  for (auto e: chars) {
-    value += e;
-  }
-  chars.clear();
 }
 
 const unordered_map<string, string>& VariableParser::getVariable() {

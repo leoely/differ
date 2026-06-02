@@ -8,7 +8,6 @@
 #include <string>
 #include <termcolor/termcolor.hpp>
 #include <LocationLexer/LocationLexer.hpp>
-#include <DifferLexer/DifferLexer.hpp>
 #include <locationTemplate/locationTemplate.hpp>
 #include <LocationToken/LocationToken.hpp>
 #include <Parser/Parser.hpp>
@@ -25,6 +24,7 @@ using std::shared_ptr;
 class LocationParser : virtual public Parser {
   using Parser::Parser;
   private:
+    string key, fullPath;
     int status;
     unordered_map<string, list<string>> location;
     list<string> fullList;
@@ -35,7 +35,6 @@ class LocationParser : virtual public Parser {
     string lineText;
     string beforeLineText;
   public:
-    string fullPath;
     explicit LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;
     void initProperty();

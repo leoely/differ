@@ -7,26 +7,27 @@ using std::list;
 
 class Parser {
   protected:
-    string key;
+    string word;
     int line, position;
     list<char> chars;
     string fullPath;
-    void obtainKey();
+    string& obtainWord();
     int getWidth(int position);
   public:
     Parser();
     ~Parser();
 };
 
-Parser::Parser() : key(""), line(0), position(0) {}
+Parser::Parser() : word(""), line(0), position(0) {}
 Parser::~Parser() {}
 
-void Parser::obtainKey() {
-  key = "";
+string& Parser::obtainWord() {
+  word = "";
   for (auto e: chars) {
-    key += e;
+    word += e;
   }
   chars.clear();
+  return word;
 }
 
 int Parser::getWidth(int position) {

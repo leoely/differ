@@ -7,7 +7,7 @@
 #include <string>
 #include <termcolor/termcolor.hpp>
 #include <VariableLexer/VariableLexer.hpp>
-#include <locationTemplate/locationTemplate.hpp>
+#include <variableTemplate/variableTemplate.hpp>
 #include <VariableToken/VariableToken.hpp>
 #include <Parser/Parser.hpp>
 
@@ -23,15 +23,14 @@ class VariableParser : virtual public Parser {
   using Parser::Parser;
   private:
     int status;
-    string value;
-    void obtainValue();
+    string key, value, fullPath;
     void dealChar(const char c);
     string lineText;
     string beforeLineText;
     unordered_map<string, string> variable;
   public:
-    unordered_map<string, string>& getVariable();
-    explicit VariableParser(string& p);
+    const unordered_map<string, string>& getVariable();
+    explicit VariableParser(string& fullPath);
     void scanLine(const string& lineText);
     void showError(const string& errormessage);
 };
