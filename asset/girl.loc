@@ -1,0 +1,6 @@
+%girl*= [
+  /tmp/differ/alice.md &
+  /tmp/differ/emma.md
+]
+%emma*=[/tmp/differ/emma.md]
+%alice*=[/tmp/differ/alice.md]

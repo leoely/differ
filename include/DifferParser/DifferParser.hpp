@@ -32,7 +32,6 @@ class DifferParser : virtual public Parser {
     string fullPath;
     DifferParser(const string& p, const list<string>& f, const unordered_map<string, list<string>>& l);
     const unordered_map<string, list<string>>& getDiffer() const;
-    void initProperty();
     void scan(const string& text);
     void scanLine(string& lineText);
     void showError(const string& errorMessage);
