@@ -5,9 +5,9 @@
 | emma  | 34  | girl   | skateboard | new york | 1.70m  |
 | james | 12  | boy    | breaking   | tokyo    | 1.79m  |
 
-### Please confirm #{3} #{1}.
-#{4} #{3} #{1} is incorrect,please ${2} the person below.
-#{4} #{3} need to #{2},it must be during working days.
+### Please confirm #{i3} #{i1}.
+#If you #{i1} is incorrect,please ${i2} the person below.
+#If you need to #{i2},it must be during working days.
 ={%boy}
 | | name  | phone       |
 | | ----- | ----------- |
