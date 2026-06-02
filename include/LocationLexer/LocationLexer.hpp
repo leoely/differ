@@ -16,11 +16,11 @@ class LocationLexer : virtual public Lexer {
     string key;
     LocationLexer();
     ~LocationLexer();
-    void scanLine(const string& lineText);
+    void scanLine(const string& lineText, bool add);
     vector<shared_ptr<LocationToken>>& getTokens();
+    void dealChar(char c, bool add);
   private:
     void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;
-    void dealChar(char c);
 };

@@ -14,13 +14,13 @@ class LocationLexer : virtual public Lexer {
     string key;
     LocationLexer();
     ~LocationLexer();
-    void scanLine(const string& lineText);
+    void scanLine(const string& lineText, bool add);
     vector<shared_ptr<LocationToken>>& getTokens();
   private:
+    void dealChar(char c, bool add);
     void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;
-    void dealChar(char c);
 };
 
 LocationLexer::LocationLexer() : Lexer(), status(0) {}
@@ -35,75 +35,117 @@ void LocationLexer::addToken(LocationTokenType type, string elem) {
   tokens.push_back(token);
 }
 
-void LocationLexer::scanLine(const string& lineText) {
+void LocationLexer::scanLine(const string& lineText, bool add) {
   position = 0;
   for (char c: lineText) {
     if (c != ' ') {
-      dealChar(c);
+      dealChar(c, add);
     } else {
-      addToken(LocationTokenType::BLANK, " ");
+      if (add == true) {
+        addToken(LocationTokenType::BLANK, " ");
+      }
     }
     position += 1;
   }
   line += 1;
-  dealChar('\n');
+  dealChar('\n', add);
 }
 
 
-void LocationLexer::dealChar(char c) {
+void LocationLexer::dealChar(char c, bool add) {
   switch (status) {
     case 0:
       if (c == '%') {
-        addToken(LocationTokenType::PERCENTAGE, "%");
+        if (add == true) {
+          addToken(LocationTokenType::PERCENTAGE, "%");
+        }
         status = 2;
       } else if (c == '\n') {
-        addToken(LocationTokenType::LINE_BREAK, "\n");
+        if (add == true) {
+          addToken(LocationTokenType::LINE_BREAK, "\n");
+        }
       }
       break;
     case 1:
-      if (c == '*') {
-        addToken(LocationTokenType::KEY, getValue());
-        addToken(LocationTokenType::ASTERISK, "*");
-        status = 2;
-      } else if (c == '\n') {
-        addToken(LocationTokenType::KEY, getValue());
-        addToken(LocationTokenType::LINE_BREAK, "\n");
-      } else {
-        chars.push_back(c);
+      switch (c) {
+        case ' ':
+          if (add == true) {
+            addToken(LocationTokenType::KEY, getValue());
+            addToken(LocationTokenType::BLANK, " ");
+          }
+        case '*':
+          if (add == true) {
+            addToken(LocationTokenType::KEY, getValue());
+            addToken(LocationTokenType::ASTERISK, "*");
+          }
+          status = 2;
+          break;
+        case '\n':
+          if (add == true) {
+            addToken(LocationTokenType::KEY, getValue());
+            addToken(LocationTokenType::LINE_BREAK, "\n");
+          }
+          break;
+        default:
+        if (add == true) {
+          chars.push_back(c);
+        }
       }
       break;
     case 2:
       if (c == '=') {
-        addToken(LocationTokenType::EQUAL, "=");
+        if (add == true) {
+          addToken(LocationTokenType::EQUAL, "=");
+        }
         status = 3;
       }
       break;
     case 3:
       if (c == '[') {
-        addToken(LocationTokenType::SQUARE_BRACKET, "[");
+        if (add == true) {
+          addToken(LocationTokenType::SQUARE_BRACKET, "[");
+        }
         status = 4;
       }
       break;
     case 4:
       switch (c) {
+        case ' ':
+          if (add == true) {
+            addToken(LocationTokenType::VALUE, getValue());
+            addToken(LocationTokenType::BLANK, " ");
+          }
+          break;
         case ']':
-          addToken(LocationTokenType::VALUE, getValue());
+          if (add == true) {
+            addToken(LocationTokenType::VALUE, getValue());
+          }
           value.clear();
-          addToken(LocationTokenType::SQUARE_BRACKET, "]");
+          if (add == true) {
+            addToken(LocationTokenType::SQUARE_BRACKET, "]");
+          }
           status = 0;
           break;
         case '&':
-          addToken(LocationTokenType::VALUE, getValue());
+          if (add == true) {
+            addToken(LocationTokenType::VALUE, getValue());
+          }
           value.clear();
-          addToken(LocationTokenType::AND, "&");
+          if (add == true) {
+            addToken(LocationTokenType::AND, "&");
+          }
           break;
         case '\n':
-          addToken(LocationTokenType::VALUE, getValue());
-          addToken(LocationTokenType::LINE_BREAK, "\n");
+          if (add == true) {
+            addToken(LocationTokenType::VALUE, getValue());
+            addToken(LocationTokenType::LINE_BREAK, "\n");
+          }
           value.clear();
           break;
         default:
-          chars.push_back(c);
+          if (add == true) {
+            chars.push_back(c);
+          }
       }
       break;
   }

@@ -18,8 +18,7 @@ using std::println;
 class DifferParser : virtual public Parser {
   using Parser::Parser;
   private:
-    string fullPath;
-    string singleLine, key, lineText, beforeLineText;
+    string fullPath, singleLine, key, lineText, beforeLineText;
     int status;
     unordered_map<string, list<string>> differ;
     unordered_map<string, string> variable;
@@ -28,6 +27,7 @@ class DifferParser : virtual public Parser {
     bool dealChar(const char c);
     void appendLine(const list<string>& stringList, const string& lineText);
     const string& dealTemplate(const string& lineText);
+    shared_ptr<DifferLexer> differLexer;
   public:
     DifferParser(const string& fullPath, const list<string>& fullList, const unordered_map<string, list<string>>& location, const unordered_map<string, string>& variable);
     const unordered_map<string, list<string>>& getDiffer() const;
@@ -36,14 +36,13 @@ class DifferParser : virtual public Parser {
     void showError(const string& errorMessage);
 };
 
-DifferParser::DifferParser(const string& fullPath, const list<string>& fullList, const unordered_map<string, list<string>>& location, const unordered_map<string, string>& variable) : status(0), fullList(fullList), location(location), fullPath(fullPath), variable(variable) {}
+DifferParser::DifferParser(const string& fullPath, const list<string>& fullList, const unordered_map<string, list<string>>& location, const unordered_map<string, string>& variable) : status(0), fullList(fullList), location(location), fullPath(fullPath), variable(variable), differLexer(new DifferLexer()) {}
 
 void DifferParser::showError(const string& errorMessage) {
   int width1 = getWidth(line - 1);
   int width2 = getWidth(line);
   if (line != 1) {
-    shared_ptr<DifferLexer> differLexer(new DifferLexer());
-    differLexer->scanLine(beforeLineText);
+    differLexer->scanLine(beforeLineText, true);
     vector<shared_ptr<DifferToken>> tokens = differLexer->getTokens();
     if (width2 == width1 + 1) {
       cout << termcolor::bold << termcolor::grey << line - 1 << "  ";
@@ -111,6 +110,9 @@ void DifferParser::scanLine(string& lineText) {
     case 9:
     dealChar('\n');
     break;
+  }
+  if (line > 1) {
+    differLexer->scanLine(this->beforeLineText, false);
   }
 }
 

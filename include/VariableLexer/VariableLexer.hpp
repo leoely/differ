@@ -15,11 +15,11 @@ class VariableLexer : public virtual Lexer {
   public:
     string key;
     VariableLexer();
-    void scanLine(const string& lineText);
+    void scanLine(const string& lineText, bool add);
     vector<shared_ptr<VariableToken>>& getTokens();
   private:
     void addToken(VariableTokenType type, string elem);
     vector<shared_ptr<VariableToken>> tokens;
     int status;
-    void dealChar(char c);
+    void dealChar(char c, bool add);
 };

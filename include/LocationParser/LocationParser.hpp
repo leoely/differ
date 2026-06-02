@@ -34,6 +34,7 @@ class LocationParser : virtual public Parser {
     void dealChar(const char c);
     string lineText;
     string beforeLineText;
+    shared_ptr<LocationLexer> locationLexer;
   public:
     explicit LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;

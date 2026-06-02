@@ -3,14 +3,14 @@ Version: 2024-05-23
 Architecture: x64-osx
 Multi-Arch: same
 Abi: 2aa6a8595f7a20bdd2313ee486f7f2a58f28c3cb242874c1d429a86004c64f6d
-Status: install ok installed
+Status: purge ok not-installed
 
 Package: vcpkg-cmake
 Version: 2024-04-23
 Architecture: x64-osx
 Multi-Arch: same
 Abi: e572a620b7a8c4979c1a721851ccec923ea01b2a794aacd1be9f8f48d3fbc80e
-Status: install ok installed
+Status: purge ok not-installed
 
 Package: argparse
 Version: 3.2
@@ -19,7 +19,7 @@ Architecture: x64-osx
 Multi-Arch: same
 Abi: 07256cba7f5c011d0f30837c5cf4f1b813a13c2c2db75cd5498d5582b2675128
 Description: Argument parser for modern C++
-Status: install ok installed
+Status: purge ok not-installed
 
 Package: termcolor
 Version: 2.1.0
@@ -27,6 +27,29 @@ Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-osx
 Multi-Arch: same
 Abi: 848cf0983e2384d5c18c1ed1421571fcd89a25ca1891284d073041bf71ef42ac
+Description: Termcolor is a header-only C++ library for printing colored messages to the terminal.
+Status: purge ok not-installed
+
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 1697ccd87c1717787d9604d21a053c8f77e704cb64d4cc0068332715f3165fe7
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 292cc172cacbc28eb2a30d907bfeb0e93a8f4c2fbbab72810ddd148af48e5f4d
+Status: install ok installed
+
+Package: termcolor
+Version: 2.1.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 6984eebca13d0e43369f192e509511fd59f356a1b3d3312383ac873432201636
 Description: Termcolor is a header-only C++ library for printing colored messages to the terminal.
 Status: install ok installed
 

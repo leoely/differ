@@ -26,6 +26,7 @@ class VariableParser : virtual public Parser {
     string lineText;
     string beforeLineText;
     unordered_map<string, string> variable;
+    shared_ptr<VariableLexer> variableLexer;
   public:
     const unordered_map<string, string>& getVariable();
     explicit VariableParser(string& fullPath);
@@ -33,14 +34,14 @@ class VariableParser : virtual public Parser {
     void showError(const string& errormessage);
 };
 
-VariableParser::VariableParser(string& fullPath) : status(0), key(""), value(""), fullPath(fullPath) {}
+VariableParser::VariableParser(string& fullPath) : status(0), key(""), value(""), fullPath(fullPath), variableLexer(new VariableLexer()) {}
 
 void VariableParser::showError(const string& errorMessage) {
   int width1 = getWidth(line - 1);
   int width2 = getWidth(line);
   if (line != 1) {
     shared_ptr<VariableLexer> locationLexer(new VariableLexer());
-    locationLexer->scanLine(beforeLineText);
+    locationLexer->scanLine(beforeLineText, true);
     vector<shared_ptr<VariableToken>> tokens = locationLexer->getTokens();
     if (width2 == width1 + 1) {
       cout << termcolor::bold << termcolor::grey << line - 1 << "  ";
@@ -91,6 +92,7 @@ void VariableParser::scanLine(const string &lineText) {
       }
     }
   }
+  variableLexer->scanLine(beforeLineText, false);
 }
 
 

@@ -1,7 +1,7 @@
 %boy*=[
-  /tmp/differ/james.sql &
-  /tmp/differ/blake.sql
+  /tmp/differ/james.md &
+  /tmp/differ/blake.md
 ]
-%james*=[/tmp/differ/james.md]
++%james*=[/tmp/differ/james.md]
 %blake*=[/tmp/differ/blake.md]
-%emma*=[/tmp/differ/emma.sql]
+%emma*=[/tmp/differ/emma.md]

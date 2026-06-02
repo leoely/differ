@@ -1,0 +1,12 @@
+x64-linux/
+x64-linux/include/
+x64-linux/include/termcolor/
+x64-linux/include/termcolor/termcolor.hpp
+x64-linux/share/
+x64-linux/share/termcolor/
+x64-linux/share/termcolor/copyright
+x64-linux/share/termcolor/termcolor/
+x64-linux/share/termcolor/termcolor/termcolor-config.cmake
+x64-linux/share/termcolor/termcolor/termcolor-targets.cmake
+x64-linux/share/termcolor/vcpkg.spdx.json
+x64-linux/share/termcolor/vcpkg_abi_info.txt

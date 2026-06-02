@@ -13,14 +13,14 @@ class DifferLexer : public virtual Lexer {
   public:
     DifferLexer();
     ~DifferLexer();
-    void scanLine(const string& lineText);
+    void scanLine(const string& lineText, bool add);
     void addToken(DifferTokenType type, const string& elem);
     vector<shared_ptr<DifferToken>>& getTokens();
   private:
+    void dealChar(char c, bool add);
     bool flag;
     vector<shared_ptr<DifferToken>> tokens;
     int status;
-    void dealChar(char c);
 };
 
 DifferLexer::DifferLexer() : Lexer(), status(0), flag(false) {}
@@ -35,42 +35,52 @@ void DifferLexer::addToken(DifferTokenType type, const string& elem) {
   tokens.push_back(token);
 }
 
-void DifferLexer::scanLine(const string& lineText) {
+void DifferLexer::scanLine(const string& lineText, bool add) {
   position = 0;
   for (char c: lineText) {
     if (flag == false) {
       if (c != ' ') {
-        dealChar(c);
+        dealChar(c, add);
       } else {
-        addToken(DifferTokenType::BLANK, " ");
+        if (add == true) {
+          addToken(DifferTokenType::BLANK, " ");
+        }
       }
     } else {
-      dealChar(c);
+      dealChar(c, add);
     }
     position += 1;
   }
   line += 1;
   if (flag == false) {
-    addToken(DifferTokenType::LINE_BREAK, "\n");
+    if (add == true) {
+      addToken(DifferTokenType::LINE_BREAK, "\n");
+    }
   } else {
-    dealChar('\n');
+    dealChar('\n', add);
   }
 }
 
-void DifferLexer::dealChar(char c) {
+void DifferLexer::dealChar(char c, bool add) {
   switch (status) {
     case 0:
       switch (c) {
         case '=':
-          addToken(DifferTokenType::EQUAL, "=");
+          if (add == true) {
+            addToken(DifferTokenType::EQUAL, "=");
+          }
           status = 1;
           break;
         case '"':
-          addToken(DifferTokenType::COLON, "\"");
+          if (add == true) {
+            addToken(DifferTokenType::COLON, "\"");
+          }
           status = 5;
           break;
         case '|':
-          addToken(DifferTokenType::DIVIDER, "|");
+          if (add == true) {
+            addToken(DifferTokenType::DIVIDER, "|");
+          }
           status = 4;
           break;
         default:
@@ -79,13 +89,17 @@ void DifferLexer::dealChar(char c) {
       break;
     case 1:
       if (c == '{') {
-        addToken(DifferTokenType::CURLY_BRACE, "{");
+        if (add == true) {
+          addToken(DifferTokenType::CURLY_BRACE, "{");
+        }
         status = 2;
       }
       break;
     case 2:
       if (c == '%') {
-        addToken(DifferTokenType::PERCENTAGE, "%");
+        if (add == true) {
+          addToken(DifferTokenType::PERCENTAGE, "%");
+        }
         status = 3;
       }
       break;
@@ -96,112 +110,164 @@ void DifferLexer::dealChar(char c) {
           location += c;
         }
         chars.clear();
-        addToken(DifferTokenType::LOCATION, location);
-        addToken(DifferTokenType::CURLY_BRACE, "}");
+        if (add == true) {
+          addToken(DifferTokenType::LOCATION, location);
+          addToken(DifferTokenType::CURLY_BRACE, "}");
+        }
         status = 0;
       } else {
-        chars.push_back(c);
+        if (add == true) {
+          chars.push_back(c);
+        }
       }
     case 4:
       flag = true;
       switch (c) {
         case ' ':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::BLANK, " ");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::BLANK, " ");
+          }
           value.clear();
           break;
         case '\n':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::LINE_BREAK, "\n");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::LINE_BREAK, "\n");
+          }
           value.clear();
           break;
         case '|':
-          addToken(DifferTokenType::SINGLE, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::DIVIDER, "|");
+          if (add == true) {
+            addToken(DifferTokenType::DIVIDER, "|");
+          }
           flag = false;
           break;
         case '"':
-          addToken(DifferTokenType::SINGLE, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::COLON, "\"");
+          if (add == true) {
+            addToken(DifferTokenType::COLON, "\"");
+          }
           flag = false;
           break;
         case '=':
-          addToken(DifferTokenType::SINGLE, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::EQUAL, "=");
+          if (add == true) {
+            addToken(DifferTokenType::EQUAL, "=");
+          }
           flag = false;
           break;
         default:
-          chars.push_back(c);
+          if (add == true) {
+            chars.push_back(c);
+          }
       }
       break;
     case 5:
       flag = true;
       switch (c) {
         case ' ':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::BLANK, " ");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::BLANK, " ");
+          }
           value.clear();
           break;
         case '\n':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::LINE_BREAK, "\n");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::LINE_BREAK, "\n");
+          }
           value.clear();
           break;
         case '"':
-          addToken(DifferTokenType::COMMENT, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::COMMENT, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::COLON, "\"");
+          if (add == true) {
+            addToken(DifferTokenType::COLON, "\"");
+          }
           status = 0;
           flag = false;
           break;
         case '=':
-          addToken(DifferTokenType::COMMENT, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::COMMENT, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::EQUAL, "=");
+          if (add == true) {
+            addToken(DifferTokenType::EQUAL, "=");
+          }
           status = 0;
           flag = false;
           break;
         default:
-          chars.push_back(c);
+          if (add == true) {
+            chars.push_back(c);
+          }
       }
       break;
     case 6:
       flag = true;
       switch (c) {
         case ' ':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::BLANK, " ");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::BLANK, " ");
+          }
           value.clear();
           break;
         case '\n':
-          addToken(DifferTokenType::SINGLE, getValue());
-          addToken(DifferTokenType::LINE_BREAK, "\n");
+          if (add == true) {
+            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::LINE_BREAK, "\n");
+          }
           value.clear();
           break;
         case '"':
-          addToken(DifferTokenType::MULTIPLE, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::MULTIPLE, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::COLON, "\"");
+          if (add == true) {
+            addToken(DifferTokenType::COLON, "\"");
+          }
           status = 0;
           flag = false;
           break;
         case '=':
-          addToken(DifferTokenType::MULTIPLE, getValue());
+          if (add == true) {
+            addToken(DifferTokenType::MULTIPLE, getValue());
+          }
           value.clear();
-          addToken(DifferTokenType::EQUAL, "=");
+          if (add == true) {
+            addToken(DifferTokenType::EQUAL, "=");
+          }
           status = 1;
           flag = false;
           break;
         case '|':
-          addToken(DifferTokenType::DIVIDER, "|");
+          if (add == true) {
+            addToken(DifferTokenType::DIVIDER, "|");
+          }
           status = 4;
           flag = false;
           break;
         default:
-          chars.push_back(c);
+          if (add == true) {
+            chars.push_back(c);
+          }
       }
       break;
   }

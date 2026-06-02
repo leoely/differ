@@ -32,6 +32,7 @@ class LocationParser : virtual public Parser {
     void dealChar(const char c);
     string lineText;
     string beforeLineText;
+    shared_ptr<LocationLexer> locationLexer;
   public:
     explicit LocationParser(string& p);
     const unordered_map<string, list<string>>& getLocation() const;
@@ -41,7 +42,7 @@ class LocationParser : virtual public Parser {
     void showError(const string& errormessage);
 };
 
-LocationParser::LocationParser(string& fullPath) : status(0), value(""), fullPath(fullPath) {}
+LocationParser::LocationParser(string& fullPath) : status(0), value(""), fullPath(fullPath), locationLexer(new LocationLexer) {}
 
 void LocationParser::initProperty() {
   status = 0;
@@ -54,8 +55,7 @@ void LocationParser::showError(const string& errorMessage) {
   int width1 = getWidth(line - 1);
   int width2 = getWidth(line);
   if (line != 1) {
-    shared_ptr<LocationLexer> locationLexer(new LocationLexer());
-    locationLexer->scanLine(beforeLineText);
+    locationLexer->scanLine(beforeLineText, true);
     vector<shared_ptr<LocationToken>> tokens = locationLexer->getTokens();
     if (width2 == width1 + 1) {
       cout << termcolor::bold << termcolor::grey << line - 1 << "  ";
@@ -102,6 +102,9 @@ void LocationParser::scanLine(const string &lineText) {
         }
       }
     }
+  }
+  if (line > 1) {
+    locationLexer->scanLine(this->beforeLineText + "\n", false);
   }
 }
 

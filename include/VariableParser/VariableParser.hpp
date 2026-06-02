@@ -28,6 +28,7 @@ class VariableParser : virtual public Parser {
     string lineText;
     string beforeLineText;
     unordered_map<string, string> variable;
+    shared_ptr<VariableLexer> variableLexer;
   public:
     const unordered_map<string, string>& getVariable();
     explicit VariableParser(string& fullPath);

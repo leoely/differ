@@ -12,16 +12,15 @@ using std::vector;
 using std::shared_ptr;
 
 class DifferLexer : public virtual Lexer {
-  using Lexer::Lexer;
   public:
     DifferLexer();
     ~DifferLexer();
-    void scanLine(const string& lineText);
+    void scanLine(const string& lineText, bool add);
     void addToken(DifferTokenType type, const string& elem);
     vector<shared_ptr<DifferToken>>& getTokens();
   private:
+    void dealChar(char c, bool add);
     bool flag;
     vector<shared_ptr<DifferToken>> tokens;
     int status;
-    void dealChar(char c);
 };
