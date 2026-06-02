@@ -1,10 +1,10 @@
-#include <list>
+#include <vector>
 #include <string>
 #include <help/help.hpp>
 #include <generate/generate.hpp>
 #include <validate/validate.hpp>
 
-using std::list;
+using std::vector;
 using std::string;
 
 int main(int argc, const char *argv[]) {
@@ -17,7 +17,7 @@ int main(int argc, const char *argv[]) {
     help();
     exit(EXIT_SUCCESS);
   }
-  list<string> arguments;
+  vector<string> arguments;
   for (int i = 2; i < argc; i += 1) {
     string argument = argv[i];
     arguments.push_back(argument);

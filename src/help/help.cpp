@@ -15,7 +15,7 @@ void help() {
   println("  ██████╔╝██║██║░░░░░██║░░░░░███████╗██║░░██║");
   println("  ╚═════╝░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚═╝░░╚═╝");
   println();
-  cout << termcolor::bold << "Command line Prompt" << termcolor::reset << ":" << endl;
+  cout << termcolor::bold << "Command line prompt" << termcolor::reset << ":" << endl;
   println("  differ [subcommand] [arguments...]");
   cout << termcolor::bold << "Subcommand list" << termcolor::reset << ":" << endl;
   println("  - generate Generate multiple difference files based on template files.");

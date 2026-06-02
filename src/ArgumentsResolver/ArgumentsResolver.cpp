@@ -1,6 +1,7 @@
 #include <iostream>
 #include <regex>
-#include <list>
+#include <vector>
+#include <vector>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -10,18 +11,18 @@ using std::endl;
 using std::regex;
 using std::regex_match;
 using std::unordered_set;
-using std::list;
+using std::vector;
 using std::unordered_map;
 using std::string;
 
 class ArgumentsResolver {
   private:
-    unordered_map<string, list<string>> argument;
+    unordered_map<string, vector<string>> argument;
     unordered_set<string> paramSet;
     int getType(string key);
     int status;
   public:
-    unordered_map<string, list<string>>& parseArguments(list<string>& params);
+    unordered_map<string, vector<string>>& parseArguments(vector<string>& params);
     ArgumentsResolver();
 };
 
@@ -32,25 +33,25 @@ int ArgumentsResolver::getType(string key) {
   if (key == "v") {
     type = 1;
   }
-  if (key == "variable") {
+  if (key == "variables") {
     type = 2;
   }
   if (key == "l") {
     type = 3;
   }
-  if (key == "location") {
+  if (key == "locations") {
     type = 4;
   }
   if (key == "d") {
     type = 5;
   }
-  if (key == "differ") {
+  if (key == "differs") {
     type = 6;
   }
   return type;
 }
 
-unordered_map<string, list<string>>& ArgumentsResolver::parseArguments(list<string>& params) {
+unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(vector<string>& params) {
   regex pattern1("^\\-[a-z]+$");
   regex pattern2("^\\-\\-[a-z]+$");
   int status = 0;
