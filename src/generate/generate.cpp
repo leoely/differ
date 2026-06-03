@@ -112,21 +112,16 @@ void generate(vector<string>& arguments) {
     }
     differMerge->merge(differs);
     unordered_map<string, list<string>> differ = differMerge->getDiffer();
-    for (auto d : differ) {
+    for (const auto& [key, list] : differ) {
       ofstream file;
-      fs::path p = d.first;
+      fs::path p = key;
       fs::path parentPath = p.parent_path();
       if (fs::exists(parentPath) == false) {
         fs::create_directories(parentPath);
       }
-      file.open(d.first);
-      for (auto it = d.second.begin(); it != d.second.end(); it++) {
-        int index = distance(d.second.begin(), it);
-        if (index == static_cast<int>(d.second.size() - 1)) {
-          file << dealBlankLine(*it);
-        } else {
-          file << dealBlankLine(*it) << "\n";
-        }
+      file.open(key);
+      for (const auto& lineText : list) {
+        file << lineText << "\n";
       }
       file.close();
     }

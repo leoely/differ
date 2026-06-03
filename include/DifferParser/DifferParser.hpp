@@ -27,7 +27,7 @@ class DifferParser : virtual public Parser {
     list<string> fullList;
     unordered_map<string, list<string>> location;
     bool dealChar(const char c);
-    void appendLine(const list<string>& stringList, const string& lineText);
+    void appendLine(const list<string>& stringList, const string lineText);
     const string& dealTemplate(const string& lineText);
     shared_ptr<DifferLexer> differLexer;
   public:

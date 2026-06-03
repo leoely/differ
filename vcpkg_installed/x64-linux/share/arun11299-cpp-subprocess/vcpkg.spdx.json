@@ -1,0 +1,236 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/arun11299-cpp-subprocess-x64-linux-2.5-3a70d006-2751-4245-a639-9910cd75d23b",
+  "name": "arun11299-cpp-subprocess:x64-linux@2.5 5d3dcc1286bb37748355d619e6980f5119d2e56bfa1c265c020985624da6dac6",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-2026-04-08-e0612b42ce44e55a0e630f2ee9d3c533a63d8bc1"
+    ],
+    "created": "2026-06-03T04:28:35Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-port-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-port-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-port-file-1",
+      "relationshipType": "DEPENDENCY_MANIFEST_OF",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-port-file-2"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-port-file-3"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-2"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-3"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-4"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-binary-file-5"
+    }
+  ],
+  "packages": [
+    {
+      "name": "arun11299-cpp-subprocess",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2.5",
+      "downloadLocation": "git+https://github.com/microsoft/vcpkg@c4fac4523bb15be0c0ef151ae919ad604626cde6",
+      "homepage": "https://github.com/arun11299/cpp-subprocess",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "Subprocessing with modern C++ ",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "arun11299-cpp-subprocess:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "5d3dcc1286bb37748355d619e6980f5119d2e56bfa1c265c020985624da6dac6",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-0",
+      "name": "arun11299/cpp-subprocess",
+      "downloadLocation": "git+https://github.com/arun11299/cpp-subprocess@v2.5",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "9901e97003276255fa4b7d97c9d1cc17f9c3a5b29a108ad3c4ed10c9794fb379a568ba587858a556630df2387cffd288e83fafeceae327aa7928635ba3121a49"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./find-threads.patch",
+      "SPDXID": "SPDXRef-port-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7052ecf6c4f0a62e1e3c763a12ad0dc9fe989ce946c0881d102bcb5c38bc8685"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./vcpkg.json",
+      "SPDXID": "SPDXRef-port-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "140e0c6daa194ac0c1ce5b06b233851daa9595eaac7c0f8f8960407ff5bfd3f2"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./portfile.cmake",
+      "SPDXID": "SPDXRef-port-file-2",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "ae41a6abe0f10c48f861512ce0043c8cc14868ccb9c7e2f6dd69ed608038c43f"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./fix-cmake-config-name.patch",
+      "SPDXID": "SPDXRef-port-file-3",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bab03275a1f05154b5177b9b0c3f54fa83e297ea19ddeb4e2567240c01f9bfc4"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./BUILD_INFO",
+      "SPDXID": "SPDXRef-binary-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b17d8abcb0fd6454b3c1ec6556988d624863978121b87c51af8b1b6d937db69a"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./share/arun11299-cpp-subprocess/copyright",
+      "SPDXID": "SPDXRef-binary-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bc029611e3bb5c28b261337d7a166e0418e10013188b9ea872e79c4d3e47a05a"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./share/subprocess/subprocess-config.cmake",
+      "SPDXID": "SPDXRef-binary-file-2",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "13799305390cbccd6a75b125e0418ce3b8100999e8f99cc91414a0f7f244ce49"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./share/subprocess/subprocess-version.cmake",
+      "SPDXID": "SPDXRef-binary-file-3",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "01bca6ad9da08d8e6b52331484c834f15383912e127e28ce2003c04ee68a7af8"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./share/subprocess/subprocess-targets.cmake",
+      "SPDXID": "SPDXRef-binary-file-4",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "bd6ad5c9475278fd3c530b3c661e7147e9963770a228a2be77b440f0a84657dc"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./include/cpp-subprocess/subprocess.hpp",
+      "SPDXID": "SPDXRef-binary-file-5",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2d3ddff7a5de7b6619071a48ae5f8da0a4a6783be2e0ffa029a86c8e04bb8978"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

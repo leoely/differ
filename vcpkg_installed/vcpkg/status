@@ -53,3 +53,12 @@ Abi: 6984eebca13d0e43369f192e509511fd59f356a1b3d3312383ac873432201636
 Description: Termcolor is a header-only C++ library for printing colored messages to the terminal.
 Status: install ok installed
 
+Package: arun11299-cpp-subprocess
+Version: 2.5
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 5d3dcc1286bb37748355d619e6980f5119d2e56bfa1c265c020985624da6dac6
+Description: Subprocessing with modern C++
+Status: install ok installed
+

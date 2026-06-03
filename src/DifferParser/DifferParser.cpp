@@ -25,7 +25,7 @@ class DifferParser : virtual public Parser {
     list<string> fullList;
     unordered_map<string, list<string>> location;
     bool dealChar(const char c);
-    void appendLine(const list<string>& stringList, const string& lineText);
+    void appendLine(const list<string>& stringList, const string lineText);
     const string& dealTemplate(const string& lineText);
     shared_ptr<DifferLexer> differLexer;
   public:
@@ -131,6 +131,8 @@ bool DifferParser::dealChar(const char c) {
           status = 1;
           break;
         default:
+          singleLine = "";
+          singleLine += c;
           status = 11;
       }
       break;
@@ -246,7 +248,7 @@ bool DifferParser::dealChar(const char c) {
           status = 9;
           break;
         case '\n':
-          appendLine(fullList, singleLine);
+          cout << singleLine << endl;
           singleLine = "";
           status = 0;
           break;
@@ -257,7 +259,7 @@ bool DifferParser::dealChar(const char c) {
   return false;
 }
 
-void DifferParser::appendLine(const list<string>& stringList, const string& lineText) {
+void DifferParser::appendLine(const list<string>& stringList, const string lineText) {
   for (auto e : stringList) {
     if (differ.find(e) != differ.end()) {
       differ[e].push_back(lineText);

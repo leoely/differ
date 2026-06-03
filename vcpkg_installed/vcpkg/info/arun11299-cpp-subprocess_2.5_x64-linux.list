@@ -1,0 +1,13 @@
+x64-linux/
+x64-linux/include/
+x64-linux/include/cpp-subprocess/
+x64-linux/include/cpp-subprocess/subprocess.hpp
+x64-linux/share/
+x64-linux/share/arun11299-cpp-subprocess/
+x64-linux/share/arun11299-cpp-subprocess/copyright
+x64-linux/share/arun11299-cpp-subprocess/vcpkg.spdx.json
+x64-linux/share/arun11299-cpp-subprocess/vcpkg_abi_info.txt
+x64-linux/share/subprocess/
+x64-linux/share/subprocess/subprocess-config.cmake
+x64-linux/share/subprocess/subprocess-targets.cmake
+x64-linux/share/subprocess/subprocess-version.cmake
