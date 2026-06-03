@@ -9,7 +9,13 @@
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
-#include <help/help.hpp>
+#include <VariableParser/VariableParser.hpp>
+#include <DifferMerge/DifferMerge.hpp>
+#include <LocationMerge/LocationMerge.hpp>
+#include <VariableMerge/VariableMerge.hpp>
+#include <FilePath/FilePath.hpp>
+#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <generateHelp/generateHelp.hpp>
 
 using std::vector;
 using std::unordered_map;
@@ -32,106 +38,99 @@ const string dealBlankLine(const string& textLine) {
 }
 
 void generate(vector<string>& arguments) {
-  //argparse::ArgumentParser program("generate");
-  //program
-    //.add_argument("-d", "--diff")
-    //.required()
-    //.help("specify the location of the differ template file.");
-  //try {
-    //program.parse_args(argc, argv);
-  //} catch (const exception &err) {
-    //std::cerr << err.what() << std::endl;
-    //std::cerr << program;
-    //std::exit(1);
-  //}
-  //try {
-    //if (program.is_used("-d") || program.is_used("--diff")) {
-      //string fOption = program.get<string>("-d");
-      //string fileOption = program.get<string>("--diff");
-      //string differFilePathString;
-      //if (fOption.size() > 0) {
-        //differFilePathString = fOption;
-      //} else {
-        //differFilePathString = fileOption;
-      //}
-      //fs::path differFilePath = differFilePathString;
-      //if (differFilePath.is_absolute()) {
-        //differFilePath = differFilePathString;
-      //} else {
-        //differFilePath = fs::absolute(differFilePath);
-      //}
-      //if (fs::exists(differFilePath) == false) {
-        //throw 2;
-      //}
-      //fs::path differFileName = differFilePath.filename();
-      //string differFileNameString(differFileName.string());
-      //size_t lastIndex1 = differFileNameString.find_last_of(".");
-      //string differExtensionString = differFileNameString.substr(lastIndex1, differFileNameString.size() - lastIndex1);
-      //if (differExtensionString != ".diff") {
-        //throw 3;
-      //}
-      //fs::path parentPath = differFilePath.parent_path();
-      //string parentPathString(parentPath.string());
-      //string locFileNameString(differFileName.string());
-      //size_t lastIndex2 = locFileNameString.find_last_of(".");
-      //string locFileString = locFileNameString.substr(0, lastIndex2);
-      //fs::path locFilePath = fs::path(parentPathString) / (locFileString + ".loc");
-      //string locationFilePathString = locFilePath.string();
-      //shared_ptr<LocationParser> locationParser(new LocationParser());
-      //if (fs::exists(locFilePath) == false) {
-        //throw 1;
-      //}
-      //ifstream file1(locFilePath);
-      //string str1;
-      //while (getline(file1, str1)) {
-        //locationParser->scanLine(str1);
-      //}
-      //unordered_map<string, list<string>> location = locationParser->getLocation();
-      //list<string> fullList = locationParser->getFullList();
-      //ifstream file2(differFilePathString);
-      //shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, fullList, location));
-      //if (fs::exists(differFilePath) == false) {
-        //throw 2;
-      //}
-      //string str2;
-      //while (getline(file2, str2)) {
-        //differParser->scanLine(str2);
-      //}
-      //unordered_map<string, list<string>> differ = differParser->getDiffer();
-      //for (auto d: differ) {
-        //ofstream file;
-        //fs::path p = d.first;
-        //fs::path parentPath = p.parent_path();
-        //if (fs::exists(parentPath) == false) {
-          //fs::create_directories(parentPath);
-        //}
-        //file.open(d.first);
-        //for (auto it = d.second.begin(); it != d.second.end(); it++) {
-          //int index = distance(d.second.begin(), it);
-          //if (index == static_cast<int>(d.second.size() - 1)) {
-            //file << dealBlankLine(*it);
-          //} else {
-            //file << dealBlankLine(*it) << "\n";
-          //}
-        //}
-        //file.close();
-      //}
-      //cout << termcolor::green << termcolor::bold << "✔" << termcolor::reset << termcolor::bold << " Generate the target file according to the template file." << termcolor::reset << endl;
-    //} else {
-      //help();
-      //return;
-    //}
-  //} catch (int errorCode) {
-    //switch (errorCode) {
-      //case 1:
-        //cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".loc\" does not exist." << termcolor::reset << endl;
-        //exit(errorCode);
-      //case 2:
-        //cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".diff\" does not exist." << termcolor::reset << endl;
-        //exit(errorCode);
-      //case 3:
-        //cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The extension of the differ file should be \".diff\"." << termcolor::reset << endl;
-        //exit(errorCode);
-    //}
-  //}
+  if (arguments.size() == 0) {
+    generateHelp();
+    exit(EXIT_SUCCESS);
+  } else if (arguments[0] == "-h") {
+    generateHelp();
+    exit(EXIT_SUCCESS);
+  } else if (arguments[0] == "--help") {
+    generateHelp();
+    exit(EXIT_SUCCESS);
+  } else {
+    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
+    unordered_map<string, vector<string>> argument;
+    try {
+      argument = argumentsResolver->parseArguments(arguments);
+    } catch (int errorCode) {
+      generateHelp();
+      exit(EXIT_FAILURE);
+    }
+    shared_ptr<LocationMerge> locationMerge(new LocationMerge());
+    vector<string> locationOptions = argument["l"];
+    vector<list<string>> fullLists;
+    vector<unordered_map<string, list<string>>> locations;
+    for (const auto& locationOption: locationOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
+      filePath->dealPath();
+      string locationFilePathString = filePath->getFilePathString();
+      shared_ptr<LocationParser> locationParser(new LocationParser(locationFilePathString));
+      ifstream locationFile(locationFilePathString);
+      string line;
+      while (getline(locationFile, line)) {
+        locationParser->scanLine(line);
+      }
+      locations.push_back(locationParser->getLocation());
+      fullLists.push_back(locationParser->getFullList());
+    }
+    locationMerge->merge(fullLists, locations);
+    list<string> fullList = locationMerge->getFullList();
+    unordered_map<string, list<string>> location = locationMerge->getLocation();
+
+    shared_ptr<VariableMerge> variableMerge(new VariableMerge());
+    vector<string> variableOptions = argument["v"];
+    vector<unordered_map<string, string>> variables;
+    for (const auto& variableOption: variableOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
+      filePath->dealPath();
+      string variableFilePathString = filePath->getFilePathString();
+      shared_ptr<VariableParser> variableParser(new VariableParser(variableFilePathString));
+      ifstream variableFile(variableFilePathString);
+      string line;
+      while (getline(variableFile, line)) {
+        variableParser->scanLine(line);
+      }
+      variables.push_back(variableParser->getVariable());
+    }
+    variableMerge->merge(variables);
+    unordered_map<string, string> variable = variableMerge->getVariable();
+
+    shared_ptr<DifferMerge> differMerge(new DifferMerge());
+    vector<string> diffOptions = argument["d"];
+    vector<unordered_map<string, list<string>>> differs;
+    for (const auto& diffOption: diffOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(diffOption, ".diff"));
+      filePath->dealPath();
+      string differFilePathString = filePath->getFilePathString();
+      shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, fullList, location, variable));
+      ifstream differFile(differFilePathString);
+      string line;
+      while (getline(differFile, line)) {
+        differParser->scanLine(line);
+      }
+      differs.push_back(differParser->getDiffer());
+    }
+    unordered_map<string, list<string>> differ = differMerge->getDiffer();
+    for (auto d : differ) {
+      ofstream file;
+      fs::path p = d.first;
+      fs::path parentPath = p.parent_path();
+      if (fs::exists(parentPath) == false) {
+        fs::create_directories(parentPath);
+      }
+      file.open(d.first);
+      for (auto it = d.second.begin(); it != d.second.end(); it++) {
+        int index = distance(d.second.begin(), it);
+        if (index == static_cast<int>(d.second.size() - 1)) {
+          file << dealBlankLine(*it);
+        } else {
+          file << dealBlankLine(*it) << "\n";
+        }
+      }
+      file.close();
+    }
+    for (const auto& [key, value] : differ) {
+      cout << termcolor::bold << "[Generate] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
+    }
+  }
 }
