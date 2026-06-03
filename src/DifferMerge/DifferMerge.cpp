@@ -2,11 +2,15 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 
 using std::vector;
 using std::unordered_map;
 using std::string;
 using std::list;
+using std::erase_if;
+using std::isspace;
 
 class DifferMerge {
   private:
@@ -27,11 +31,15 @@ void DifferMerge::merge(vector<unordered_map<string, list<string>>>& differs) {
   for (const auto& d : differs) {
     for (const auto& [key, list1] : d) {
       for (const auto& lineText : list1) {
-        if (differ.find(key) != differ.end()) {
-          differ[key].push_back(lineText);
+        string location = key;
+        erase_if(location, [](unsigned char ch) {
+          return isspace(ch);
+        });
+        if (differ.find(location) != differ.end()) {
+          differ[location].push_back(lineText);
         } else {
           list<string> newList = {lineText};
-          differ[key] = newList;
+          differ[location] = newList;
         }
       }
     }

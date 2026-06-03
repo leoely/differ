@@ -4,11 +4,15 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 
 using std::vector;
 using std::unordered_map;
 using std::string;
 using std::list;
+using std::erase_if;
+using std::isspace;
 
 class DifferMerge {
   private:

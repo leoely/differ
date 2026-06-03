@@ -110,6 +110,7 @@ void generate(vector<string>& arguments) {
       }
       differs.push_back(differParser->getDiffer());
     }
+    differMerge->merge(differs);
     unordered_map<string, list<string>> differ = differMerge->getDiffer();
     for (auto d : differ) {
       ofstream file;
