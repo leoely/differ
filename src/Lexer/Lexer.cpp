@@ -1,8 +1,10 @@
+#include <memory>
 #include <string>
 #include <list>
 
 using std::list;
 using std::string;
+using std::shared_ptr;
 
 class Lexer {
   protected:

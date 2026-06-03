@@ -38,13 +38,7 @@ void LocationLexer::addToken(LocationTokenType type, string elem) {
 void LocationLexer::scanLine(const string& lineText, bool add) {
   position = 0;
   for (char c: lineText) {
-    if (c != ' ') {
-      dealChar(c, add);
-    } else {
-      if (add == true) {
-        addToken(LocationTokenType::BLANK, " ");
-      }
-    }
+    dealChar(c, add);
     position += 1;
   }
   line += 1;

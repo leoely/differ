@@ -106,7 +106,7 @@ void DifferLexer::dealChar(char c, bool add) {
     case 3:
       if (c == '}') {
         string location;
-        for (char c : this->chars) {
+        for (char c : chars) {
           location += c;
         }
         chars.clear();

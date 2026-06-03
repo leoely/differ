@@ -36,13 +36,7 @@ void VariableLexer::addToken(VariableTokenType type, string elem) {
 void VariableLexer::scanLine(const string& lineText, bool add) {
   position = 0;
   for (char c: lineText) {
-    if (c != ' ') {
-      dealChar(c, add);
-    } else {
-      if (add == true) {
-        addToken(VariableTokenType::BLANK, " ");
-      }
-    }
+    dealChar(c, add);
     position += 1;
   }
   line += 1;
@@ -54,6 +48,9 @@ void VariableLexer::dealChar(char c, bool add) {
   switch (status) {
     case 0:
       switch (c) {
+        case '\n':
+          addToken(VariableTokenType::LINE_BREAK, "\n");
+          break;
         case '^':
           if (add == true) {
             addToken(VariableTokenType::CARET, "^");
@@ -133,7 +130,7 @@ void VariableLexer::dealChar(char c, bool add) {
         case ' ':
           if (add == true) {
             addToken(VariableTokenType::VALUE, getValue());
-            addToken(VariableTokenType::BLANK, "\"");
+            addToken(VariableTokenType::BLANK, " ");
           }
           break;
         case '"':

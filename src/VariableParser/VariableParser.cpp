@@ -88,6 +88,9 @@ void VariableParser::scanLine(const string &lineText) {
           case 4:
             showError("This position should be the character \"\"\";");
             exit(errorCode);
+          case 5:
+            showError("This position cannot be the charactor \"\\n\"");
+            exit(errorCode);
         }
       }
     }
@@ -99,48 +102,65 @@ void VariableParser::scanLine(const string &lineText) {
 void VariableParser::dealChar(char c) {
   switch (status) {
     case 0:
-      if (c == '^') {
-        status = 1;
-      } else {
-        throw 1;
+      switch (c) {
+        case '^':
+          status = 1;
+          break;
+        default:
+          throw 1;
       }
       break;
     case 1:
-      if (c == '(') {
-        status = 2;
-      } else {
-        throw 2;
+      switch (c) {
+        case '(':
+          status = 2;
+          break;
+        default:
+          throw 2;
       }
       break;
     case 2:
-      if (c == ')') {
-        key = obtainWord();
-        status = 3;
-      } else {
-        chars.push_back(c);
+      switch (c) {
+        case '\n':
+          throw 5;
+        case ')':
+          key = obtainWord();
+          status = 3;
+          break;
+        default:
+          chars.push_back(c);
       }
       break;
     case 3:
-      if (c == '=') {
-        status = 4;
-      } else {
-        throw 3;
+      switch (c) {
+        case '=':
+          status = 4;
+          break;
+        default:
+          throw 3;
       }
       break;
     case 4:
-      if (c == '"') {
-        status = 5;
-      } else {
-        throw 4;
+      switch (c) {
+        case '"':
+          status = 5;
+          break;
+        default:
+          throw 4;
       }
       break;
     case 5:
-      if (c == '"') {
-        value = obtainWord();
-        variable[key] = value;
-        status = 0;
-      } else {
-        chars.push_back(c);
+      switch (c) {
+        case '\n':
+          throw 5;
+          break;
+        case '"':
+          value = obtainWord();
+          variable[key] = value;
+          status = 0;
+          break;
+        default:
+          chars.push_back(c);
       }
       break;
   }

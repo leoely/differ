@@ -99,6 +99,9 @@ void LocationParser::scanLine(const string &lineText) {
           case 3:
             showError("This position should be the character \"[\";");
             exit(errorCode);
+          case 4:
+            showError("This position cannot be the charactor \"\\n\"");
+            exit(errorCode);
         }
       }
     }
@@ -112,36 +115,50 @@ void LocationParser::scanLine(const string &lineText) {
 void LocationParser::dealChar(char c) {
   switch (status) {
     case 0:
-      if (c == '%') {
-        status = 1;
-      } else {
-        throw 1;
+      switch (c) {
+        case '%':
+          status = 1;
+          break;
+        default:
+          throw 1;
       }
       break;
     case 1:
-      if (c == '*') {
-        key = obtainWord();
-        status = 2;
-      } else {
-        chars.push_back(c);
+      switch (c) {
+        case '\n':
+          throw 4;
+          break;
+        case '*':
+          key = obtainWord();
+          status = 2;
+          break;
+        default:
+          chars.push_back(c);
       }
       break;
     case 2:
-      if (c == '=') {
-        status = 3;
-      } else {
-        throw 2;
+      switch (c) {
+        case '=':
+          status = 3;
+          break;
+        default:
+          throw 2;
       }
       break;
     case 3:
-      if (c == '[') {
-        status = 4;
-      } else {
-        throw 3;
+      switch (c) {
+        case '[':
+          status = 4;
+          break;
+        default:
+          throw 3;
       }
       break;
     case 4:
       switch (c) {
+        case '\n':
+          throw 4;
+          break;
         case '&':
           appendValue();
           chars.clear();
