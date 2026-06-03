@@ -2,11 +2,13 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 #include <unordered_set>
 #include <unordered_map>
 #include <list>
 #include <string>
 
+using std::vector;
 using std::cout;
 using std::endl;
 using std::shared_ptr;
@@ -21,7 +23,7 @@ class LocationMerge {
     unordered_map<string, list<string>> location;
   public:
     LocationMerge();
-    const list<string>& getFullList();
+    list<string>& getFullList();
     unordered_map<string, list<string>> getLocation();
     void merge(vector<list<string>>& fullLists, vector<unordered_map<string, list<string>>>& locations);
 };

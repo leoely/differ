@@ -117,6 +117,8 @@ void LocationParser::dealChar(char c) {
   switch (status) {
     case 0:
       switch (c) {
+        case '\n':
+          break;
         case '%':
           status = 1;
           break;
@@ -157,9 +159,6 @@ void LocationParser::dealChar(char c) {
       break;
     case 4:
       switch (c) {
-        case '\n':
-          throw 4;
-          break;
         case '&':
           appendValue();
           chars.clear();

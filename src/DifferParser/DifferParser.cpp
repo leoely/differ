@@ -101,7 +101,11 @@ void DifferParser::scanLine(string& lineText) {
           exit(errorCode);
           break;
         case 6:
-          showError("The corresponding position is not defined;");
+          showError("The corresponding location is not defined;");
+          exit(errorCode);
+          break;
+        case 7:
+          showError("The corresponding variable is not defined;");
           exit(errorCode);
           break;
       }
@@ -131,53 +135,67 @@ bool DifferParser::dealChar(const char c) {
       }
       break;
     case 1:
-      if (c == '\n') {
-        status = 0;
+      switch (c) {
+        case '\n':
+          status = 0;
+          break;
       }
       break;
     case 2:
-      if (c == '{') {
-        status = 3;
-      } else {
-        throw 1;
+      switch (c) {
+        case '{':
+          status = 3;
+          break;
+        default:
+          throw 1;
       }
       break;
     case 3:
-      if (c == '%') {
-        status = 4;
-      } else {
-        throw 2;
+      switch (c) {
+        case '%':
+          status = 4;
+          break;
+        default:
+          throw 2;
       }
       break;
     case 4:
-      if (c == '}') {
-        key = obtainWord();
-        status = 5;
-      } else {
-        chars.push_back(c);
+      switch (c) {
+        case '{':
+          key = obtainWord();
+          status = 5;
+          break;
+        default:
+          chars.push_back(c);
       }
       break;
     case 5:
-      if (c == '|') {
-        status = 6;
-      } else {
-        throw 3;
+      switch (c) {
+        case '|':
+          status = 6;
+          break;
+        default:
+          throw 3;
       }
       break;
     case 6:
-      if (c == ' ') {
-        status = 8;
-      } else {
-        throw 4;
+      swtich (c) {
+        case ' ':
+          status = 8;
+          break;
+        default:
+          throw 4;
       }
       break;
     case 7:
-      if (c == '|') {
-        status = 6;
-      } else {
-        status = 0;
-        key = "";
-        return dealChar(c);
+      switch (c) {
+        case '|':
+          status = 6;
+          break;
+        default:
+          status = 0;
+          key = "";
+          return dealChar(c);
       }
       break;
     case 8:
@@ -199,16 +217,22 @@ bool DifferParser::dealChar(const char c) {
           singleLine += c;
       }
     case 9:
-      if (c == '{') {
-        status = 10;
-      } else {
-        throw 1;
+      switch (c) {
+        case '{':
+          status = 10;
+          break;
+        default:
+          throw 1;
       }
       break;
     case 10:
       if (c == '}') {
         key = obtainWord();
-        singleLine += variable[key];
+        if (variable.contains(key)) {
+          singleLine += variable[key];
+        } else {
+          throw 7;
+        }
       } else {
         chars.push_back(c);
       }

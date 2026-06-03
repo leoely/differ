@@ -104,6 +104,8 @@ void VariableParser::dealChar(char c) {
   switch (status) {
     case 0:
       switch (c) {
+        case '\n':
+          break;
         case '^':
           status = 1;
           break;

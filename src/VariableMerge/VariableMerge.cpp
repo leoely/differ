@@ -4,6 +4,7 @@
 
 using std::string;
 using std::unordered_map;
+using std::vector;
 
 class VariableMerge {
   private:
@@ -22,7 +23,9 @@ unordered_map<string, string>& VariableMerge::getVariable() {
 
 void VariableMerge::merge(vector<unordered_map<string, string>>& variables) {
   variable.clear();
-  for (const auto& [key, value]: variables) {
-    variable[key]= value;
+  for (const auto& v : variables) {
+    for (const auto& [key, value] : v) {
+      variable[key]= value;
+    }
   }
 }
