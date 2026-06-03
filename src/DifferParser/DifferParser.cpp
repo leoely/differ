@@ -73,7 +73,8 @@ void DifferParser::scanLine(string& lineText) {
   }
   this->beforeLineText = this->lineText;
   this->lineText = lineText;
-  for (char c : lineText) {
+  string newLineText = lineText + "\n";
+  for (char c : newLineText) {
     position += 1;
     try {
       dealChar(c);
@@ -105,11 +106,6 @@ void DifferParser::scanLine(string& lineText) {
           break;
       }
     }
-  }
-  switch (status) {
-    case 9:
-    dealChar('\n');
-    break;
   }
   if (line > 1) {
     differLexer->scanLine(this->beforeLineText, false);

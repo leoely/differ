@@ -83,7 +83,8 @@ void LocationParser::scanLine(const string &lineText) {
   line += 1;
   this->beforeLineText = this->lineText;
   this->lineText = lineText;
-  for (char c : lineText) {
+  string newLineText = lineText + "\n";
+  for (char c : newLineText) {
     position += 1;
     if (c != ' ') {
       try {
@@ -100,7 +101,7 @@ void LocationParser::scanLine(const string &lineText) {
             showError("This position should be the character \"[\";");
             exit(errorCode);
           case 4:
-            showError("This position cannot be the charactor \"\\n\"");
+            showError("This position cannot be the charactor \"\\n\";");
             exit(errorCode);
         }
       }
