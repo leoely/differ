@@ -20,6 +20,7 @@ void validateHelp() {
   println("  diff validate -d [d1] [d2] [...] -l [l1] [l2] [...] -v [v1] [v2] [...]");
   println("");
   cout << termcolor::bold << "Short and long flag comparsion" << termcolor::reset << ":" << endl;
+  println("  -h --help");
   println("  -v --variables");
   println("  -l --locations");
   println("  -d --differs");

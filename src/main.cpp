@@ -13,6 +13,10 @@ int main(int argc, const char *argv[]) {
     exit(EXIT_SUCCESS);
   }
   string argument1 = argv[1];
+  if (argument1 == "-h") {
+    help();
+    exit(EXIT_SUCCESS);
+  }
   if (argument1 == "--help") {
     help();
     exit(EXIT_SUCCESS);
