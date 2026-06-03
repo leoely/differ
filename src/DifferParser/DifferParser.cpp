@@ -161,7 +161,7 @@ bool DifferParser::dealChar(const char c) {
       break;
     case 4:
       switch (c) {
-        case '{':
+        case '}':
           key = obtainWord();
           status = 5;
           break;
@@ -171,6 +171,8 @@ bool DifferParser::dealChar(const char c) {
       break;
     case 5:
       switch (c) {
+        case '\n':
+          break;
         case '|':
           status = 6;
           break;
@@ -179,7 +181,7 @@ bool DifferParser::dealChar(const char c) {
       }
       break;
     case 6:
-      swtich (c) {
+      switch (c) {
         case ' ':
           status = 8;
           break;
@@ -222,7 +224,7 @@ bool DifferParser::dealChar(const char c) {
           status = 10;
           break;
         default:
-          throw 1;
+          status = 11;
       }
       break;
     case 10:
@@ -233,6 +235,7 @@ bool DifferParser::dealChar(const char c) {
         } else {
           throw 7;
         }
+        status = 8;
       } else {
         chars.push_back(c);
       }
