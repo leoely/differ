@@ -121,7 +121,7 @@ void generate(vector<string>& arguments) {
       }
       file.open(key);
       for (const auto& lineText : list) {
-        file << lineText << "\n";
+        file << dealBlankLine(lineText) << "\n";
       }
       file.close();
     }

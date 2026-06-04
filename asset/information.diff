@@ -6,7 +6,7 @@
 | james | 12  | boy    | breaking   | tokyo    | 1.79m  |
 
 ### Please confirm you #{i1}.
-# If you #{i1} is incorrect,please ${i2} the person below.
+# If your #{i1} is incorrect,please #{i2} the person below.
 # If you need to #{i2},it must be during working days.
 ={%boy}
 | | name  | phone       |

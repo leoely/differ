@@ -208,11 +208,11 @@ bool DifferParser::dealChar(const char c) {
           status = 9;
           break;
         case '\n':
-          if (location.find(key) != location.end()) {
+          if (location.contains(key)) {
             list<string> aloneList = location[key];
             appendLine(aloneList, singleLine);
             singleLine = "";
-            status = 0;
+            status = 7;
           } else {
             throw 6;
           }
@@ -220,12 +220,14 @@ bool DifferParser::dealChar(const char c) {
         default:
           singleLine += c;
       }
+      break;
     case 9:
       switch (c) {
         case '{':
           status = 10;
           break;
         default:
+          singleLine += c;
           status = 11;
       }
       break;
@@ -237,7 +239,7 @@ bool DifferParser::dealChar(const char c) {
         } else {
           throw 7;
         }
-        status = 8;
+        status = 11;
       } else {
         chars.push_back(c);
       }
@@ -245,7 +247,7 @@ bool DifferParser::dealChar(const char c) {
     case 11:
       switch (c) {
         case '#':
-          status = 9;
+          status = 12;
           break;
         case '\n':
           appendLine(fullList, singleLine);
@@ -255,6 +257,18 @@ bool DifferParser::dealChar(const char c) {
         default:
           singleLine += c;
       }
+      break;
+    case 12:
+      switch (c) {
+        case '{':
+          status = 10;
+          break;
+        default:
+          singleLine += "#";
+          singleLine += c;
+          status = 11;
+      }
+      break;
   }
   return false;
 }

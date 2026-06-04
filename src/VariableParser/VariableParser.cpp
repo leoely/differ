@@ -72,33 +72,33 @@ void VariableParser::scanLine(const string &lineText) {
   string newLineText = lineText + "\n";
   for (char c : newLineText) {
     position += 1;
-    if (c != ' ') {
-      try {
-        dealChar(c);
-      } catch (int errorCode) {
-        switch (errorCode) {
-          case 1:
-            showError("This position should be the character \"^\";");
-            exit(errorCode);
-          case 2:
-            showError("This position should be the character \"(\";");
-            exit(errorCode);
-          case 3:
-            showError("This position should be the character \"=\";");
-            exit(errorCode);
-          case 4:
-            showError("This position should be the character \"\"\";");
-            exit(errorCode);
-          case 5:
-            showError("This position cannot be the charactor \"\\n\";");
-            exit(errorCode);
-        }
+    try {
+      dealChar(c);
+    } catch (int errorCode) {
+      switch (errorCode) {
+        case 1:
+          showError("This position should be the character \"^\";");
+          exit(errorCode);
+        case 2:
+          showError("This position should be the character \"(\";");
+          exit(errorCode);
+        case 3:
+          showError("This position should be the character \"=\";");
+          exit(errorCode);
+        case 4:
+          showError("This position should be the character \"\"\";");
+          exit(errorCode);
+        case 5:
+          showError("This position cannot be the charactor \"\\n\";");
+          exit(errorCode);
+        case 6:
+          showError("This position cannot be the charactor \" \";");
+          exit(errorCode);
       }
     }
   }
   variableLexer->scanLine(beforeLineText, false);
 }
-
 
 void VariableParser::dealChar(char c) {
   switch (status) {
@@ -124,6 +124,8 @@ void VariableParser::dealChar(char c) {
       break;
     case 2:
       switch (c) {
+        case ' ':
+          throw 6;
         case '\n':
           throw 5;
         case ')':
