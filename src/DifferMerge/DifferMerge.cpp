@@ -1,3 +1,4 @@
+#include <unordered_set>
 #include <unordered_map>
 #include <string>
 #include <list>
@@ -11,6 +12,7 @@ using std::string;
 using std::list;
 using std::erase_if;
 using std::isspace;
+using std::unordered_set;
 
 class DifferMerge {
   private:
@@ -29,18 +31,21 @@ unordered_map<string, list<string>>& DifferMerge::getDiffer() {
 
 void DifferMerge::merge(vector<unordered_map<string, list<string>>>& differs) {
   for (const auto& d : differs) {
-    for (const auto& [key, list1] : d) {
-      for (const auto& lineText : list1) {
-        string location = key;
-        erase_if(location, [](unsigned char ch) {
-          return isspace(ch);
-        });
-        if (differ.find(location) != differ.end()) {
-          differ[location].push_back(lineText);
+    unordered_set<string> locationSet;
+    for (auto [key, list1] : d) {
+      string location = key;
+      erase_if(location, [](unsigned char ch) {
+        return isspace(ch);
+      });
+      if (!locationSet.contains(location)) {
+        if (differ.contains(location)) {
+          list<string> list2 = differ[location];
+          list2.splice(list2.end(), list1);
+          differ[location] = list2;
         } else {
-          list<string> newList = {lineText};
-          differ[location] = newList;
+          differ[location] = list1;
         }
+        locationSet.insert(location);
       }
     }
   }

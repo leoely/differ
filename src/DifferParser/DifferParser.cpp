@@ -248,7 +248,7 @@ bool DifferParser::dealChar(const char c) {
           status = 9;
           break;
         case '\n':
-          cout << singleLine << endl;
+          appendLine(fullList, singleLine);
           singleLine = "";
           status = 0;
           break;

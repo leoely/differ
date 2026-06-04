@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_set>
 #include <unordered_map>
 #include <string>
 #include <list>
@@ -13,6 +14,7 @@ using std::string;
 using std::list;
 using std::erase_if;
 using std::isspace;
+using std::unordered_set;
 
 class DifferMerge {
   private:
