@@ -3,6 +3,7 @@
 #include <help/help.hpp>
 #include <generate/generate.hpp>
 #include <validate/validate.hpp>
+#include <look/look.hpp>
 
 using std::vector;
 using std::string;
@@ -16,10 +17,13 @@ int main(int argc, const char *argv[]) {
   if (argument1 == "-h") {
     help();
     exit(EXIT_SUCCESS);
-  }
-  if (argument1 == "--help") {
+  } else if (argument1 == "--help") {
     help();
     exit(EXIT_SUCCESS);
+  } else if (argument1 == "-v") {
+    cout << "v1.0.0" << endl;
+  } else if (argument1 == "--version") {
+    cout << "v1.0.0" << endl;
   }
   vector<string> arguments;
   for (int i = 2; i < argc; i += 1) {
@@ -32,6 +36,9 @@ int main(int argc, const char *argv[]) {
     exit(EXIT_SUCCESS);
   } else if (argument1 == "validate") {
     validate(arguments);
+    exit(EXIT_SUCCESS);
+  } else if (argument1 == "look") {
+    look(arguments);
     exit(EXIT_SUCCESS);
   } else {
     help();
