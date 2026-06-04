@@ -187,6 +187,9 @@ void LocationParser::appendValue() {
   for (auto e: chars) {
     value.push_back(e);
   }
+  erase_if(value, [](unsigned char ch) {
+    return isspace(ch);
+  });
   if (location.find(key) == location.end()) {
     list<string> values = {value};
     location[key] = values;

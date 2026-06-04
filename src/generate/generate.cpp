@@ -112,7 +112,7 @@ void generate(vector<string>& arguments) {
     }
     differMerge->merge(differs);
     unordered_map<string, list<string>> differ = differMerge->getDiffer();
-    for (const auto& [key, list] : differ) {
+    for (const auto& [key, list1] : differ) {
       ofstream file;
       fs::path p = key;
       fs::path parentPath = p.parent_path();
@@ -120,7 +120,7 @@ void generate(vector<string>& arguments) {
         fs::create_directories(parentPath);
       }
       file.open(key);
-      for (const auto& lineText : list) {
+      for (const auto& lineText : list1) {
         file << dealBlankLine(lineText) << "\n";
       }
       file.close();

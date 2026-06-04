@@ -208,6 +208,9 @@ bool DifferParser::dealChar(const char c) {
           status = 9;
           break;
         case '\n':
+          erase_if(key, [](unsigned char ch) {
+            return isspace(ch);
+          });
           if (location.contains(key)) {
             list<string> aloneList = location[key];
             appendLine(aloneList, singleLine);

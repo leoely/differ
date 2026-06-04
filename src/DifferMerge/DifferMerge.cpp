@@ -34,19 +34,21 @@ void DifferMerge::merge(vector<unordered_map<string, list<string>>>& differs) {
     unordered_set<string> locationSet;
     for (auto [key, list1] : d) {
       string location = key;
-      erase_if(location, [](unsigned char ch) {
-        return isspace(ch);
-      });
-      if (!locationSet.contains(location)) {
-        if (differ.contains(location)) {
-          list<string> list2 = differ[location];
-          list2.splice(list2.end(), list1);
-          differ[location] = list2;
-        } else {
-          differ[location] = list1;
+      //if (!location.contains("\n")) {
+        erase_if(location, [](unsigned char ch) {
+          return isspace(ch);
+        });
+        if (!locationSet.contains(location)) {
+          if (differ.contains(location)) {
+            list<string> list2 = differ[location];
+            list2.splice(list2.end(), list1);
+            differ[location] = list2;
+          } else {
+            differ[location] = list1;
+          }
+          locationSet.insert(location);
         }
-        locationSet.insert(location);
-      }
+      //}
     }
   }
 }
