@@ -49,15 +49,18 @@ void LocationLexer::scanLine(const string& lineText, bool add) {
 void LocationLexer::dealChar(char c, bool add) {
   switch (status) {
     case 0:
-      if (c == '%') {
-        if (add == true) {
-          addToken(LocationTokenType::PERCENTAGE, "%");
-        }
-        status = 2;
-      } else if (c == '\n') {
-        if (add == true) {
-          addToken(LocationTokenType::LINE_BREAK, "\n");
-        }
+      switch (c) {
+        case '%':
+          if (add == true) {
+            addToken(LocationTokenType::PERCENTAGE, "%");
+          }
+          status = 1;
+          break;
+        case '\n':
+          if (add == true) {
+            addToken(LocationTokenType::LINE_BREAK, "\n");
+          }
+          break;
       }
       break;
     case 1:
@@ -67,6 +70,7 @@ void LocationLexer::dealChar(char c, bool add) {
             addToken(LocationTokenType::KEY, getValue());
             addToken(LocationTokenType::BLANK, " ");
           }
+          break;
         case '*':
           if (add == true) {
             addToken(LocationTokenType::KEY, getValue());

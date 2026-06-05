@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <termcolor/termcolor.hpp>
 #include <lookHelp/lookHelp.hpp>
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <FilePath/FilePath.hpp>
@@ -10,6 +11,12 @@
 #include <VariableParser/VariableParser.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
+#include <VariableToken/VariableToken.hpp>
+#include <LocationToken/LocationToken.hpp>
+#include <DifferToken/DifferToken.hpp>
+#include <locationTemplate/locationTemplate.hpp>
+#include <variableTemplate/variableTemplate.hpp>
+#include <differTemplate/differTemplate.hpp>
 
 using std::ifstream;
 using std::string;
@@ -44,6 +51,21 @@ void look(vector<string> arguments) {
       string line;
       while (getline(locationFile, line)) {
         locationParser->scanLine(line);
+      }
+    }
+    for (const auto& locationOption: locationOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
+      filePath->dealPath();
+      string locationFilePathString = filePath->getFilePathString();
+      shared_ptr<LocationLexer> locationLexer(new LocationLexer());
+      ifstream locationFile(locationFilePathString);
+      string line;
+      while (getline(locationFile, line)) {
+        locationLexer->scanLine(line, true);
+      }
+      vector<shared_ptr<LocationToken>> locationTokens = locationLexer->getTokens();
+      for (const auto& locationToken : locationTokens) {
+        locationTemplate(*locationToken);
       }
     }
   }
