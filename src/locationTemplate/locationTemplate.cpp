@@ -17,25 +17,25 @@ void locationTemplate(LocationToken& token) {
       println("");
       break;
     case LocationTokenType::PERCENTAGE:
-      cout << termcolor::bold << termcolor::color<169, 121, 98> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<205, 58, 168> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::KEY:
-      cout << termcolor::bold << termcolor::color<154, 80, 139> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<184, 93, 205> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::ASTERISK:
-      cout << termcolor::bold << termcolor::color<121, 156, 94> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<121, 196, 94> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::EQUAL:
-      cout << termcolor::bold << termcolor::color<123, 115, 220> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<63, 205, 225> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::VALUE:
-      cout << termcolor::bold << termcolor::color<175, 112, 93> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<215, 159, 103> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::SQUARE_BRACKET:
-      cout << termcolor::bold << termcolor::color<129, 89, 118> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<139, 79, 188> << token.elem << termcolor::reset;
       break;
     case LocationTokenType::AND:
-      cout << termcolor::bold << termcolor::color<151, 65, 72> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<208, 99, 82> << token.elem << termcolor::reset;
       break;
   }
 }
