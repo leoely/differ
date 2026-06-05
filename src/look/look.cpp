@@ -26,6 +26,16 @@ using std::ifstream;
 using std::string;
 using std::vector;
 
+void outputWithLineNumber(int& index, int lastWidth) {
+  index += 1;
+  int width = getWidth(index);
+  string blank = "";
+  for (int i = 0; i < lastWidth - width; i += 1) {
+    blank += " ";
+  }
+  cout << termcolor::bold << termcolor::grey << index << " " << blank;
+}
+
 void look(vector<string> arguments) {
   if (arguments.size() == 0) {
     lookHelp();
@@ -78,23 +88,92 @@ void look(vector<string> arguments) {
     for (const auto& locationToken : locationTokens) {
       LocationToken token = *locationToken;
       if (locationIndex == 0) {
-        locationIndex += 1;
-        int width = getWidth(locationIndex);
-        string blank = "";
-        for (int i = 0; i < locationWidth - width; i += 1) {
-          blank += " ";
-        }
-        cout << termcolor::bold << termcolor::grey << locationIndex << " " << blank;
+       outputWithLineNumber(locationIndex, locationWidth);
       }
       locationTemplate(token);
       if (token.type == LocationTokenType::LINE_BREAK && locationIndex != locationSize) {
-        locationIndex += 1;
-        int width = getWidth(locationIndex);
-        string blank = "";
-        for (int i = 0; i < locationWidth - width; i += 1) {
-          blank += " ";
-        }
-        cout << termcolor::bold << termcolor::grey << locationIndex << " " << blank;
+        outputWithLineNumber(locationIndex, locationWidth);
+      }
+    }
+    vector<string> variableOptions = argument["v"];
+    for (const auto& variableOption: variableOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
+      filePath->dealPath();
+      string variableFilePathString = filePath->getFilePathString();
+      shared_ptr<VariableParser> variableParser(new VariableParser(variableFilePathString));
+      ifstream variableFile(variableFilePathString);
+      string line;
+      while (getline(variableFile, line)) {
+        variableParser->scanLine(line);
+      }
+    }
+    int variableSize = 0;
+    int variableIndex = 0;;
+    vector<shared_ptr<VariableToken>> variableTokens;
+    for (const auto& variableOption: variableOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
+      filePath->dealPath();
+      string variableFilePathString = filePath->getFilePathString();
+      shared_ptr<VariableLexer> variableLexer(new VariableLexer());
+      ifstream variableFile(variableFilePathString);
+      string line;
+      while (getline(variableFile, line)) {
+        variableLexer->scanLine(line, true);
+        variableSize += 1;
+      }
+      vector<shared_ptr<VariableToken>> tokens = variableLexer->getTokens();
+      variableTokens.insert(variableTokens.end(), tokens.begin(), tokens.end());
+    }
+    int variableWidth = getWidth(variableSize);
+    for (const auto& variableToken : variableTokens) {
+      VariableToken token = *variableToken;
+      if (variableIndex == 0) {
+       outputWithLineNumber(variableIndex, variableWidth);
+      }
+      variableTemplate(token);
+      if (token.type == VariableTokenType::LINE_BREAK && variableIndex != variableSize) {
+        outputWithLineNumber(variableIndex, variableWidth);
+      }
+    }
+    vector<string> differOptions = argument["d"];
+    for (const auto& differOption: differOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(differOption, ".diff"));
+      filePath->dealPath();
+      string differFilePathString = filePath->getFilePathString();
+      // @TODO
+      shared_ptr<DifferParser> DifferParser(new DifferParser(differFilePathString));
+      ifstream differFile(differFilePathString);
+      string line;
+      while (getline(differFile, line)) {
+        differParser->scanLine(line);
+      }
+    }
+    int differSize = 0;
+    int differIndex = 0;;
+    vector<shared_ptr<DifferToken>> DifferTokens;
+    for (const auto& differOption: differOptions) {
+      shared_ptr<FilePath> filePath(new FilePath(differOption, ".var"));
+      filePath->dealPath();
+      string differFilePathString = filePath->getFilePathString();
+      shared_ptr<DifferLexer> differLexer(new DifferLexer());
+      ifstream differFile(differFilePathString);
+      string line;
+      while (getline(differFile, line)) {
+        differLexer->scanLine(line, true);
+        differSize += 1;
+      }
+      vector<shared_ptr<DifferToken>> tokens = differLexer->getTokens();
+      differTokens.insert(differTokens.end(), tokens.begin(), tokens.end());
+    }
+    int differWidth = getWidth(differSize);
+    for (const auto& differToken : differTokens) {
+      DifferToken token = *differToken;
+      if (differIndex == 0) {
+       outputWithLineNumber(differIndex, differWidth);
+      }
+      differTemplate(token);
+      if (token.type == DifferTokenType::LINE_BREAK && differIndex != differSize) {
+        outputWithLineNumber(differIndex, differWidth);
       }
     }
   }

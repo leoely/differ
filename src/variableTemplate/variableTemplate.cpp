@@ -17,19 +17,19 @@ void variableTemplate(VariableToken& token) {
       println("");
       break;
     case VariableTokenType::BRACKET:
-      cout << termcolor::bold << termcolor::color<239, 132, 26> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<229, 128, 26> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::COLON:
-      cout << termcolor::bold << termcolor::color<123, 132, 26> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<13, 132, 236> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::EQUAL:
       cout << termcolor::bold << termcolor::color<203, 32, 126> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::CARET:
-      cout << termcolor::bold << termcolor::color<231, 205, 26> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<221, 195, 26> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::KEY:
-      cout << termcolor::bold << termcolor::color<231, 105, 26> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<221, 95, 26> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::VALUE:
       cout << termcolor::bold << termcolor::color<231, 105, 226> << token.elem << termcolor::reset;
