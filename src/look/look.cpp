@@ -82,7 +82,7 @@ void look(vector<string> arguments) {
         int width = getWidth(locationIndex);
         string blank = "";
         for (int i = 0; i < locationWidth - width; i += 1) {
-          blank += "";
+          blank += " ";
         }
         cout << termcolor::bold << termcolor::grey << locationIndex << " " << blank;
       }
