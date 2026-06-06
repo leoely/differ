@@ -45,7 +45,7 @@ void outputWithLineNumber(int& index, int lastWidth) {
   cout << termcolor::bold << termcolor::grey << index << " " << blank;
 }
 
-void look(vector<string> arguments) {
+void look(vector<string>& arguments) {
   if (arguments.size() == 0) {
     lookHelp();
     exit(EXIT_SUCCESS);

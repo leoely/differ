@@ -37,4 +37,4 @@ using std::unordered_map;
 using std::cout;
 using std::endl;
 
-void look(vector<string> arguments);
+void look(vector<string>& arguments);

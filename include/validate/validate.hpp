@@ -20,4 +20,4 @@ using std::getline;
 
 namespace fs = std::filesystem;
 
-void validate(vector<string> arguments);
+void validate(vector<string>& arguments);

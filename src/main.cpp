@@ -3,6 +3,7 @@
 #include <help/help.hpp>
 #include <generate/generate.hpp>
 #include <validate/validate.hpp>
+#include <preview/preview.hpp>
 #include <look/look.hpp>
 
 using std::vector;
@@ -39,6 +40,9 @@ int main(int argc, const char *argv[]) {
     exit(EXIT_SUCCESS);
   } else if (argument1 == "look") {
     look(arguments);
+    exit(EXIT_SUCCESS);
+  } else if (argument1 == "preview") {
+    preview(arguments);
     exit(EXIT_SUCCESS);
   } else {
     help();

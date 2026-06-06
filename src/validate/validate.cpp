@@ -20,7 +20,7 @@ using std::getline;
 
 namespace fs = std::filesystem;
 
-void validate(vector<string> arguments) {
+void validate(vector<string>& arguments) {
   if (arguments.size() == 0) {
     validateHelp();
     exit(EXIT_SUCCESS);

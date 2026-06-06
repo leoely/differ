@@ -15,7 +15,7 @@
 #include <VariableMerge/VariableMerge.hpp>
 #include <FilePath/FilePath.hpp>
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
-#include <generateHelp/generateHelp.hpp>
+#include <previewHelp/previewHelp.hpp>
 
 using std::vector;
 using std::unordered_map;
@@ -24,28 +24,17 @@ using std::cout;
 using std::endl;
 using std::shared_ptr;
 using std::ifstream;
-using std::ofstream;
 using std::exception;
 
-namespace fs = std::filesystem;
-
-const string dealBlankLine(const string& textLine) {
-  if (textLine == " ") {
-    return "";
-  } else {
-    return textLine;
-  }
-}
-
-void generate(vector<string>& arguments) {
+void preview(vector<string>& arguments) {
   if (arguments.size() == 0) {
-    generateHelp();
+    previewHelp();
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "-h") {
-    generateHelp();
+    previewHelp();
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "--help") {
-    generateHelp();
+    previewHelp();
     exit(EXIT_SUCCESS);
   } else {
     shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
@@ -53,7 +42,7 @@ void generate(vector<string>& arguments) {
     try {
       argument = argumentsResolver->parseArguments(arguments);
     } catch (int errorCode) {
-      generateHelp();
+      previewHelp();
       exit(EXIT_FAILURE);
     }
     shared_ptr<LocationMerge> locationMerge(new LocationMerge());
@@ -118,21 +107,5 @@ void generate(vector<string>& arguments) {
     }
     differMerge->merge(differs);
     unordered_map<string, list<string>> differ = differMerge->getDiffer();
-    for (const auto& [key, list1] : differ) {
-      ofstream file;
-      fs::path p = key;
-      fs::path parentPath = p.parent_path();
-      if (fs::exists(parentPath) == false) {
-        fs::create_directories(parentPath);
-      }
-      file.open(key);
-      for (const auto& lineText : list1) {
-        file << dealBlankLine(lineText) << "\n";
-      }
-      file.close();
-    }
-    for (const auto& [key, value] : differ) {
-      cout << termcolor::bold << "[Generate] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
-    }
   }
 }

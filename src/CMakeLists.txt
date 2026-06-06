@@ -8,7 +8,9 @@ MemoryCheck(differ)
 AddCoverage(differ)
 
 target_link_libraries(
-  differ assist validate validateHelp generate generateHelp look lookHelp
+  differ assist
+  validate validateHelp generate generateHelp
+  look lookHelp preview previewHelp
   getWidth ArgumentsResolver FilePath
   Parser DifferParser LocationParser VariableParser
   LocationMerge VariableMerge DifferMerge
@@ -42,3 +44,5 @@ add_subdirectory(validate)
 add_subdirectory(validateHelp)
 add_subdirectory(look)
 add_subdirectory(lookHelp)
+add_subdirectory(preview)
+add_subdirectory(previewHelp)
