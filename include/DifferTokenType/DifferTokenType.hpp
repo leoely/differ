@@ -11,5 +11,8 @@ enum class DifferTokenType {
   LOCATION,
   SINGLE,
   COMMENT,
-  MULTIPLE
+  MULTIPLE,
+  HASHTAG,
+  VARIABLE,
+  BAR
 };

@@ -18,7 +18,7 @@ void differTemplate(DifferToken& token) {
       println("");
       break;
     case DifferTokenType::EQUAL:
-      cout << termcolor::on_color<42, 123, 143> << token.elem << termcolor::reset;
+      cout << termcolor::color<42, 123, 143> << token.elem << termcolor::reset;
       break;
     case DifferTokenType::COLON:
       cout << termcolor::color<53, 62, 100> << token.elem << termcolor::reset;
@@ -43,6 +43,15 @@ void differTemplate(DifferToken& token) {
       break;
     case DifferTokenType::MULTIPLE:
       cout << termcolor::color<113, 135, 58> << token.elem << termcolor::reset;
+      break;
+    case DifferTokenType::HASHTAG:
+      cout << termcolor::color<223, 135, 58> << token.elem << termcolor::reset;
+      break;
+    case DifferTokenType::VARIABLE:
+      cout << termcolor::color<204, 235, 58> << token.elem << termcolor::reset;
+      break;
+    case DifferTokenType::BAR:
+      cout << termcolor::color<104, 135, 58> << token.elem << termcolor::reset;
       break;
   }
 }
