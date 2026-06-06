@@ -80,6 +80,7 @@ void look(vector<string> arguments) {
       fullLists.push_back(locationParser->getFullList());
       locations.push_back(locationParser->getLocation());
     }
+    cout << "[" << termcolor::bold << "Merged" << termcolor::reset <<"]" << termcolor::bold << " Location File" << termcolor::reset << ":" << termcolor::reset << endl;
     int locationSize = 0;
     int locationIndex = 0;;
     vector<shared_ptr<LocationToken>> locationTokens;
@@ -124,6 +125,7 @@ void look(vector<string> arguments) {
     }
     int variableSize = 0;
     int variableIndex = 0;;
+    cout << "[" << termcolor::bold << "Merged" << termcolor::reset <<"]" << termcolor::bold << " Variable File" << termcolor::reset << ":" << termcolor::reset << endl;
     vector<shared_ptr<VariableToken>> variableTokens;
     for (const auto& variableOption: variableOptions) {
       shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
@@ -166,6 +168,7 @@ void look(vector<string> arguments) {
         differParser->scanLine(line);
       }
     }
+    cout << "[" << termcolor::bold << "Merged" << termcolor::reset <<"]" << termcolor::bold << " Differ File" << termcolor::reset << ":" << termcolor::reset << endl;
     int differSize = 0;
     int differIndex = 0;;
     vector<shared_ptr<DifferToken>> differTokens;
