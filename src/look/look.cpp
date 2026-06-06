@@ -1,6 +1,9 @@
+#include <iostream>
+#include <list>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include <termcolor/termcolor.hpp>
 #include <lookHelp/lookHelp.hpp>
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
@@ -20,11 +23,17 @@
 #include <LocationTokenType/LocationTokenType.hpp>
 #include <DifferTokenType/DifferTokenType.hpp>
 #include <VariableTokenType/VariableTokenType.hpp>
+#include <LocationMerge/LocationMerge.hpp>
+#include <VariableMerge/VariableMerge.hpp>
 #include <getWidth/getWidth.hpp>
 
+using std::list;
 using std::ifstream;
 using std::string;
 using std::vector;
+using std::unordered_map;
+using std::cout;
+using std::endl;
 
 void outputWithLineNumber(int& index, int lastWidth) {
   index += 1;
@@ -55,6 +64,8 @@ void look(vector<string> arguments) {
       lookHelp();
       exit(EXIT_FAILURE);
     }
+    vector<list<string>> fullLists;
+    vector<unordered_map<string, list<string>>> locations;
     vector<string> locationOptions = argument["l"];
     for (const auto& locationOption: locationOptions) {
       shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
@@ -66,6 +77,8 @@ void look(vector<string> arguments) {
       while (getline(locationFile, line)) {
         locationParser->scanLine(line);
       }
+      fullLists.push_back(locationParser->getFullList());
+      locations.push_back(locationParser->getLocation());
     }
     int locationSize = 0;
     int locationIndex = 0;;
@@ -95,6 +108,7 @@ void look(vector<string> arguments) {
         outputWithLineNumber(locationIndex, locationWidth);
       }
     }
+    vector<unordered_map<string, string>> variables;
     vector<string> variableOptions = argument["v"];
     for (const auto& variableOption: variableOptions) {
       shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
@@ -106,6 +120,7 @@ void look(vector<string> arguments) {
       while (getline(variableFile, line)) {
         variableParser->scanLine(line);
       }
+      variables.push_back(variableParser->getVariable());
     }
     int variableSize = 0;
     int variableIndex = 0;;
@@ -135,13 +150,16 @@ void look(vector<string> arguments) {
         outputWithLineNumber(variableIndex, variableWidth);
       }
     }
+    shared_ptr<LocationMerge> locationMerge(new LocationMerge());
+    shared_ptr<VariableMerge> variableMerge(new VariableMerge());
+    locationMerge->merge(fullLists, locations);
+    variableMerge->merge(variables);
     vector<string> differOptions = argument["d"];
     for (const auto& differOption: differOptions) {
       shared_ptr<FilePath> filePath(new FilePath(differOption, ".diff"));
       filePath->dealPath();
       string differFilePathString = filePath->getFilePathString();
-      // @TODO
-      shared_ptr<DifferParser> DifferParser(new DifferParser(differFilePathString));
+      shared_ptr<DifferParser> differParser(new DifferParser(differFilePathString, locationMerge->getFullList(), locationMerge->getLocation(), variableMerge->getVariable()));
       ifstream differFile(differFilePathString);
       string line;
       while (getline(differFile, line)) {
@@ -150,9 +168,9 @@ void look(vector<string> arguments) {
     }
     int differSize = 0;
     int differIndex = 0;;
-    vector<shared_ptr<DifferToken>> DifferTokens;
+    vector<shared_ptr<DifferToken>> differTokens;
     for (const auto& differOption: differOptions) {
-      shared_ptr<FilePath> filePath(new FilePath(differOption, ".var"));
+      shared_ptr<FilePath> filePath(new FilePath(differOption, ".diff"));
       filePath->dealPath();
       string differFilePathString = filePath->getFilePathString();
       shared_ptr<DifferLexer> differLexer(new DifferLexer());

@@ -46,10 +46,10 @@ void FilePath::dealPath() {
   } catch (int errorCode) {
     switch (errorCode) {
       case 1:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \".loc\" does not exist." << termcolor::reset << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The path of the specified file \"" << extension << "\" does not exist." << termcolor::reset << endl;
         exit(errorCode);
       case 2:
-        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \".loc\" extension." << termcolor::reset << endl;
+        cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The file must have the \"" << extension << "\" extension." << termcolor::reset << endl;
         exit(errorCode);
     }
   }
