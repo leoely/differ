@@ -52,13 +52,12 @@ void VariableParser::showError(const string& errorMessage) {
       variableTemplate(*token);
     }
   }
-  string blanks1 = "";
   cout << termcolor::bold << termcolor::grey << line << " " << termcolor::on_color<184, 31, 40> << termcolor::bold << termcolor::white << this->lineText << termcolor::reset << endl;
-  string blanks2 = "";
+  string blanks = "";
   for (int i = 0; i < position + width2 - 1; i += 1) {
-    blanks2 += " ";
+    blanks += " ";
   }
-  cout << blanks2 << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
+  cout << blanks << termcolor::reverse << termcolor::bold << "=^=" << termcolor::reset << termcolor::bold << " [Error] :: " << errorMessage << termcolor::reset << endl;
   cout << termcolor::dark << "[Type] :: "  << "Variable file;" << termcolor::reset << endl;
   cout << termcolor::dark << "[Path] :: \"" << fullPath << "\";" << termcolor::reset << endl;
   cout << termcolor::dark << "[Variable] :: Position: " << position << ", Line: " << line << ";" << termcolor::reset << endl;

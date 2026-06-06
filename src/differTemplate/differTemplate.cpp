@@ -9,7 +9,7 @@ using std::println;
 using std::cout;
 using std::endl;
 
-void differTemplate(DifferToken& token) {
+void differTemplate(const DifferToken& token) {
   switch (token.type) {
     case DifferTokenType::BLANK:
       cout << token.elem;

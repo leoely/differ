@@ -24,3 +24,4 @@ class DifferMerge {
     void merge(vector<unordered_map<string, list<string>>>& differs);
     DifferMerge();
 };
+

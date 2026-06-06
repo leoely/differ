@@ -19,16 +19,16 @@ class ArgumentsResolver {
   private:
     unordered_map<string, vector<string>> argument;
     unordered_set<string> paramSet;
-    int getType(string key);
     int status;
+    static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseArguments(vector<string>& params);
+    unordered_map<string, vector<string>>& parseArguments(const vector<string>& params);
     ArgumentsResolver();
 };
 
-ArgumentsResolver::ArgumentsResolver() {}
+ArgumentsResolver::ArgumentsResolver() : status(0) {}
 
-int ArgumentsResolver::getType(string key) {
+int ArgumentsResolver::getType(const string& key) {
   int type = 0;
   if (key == "v") {
     type = 1;
@@ -51,10 +51,10 @@ int ArgumentsResolver::getType(string key) {
   return type;
 }
 
-unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(vector<string>& params) {
+unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const vector<string>& params) {
   regex pattern1("^\\-[a-z]+$");
   regex pattern2("^\\-\\-[a-z]+$");
-  int status = 0;
+  status = 0;
   int type;
   string key;
   for (const auto &param : params) {

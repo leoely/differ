@@ -13,13 +13,12 @@ using std::shared_ptr;
 
 class LocationLexer : virtual public Lexer {
   public:
-    string key;
     LocationLexer();
     ~LocationLexer();
     void scanLine(const string& lineText, bool add);
     vector<shared_ptr<LocationToken>>& getTokens();
-    void dealChar(char c, bool add);
   private:
+    void dealChar(char c, bool add);
     void addToken(LocationTokenType type, string elem);
     vector<shared_ptr<LocationToken>> tokens;
     int status;

@@ -21,9 +21,9 @@ class ArgumentsResolver {
   private:
     unordered_map<string, vector<string>> argument;
     unordered_set<string> paramSet;
-    int getType(string key);
     int status;
+    static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseArguments(vector<string>& params);
+    unordered_map<string, vector<string>>& parseArguments(const vector<string>& params);
     ArgumentsResolver();
 };

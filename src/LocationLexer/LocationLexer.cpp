@@ -11,7 +11,6 @@ using std::shared_ptr;
 
 class LocationLexer : virtual public Lexer {
   public:
-    string key;
     LocationLexer();
     ~LocationLexer();
     void scanLine(const string& lineText, bool add);

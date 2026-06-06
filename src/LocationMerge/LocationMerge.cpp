@@ -23,7 +23,7 @@ class LocationMerge {
   public:
     LocationMerge();
     list<string>& getFullList();
-    unordered_map<string, list<string>> getLocation();
+    unordered_map<string, list<string>>& getLocation();
     void merge(vector<list<string>>& fullLists, vector<unordered_map<string, list<string>>>& locations);
 };
 
@@ -58,6 +58,6 @@ list<string>& LocationMerge::getFullList() {
   return fullList;
 }
 
-unordered_map<string, list<string>> LocationMerge::getLocation() {
+unordered_map<string, list<string>>& LocationMerge::getLocation() {
   return location;
 }

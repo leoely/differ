@@ -10,4 +10,4 @@ using std::println;
 using std::print;
 using std::cout;
 
-void variableTemplate(VariableToken& token);
+void variableTemplate(const VariableToken& token);

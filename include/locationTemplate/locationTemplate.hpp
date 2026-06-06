@@ -10,4 +10,4 @@ using std::println;
 using std::print;
 using std::cout;
 
-void locationTemplate(LocationToken& token);
+void locationTemplate(const LocationToken& token);

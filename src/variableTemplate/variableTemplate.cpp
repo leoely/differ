@@ -8,7 +8,7 @@ using std::println;
 using std::print;
 using std::cout;
 
-void variableTemplate(VariableToken& token) {
+void variableTemplate(const VariableToken& token) {
   switch (token.type) {
     case VariableTokenType::BLANK:
       print(" ");

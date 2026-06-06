@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <termcolor/termcolor.hpp>
 
 using std::vector;
 using std::cout;
@@ -24,6 +25,6 @@ class LocationMerge {
   public:
     LocationMerge();
     list<string>& getFullList();
-    unordered_map<string, list<string>> getLocation();
+    unordered_map<string, list<string>>& getLocation();
     void merge(vector<list<string>>& fullLists, vector<unordered_map<string, list<string>>>& locations);
 };
