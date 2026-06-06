@@ -13,6 +13,5 @@ enum class DifferTokenType {
   COMMENT,
   MULTIPLE,
   HASHTAG,
-  VARIABLE,
-  BAR
+  VARIABLE
 };

@@ -20,10 +20,10 @@ void variableTemplate(VariableToken& token) {
       cout << termcolor::bold << termcolor::color<229, 128, 26> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::COLON:
-      cout << termcolor::bold << termcolor::color<13, 132, 236> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<43, 142, 236> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::EQUAL:
-      cout << termcolor::bold << termcolor::color<203, 32, 126> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<213, 52, 136> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::CARET:
       cout << termcolor::bold << termcolor::color<221, 195, 26> << token.elem << termcolor::reset;
@@ -32,7 +32,7 @@ void variableTemplate(VariableToken& token) {
       cout << termcolor::bold << termcolor::color<221, 95, 26> << token.elem << termcolor::reset;
       break;
     case VariableTokenType::VALUE:
-      cout << termcolor::bold << termcolor::color<231, 105, 226> << token.elem << termcolor::reset;
+      cout << termcolor::bold << termcolor::color<121, 195, 116> << token.elem << termcolor::reset;
       break;
   }
 }

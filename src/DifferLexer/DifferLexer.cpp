@@ -115,7 +115,7 @@ void DifferLexer::dealChar(char c, bool add) {
           break;
         case '|':
           if (add == true) {
-            addToken(DifferTokenType::BAR, "|");
+            addToken(DifferTokenType::DIVIDER, "|");
           }
           status = 9;
           break;
@@ -162,13 +162,13 @@ void DifferLexer::dealChar(char c, bool add) {
       switch (c) {
         case ' ':
           if (add == true) {
-            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::MULTIPLE, getValue());
             addToken(DifferTokenType::BLANK, " ");
           }
           break;
         case '\n':
           if (add == true) {
-            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::MULTIPLE, getValue());
             addToken(DifferTokenType::LINE_BREAK, "\n");
           }
           status = 0;
@@ -212,13 +212,13 @@ void DifferLexer::dealChar(char c, bool add) {
       switch (c) {
         case ' ':
           if (add == true) {
-            addToken(DifferTokenType::MULTIPLE, getValue());
+            addToken(DifferTokenType::SINGLE, getValue());
             addToken(DifferTokenType::BLANK, " ");
           }
           break;
         case '\n':
           if (add == true) {
-            addToken(DifferTokenType::MULTIPLE, getValue());
+            addToken(DifferTokenType::SINGLE, getValue());
             addToken(DifferTokenType::LINE_BREAK, "\n");
           }
           status = 4;
