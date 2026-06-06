@@ -38,27 +38,11 @@ void DifferLexer::addToken(DifferTokenType type, const string& elem) {
 void DifferLexer::scanLine(const string& lineText, bool add) {
   position = 0;
   for (char c: lineText) {
-    if (flag == false) {
-      if (c != ' ') {
-        dealChar(c, add);
-      } else {
-        if (add == true) {
-          addToken(DifferTokenType::BLANK, " ");
-        }
-      }
-    } else {
-      dealChar(c, add);
-    }
+    dealChar(c, add);
     position += 1;
   }
   line += 1;
-  if (flag == false) {
-    if (add == true) {
-      addToken(DifferTokenType::LINE_BREAK, "\n");
-    }
-  } else {
-    dealChar('\n', add);
-  }
+  dealChar('\n', add);
 }
 
 void DifferLexer::dealChar(char c, bool add) {
@@ -83,7 +67,6 @@ void DifferLexer::dealChar(char c, bool add) {
           }
           break;
         default:
-          flag = true;
           chars.push_back(c);
           status = 6;
       }
@@ -150,7 +133,6 @@ void DifferLexer::dealChar(char c, bool add) {
           break;
         default:
           status = 0;
-          flag = true;
           chars.push_back(c);
       }
       break;
@@ -159,35 +141,16 @@ void DifferLexer::dealChar(char c, bool add) {
       switch (c) {
         case ' ':
           if (add == true) {
-            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::COMMENT, getValue());
             addToken(DifferTokenType::BLANK, " ");
           }
           break;
         case '\n':
           if (add == true) {
-            addToken(DifferTokenType::SINGLE, getValue());
+            addToken(DifferTokenType::COMMENT, getValue());
             addToken(DifferTokenType::LINE_BREAK, "\n");
           }
-          break;
-        case '"':
-          if (add == true) {
-            addToken(DifferTokenType::COMMENT, getValue());
-          }
-          if (add == true) {
-            addToken(DifferTokenType::COLON, "\"");
-          }
           status = 0;
-          flag = false;
-          break;
-        case '=':
-          if (add == true) {
-            addToken(DifferTokenType::COMMENT, getValue());
-          }
-          if (add == true) {
-            addToken(DifferTokenType::EQUAL, "=");
-          }
-          status = 0;
-          flag = false;
           break;
         default:
           if (add == true) {
@@ -246,7 +209,6 @@ void DifferLexer::dealChar(char c, bool add) {
       }
       break;
     case 9:
-      flag = true;
       switch (c) {
         case ' ':
           if (add == true) {
