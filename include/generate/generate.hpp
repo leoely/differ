@@ -1,7 +1,5 @@
 #pragma once
 
-#include <fmt/core.h>
-#include <fmt/format.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -26,6 +24,7 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::views::join_with;
 using std::views::split;
 using std::ios_base;
 using std::vector;
@@ -43,4 +42,4 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void generate(const int argc, const char *argv[]);
+void generate(vector<string>& arguments);

@@ -8,7 +8,7 @@ MemoryCheck(differ)
 AddCoverage(differ)
 
 target_link_libraries(
-  differ assist sago::platform_folders
+  differ PRIVATE assist
   validate validateHelp generate generateHelp
   look lookHelp preview previewHelp clear clearHelp
   getWidth ArgumentsResolver FilePath
@@ -16,6 +16,7 @@ target_link_libraries(
   LocationMerge VariableMerge DifferMerge
   Lexer LocationLexer DifferLexer VariableLexer
   locationTemplate differTemplate variableTemplate
+   sago::platform_folders
 )
 
 install(TARGETS differ DESTINATION bin)

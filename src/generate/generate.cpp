@@ -1,5 +1,3 @@
-#include <fmt/core.h>
-#include <fmt/format.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -24,6 +22,7 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::views::join_with;
 using std::views::split;
 using std::ios_base;
 using std::vector;
@@ -150,10 +149,10 @@ void generate(vector<string>& arguments) {
     if (!fs::exists(differLocationsPath)) {
       ofstream differLocationsFile(differLocationsPath);
     }
-    ifstream differLocationsFile(differLocationsPath);
     vector<unordered_set<string>> sets;
     list<string> lines;
     string line;
+    ifstream differLocationsFile(differLocationsPath);
     while (getline(differLocationsFile, line)) {
       lines.push_back(line);
       unordered_set<string> set;
@@ -164,6 +163,7 @@ void generate(vector<string>& arguments) {
       }
       sets.push_back(set);
     }
+    differLocationsFile.close();
     bool flag = true;
     vector<string> keys;
     for (const auto& [key, value] : differ) {
@@ -180,17 +180,20 @@ void generate(vector<string>& arguments) {
       keys.push_back(key);
     }
     if (flag == false) {
-      string line = fmt::format("{}", fmt::join(keys, ","));
+      auto joined = keys | std::views::join_with(',');
+      string line{joined.begin(), joined.end()};
       if (lines.size() + 1 <= 1) {
-        ofstream differLoctionsFile(differLocationsPath, ios_base::app);
-        differLocationsFile << line;
+        ofstream differLocationsFile1(differLocationsPath, ios_base::app);
+        differLocationsFile1 << line;
+        differLocationsFile1.close();
       } else {
         lines.push_back(line);
         lines.pop_front();
-        ofstream differLocationsFile(differLocationsPath);
+        ofstream differLocationsFile1(differLocationsPath);
         for (const auto& line : lines) {
-          differLocationsFile << line;
+          differLocationsFile1 << line;
         }
+        differLocationsFile1.close();
       }
     }
     for (const auto& [key, value] : differ) {
