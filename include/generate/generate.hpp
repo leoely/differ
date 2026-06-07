@@ -1,6 +1,7 @@
 #pragma once
 
-#include <cstdlib>
+#include <fmt/core.h>
+#include <fmt/format.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -9,6 +10,11 @@
 #include <fstream>
 #include <filesystem>
 #include <exception>
+#include <sstream>
+#include <unordered_set>
+#include <string_view>
+#include <ranges>
+#include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
@@ -20,6 +26,8 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::views::split;
+using std::ios_base;
 using std::vector;
 using std::unordered_map;
 using std::string;
@@ -30,7 +38,9 @@ using std::ifstream;
 using std::ofstream;
 using std::exception;
 using std::getenv;
+using std::unordered_set;
+using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void generate(vector<string>& arguments);
+void generate(const int argc, const char *argv[]);

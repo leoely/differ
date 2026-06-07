@@ -8,7 +8,7 @@ MemoryCheck(differ)
 AddCoverage(differ)
 
 target_link_libraries(
-  differ assist
+  differ assist sago::platform_folders
   validate validateHelp generate generateHelp
   look lookHelp preview previewHelp clear clearHelp
   getWidth ArgumentsResolver FilePath

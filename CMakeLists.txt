@@ -11,6 +11,7 @@ project(
 set(CMAKE_BUILD_TYPE "Debug")
 
 find_package(subprocess CONFIG REQUIRED)
+find_package(platform_folders CONFIG REQUIRED)
 find_package(Doxygen REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(Coverage)

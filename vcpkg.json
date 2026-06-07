@@ -1,5 +1,6 @@
 {
   "dependencies": [
+    "platform-folders",
     "arun11299-cpp-subprocess",
     "termcolor"
   ]

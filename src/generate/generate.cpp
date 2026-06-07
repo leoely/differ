@@ -1,4 +1,5 @@
-#include <cstdlib>
+#include <fmt/core.h>
+#include <fmt/format.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -7,6 +8,11 @@
 #include <fstream>
 #include <filesystem>
 #include <exception>
+#include <sstream>
+#include <unordered_set>
+#include <string_view>
+#include <ranges>
+#include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
@@ -18,6 +24,8 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::views::split;
+using std::ios_base;
 using std::vector;
 using std::unordered_map;
 using std::string;
@@ -28,6 +36,8 @@ using std::ifstream;
 using std::ofstream;
 using std::exception;
 using std::getenv;
+using std::unordered_set;
+using std::stringstream;
 
 namespace fs = std::filesystem;
 
@@ -133,14 +143,56 @@ void generate(vector<string>& arguments) {
       }
       file.close();
     }
-    //const char* pathEnv = getenv("HOME");
-    //if (pathEnv == nullptr) {
-      //cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "." << termcolor::reset << endl;
-      //exit(EXIT_FAILURE);
-    //}
-    //const string homePathString = pathEnv;
-    //const fs::path homePath = homePathString;
-    //fs::path locationPath = homePath / ".differ_locations";
+    string documentPathString = sago::getDocumentsFolder();
+    const fs::path documentPath = documentPathString;
+    const fs::path homePath = documentPath.parent_path();
+    fs::path differLocationsPath = homePath / ".differ_locations";
+    if (!fs::exists(differLocationsPath)) {
+      ofstream differLocationsFile(differLocationsPath);
+    }
+    ifstream differLocationsFile(differLocationsPath);
+    vector<unordered_set<string>> sets;
+    list<string> lines;
+    string line;
+    while (getline(differLocationsFile, line)) {
+      lines.push_back(line);
+      unordered_set<string> set;
+      stringstream ss(line);
+      string l;
+      while (getline(ss, l, ',')) {
+        set.insert(l);
+      }
+      sets.push_back(set);
+    }
+    bool flag = true;
+    vector<string> keys;
+    for (const auto& [key, value] : differ) {
+      for (const auto& set : sets) {
+        if (differ.size() != set.size()) {
+          flag = false;
+          break;
+        }
+        if (!set.contains(key)) {
+          flag = false;
+          break;
+        }
+      }
+      keys.push_back(key);
+    }
+    if (flag == false) {
+      string line = fmt::format("{}", fmt::join(keys, ","));
+      if (lines.size() + 1 <= 1) {
+        ofstream differLoctionsFile(differLocationsPath, ios_base::app);
+        differLocationsFile << line;
+      } else {
+        lines.push_back(line);
+        lines.pop_front();
+        ofstream differLocationsFile(differLocationsPath);
+        for (const auto& line : lines) {
+          differLocationsFile << line;
+        }
+      }
+    }
     for (const auto& [key, value] : differ) {
       cout << termcolor::bold << "[Generate] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
     }
