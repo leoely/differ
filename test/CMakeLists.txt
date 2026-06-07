@@ -11,3 +11,6 @@ FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
 add_subdirectory(generateTest)
+add_subdirectory(validateTest)
+add_subdirectory(lookTest)
+add_subdirectory(previewTest)
