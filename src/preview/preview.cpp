@@ -1,3 +1,4 @@
+#include <print>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -17,6 +18,7 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <previewHelp/previewHelp.hpp>
 
+using std::println;
 using std::vector;
 using std::unordered_map;
 using std::string;
@@ -107,5 +109,11 @@ void preview(vector<string>& arguments) {
     }
     differMerge->merge(differs);
     unordered_map<string, list<string>> differ = differMerge->getDiffer();
+    for (const auto& [key, list1] : differ) {
+      cout << "\"" << termcolor::bold << key << termcolor::reset << "\"" << termcolor:: bold << ":" << termcolor::reset << endl;
+      for (const auto& line : list1) {
+        println("{}", line);
+      }
+    }
   }
 }
