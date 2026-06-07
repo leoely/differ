@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -26,6 +27,7 @@ using std::shared_ptr;
 using std::ifstream;
 using std::ofstream;
 using std::exception;
+using std::getenv;
 
 namespace fs = std::filesystem;
 
@@ -131,6 +133,14 @@ void generate(vector<string>& arguments) {
       }
       file.close();
     }
+    //const char* pathEnv = getenv("HOME");
+    //if (pathEnv == nullptr) {
+      //cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "." << termcolor::reset << endl;
+      //exit(EXIT_FAILURE);
+    //}
+    //const string homePathString = pathEnv;
+    //const fs::path homePath = homePathString;
+    //fs::path locationPath = homePath / ".differ_locations";
     for (const auto& [key, value] : differ) {
       cout << termcolor::bold << "[Generate] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
     }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -8,8 +9,6 @@
 #include <fstream>
 #include <filesystem>
 #include <exception>
-#include <algorithm>
-#include <cctype>
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <DifferParser/DifferParser.hpp>
@@ -30,8 +29,7 @@ using std::shared_ptr;
 using std::ifstream;
 using std::ofstream;
 using std::exception;
-using std::erase_if;
-using std::isspace;
+using std::getenv;
 
 namespace fs = std::filesystem;
 

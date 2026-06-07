@@ -5,6 +5,7 @@
 #include <validate/validate.hpp>
 #include <preview/preview.hpp>
 #include <look/look.hpp>
+//#include <clear/clear.hpp>
 
 using std::vector;
 using std::string;
@@ -44,6 +45,9 @@ int main(int argc, const char *argv[]) {
   } else if (argument1 == "preview") {
     preview(arguments);
     exit(EXIT_SUCCESS);
+  //} else if (argument1 == "clear") {
+    //clear(arguments);
+    //exit(EXIT_SUCCESS);
   } else {
     help();
     exit(EXIT_FAILURE);

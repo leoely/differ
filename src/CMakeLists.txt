@@ -10,7 +10,7 @@ AddCoverage(differ)
 target_link_libraries(
   differ assist
   validate validateHelp generate generateHelp
-  look lookHelp preview previewHelp
+  look lookHelp preview previewHelp clear clearHelp
   getWidth ArgumentsResolver FilePath
   Parser DifferParser LocationParser VariableParser
   LocationMerge VariableMerge DifferMerge
@@ -46,3 +46,5 @@ add_subdirectory(look)
 add_subdirectory(lookHelp)
 add_subdirectory(preview)
 add_subdirectory(previewHelp)
+add_subdirectory(clear)
+add_subdirectory(clearHelp)
