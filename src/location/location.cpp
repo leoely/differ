@@ -68,6 +68,39 @@ void showLocations(int left, int right) {
         }
         cout << endl;
       }
+    } else if (right = -1) {
+      ifstream differLocationsFile(differLocationsPath);
+      size_t lineCount = count(
+        istreambuf_iterator<char>(differLocationsFile),
+        istreambuf_iterator<char>(),
+        '\n'
+      );
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
+      if (left < 1) {
+        throw 5;
+      }
+      int width = getWidth(lineCount);
+      string line;
+      int count = 0;
+      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
+      while (getline(differLocationsFile, line)) {
+        count += 1;
+        if (count == left) {
+          int lineWidth = getWidth(count);
+          string blanks = " ";
+          for (int i = 0; i < width - lineWidth; i += 1) {
+            blanks += " ";
+          }
+          cout << termcolor::color<150, 150, 150> << count << " " << termcolor::reset;
+          stringstream ss(line);
+          string location;
+          while (getline(ss, location, ',')) {
+            cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+          }
+          cout << endl;
+        }
+      }
     } else {
       ifstream differLocationsFile(differLocationsPath);
       size_t lineCount = count(
@@ -134,14 +167,33 @@ void location(vector<string>& arguments) {
       exit(EXIT_FAILURE);
     }
     vector<string> pointerOptions = argument["p"];
-    if (pointerOptions.size() != 2) {
-      locationHelp();
-      exit(EXIT_FAILURE);
-    } else {
+    regex pattern("^\\^[0-9]+$");
+    if (pointerOptions.size() == 1) {
+      try {
+        string pointerFullString = pointerOptions[0];
+        if (!regex_match(pointerFullString, pattern)) {
+          throw 1;
+        }
+        string pointerString = pointerFullString.substr(1, pointerFullString.size() - 1);
+        int pointer = -1;
+        from_chars(pointerString.data(), pointerString.data() + pointerString.size(), pointer);
+        showLocations(pointer, pointer);
+      } catch (int errorCode) {
+        switch (errorCode) {
+          case 1:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the pointer should be \"^k\"." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+          case 5:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the pointer exceeds the boundary." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+        }
+      }
+    } else if(pointerOptions.size() == 2) {
       try {
         string leftFullString = pointerOptions[0];
         string rightFullString = pointerOptions[1];
-        regex pattern("^\\^[0-9]+$");
         if (!regex_match(leftFullString, pattern)) {
           throw 1;
         }
@@ -175,6 +227,9 @@ void location(vector<string>& arguments) {
             break;
         }
       }
+    } else {
+      locationHelp();
+      exit(EXIT_FAILURE);
     }
   }
 }
