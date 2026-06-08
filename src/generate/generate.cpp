@@ -20,6 +20,8 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::next;
+using std::iter_swap;
 using std::views::join_with;
 using std::ios_base;
 using std::vector;
@@ -163,6 +165,7 @@ void generate(vector<string>& arguments) {
     }
     differLocationsFile.close();
     bool flag = true;
+    int sameIndex = -1;;
     vector<string> keys;
     if (sets.size() == 0) {
       flag = false;
@@ -172,6 +175,7 @@ void generate(vector<string>& arguments) {
     } else {
       for (const auto& [key, value] : differ) {
         int count = 0;
+        int index = 0;
         for (const auto& set : sets) {
           if (differ.size() != set.size()) {
             count += 1;
@@ -181,6 +185,8 @@ void generate(vector<string>& arguments) {
             count += 1;
             break;
           }
+          sameIndex = index;
+          index += 1;
         }
         if (count == sets.size()) {
           flag = false;
@@ -203,6 +209,17 @@ void generate(vector<string>& arguments) {
           differLocationsFile1 << line << "\n";
         }
         differLocationsFile1.close();
+      }
+    } else {
+      int lastIndex = sets.size() - 1;
+      if (sameIndex != lastIndex) {
+        auto it1 = next(lines.begin(), sameIndex);
+        auto it2 = next(lines.begin(), lastIndex);
+        iter_swap(it1, it2);
+        ofstream differLocationsFile1(differLocationsPath);
+        for (const auto& line : lines) {
+          differLocationsFile1 << line << "\n";
+        }
       }
     }
     for (const auto& [key, value] : differ) {

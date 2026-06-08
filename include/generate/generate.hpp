@@ -22,6 +22,8 @@
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
+using std::next;
+using std::iter_swap;
 using std::views::join_with;
 using std::ios_base;
 using std::vector;
