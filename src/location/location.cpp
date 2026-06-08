@@ -1,19 +1,22 @@
+#include <memory>
 #include <vector>
 #include <string>
+#include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <locationHelp/locationHelp.hpp>
 
 using std::string;
 using std::vector;
+using std::shared_ptr;
 
 void location(vector<string>& arguments) {
   if (arguments.size() == 0) {
-    clearHelp();
+    locationHelp();
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "-h") {
-    clearHelp();
+    locationHelp();
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "--help") {
-    clearHelp();
+    locationHelp();
     exit(EXIT_SUCCESS);
   } else {
     shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
