@@ -89,7 +89,7 @@ void showLocations(int left, int right) {
       cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
       while (getline(differLocationsFile, line)) {
         count += 1;
-        if (cout >= left && count <= right) {
+        if (count >= left && count <= right) {
           int lineWidth = getWidth(count);
           string blanks = " ";
           for (int i = 0; i < width - lineWidth; i += 1) {
@@ -142,10 +142,10 @@ void location(vector<string>& arguments) {
         string leftFullString = pointerOptions[0];
         string rightFullString = pointerOptions[0];
         regex pattern("^\\^[0-9]+$");
-        if (!match(leftString, pattern)) {
+        if (!regex_match(leftFullString, pattern)) {
           throw 1;
         }
-        if (!match(rightString, pattern)) {
+        if (!regex_match(rightFullString, pattern)) {
           throw 2;
         }
         string leftString = leftFullString.substr(1, leftFullString.size() - 1);

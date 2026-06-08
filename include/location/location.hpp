@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <regex>
 #include <fstream>
 #include <filesystem>
 #include <memory>
@@ -15,6 +16,9 @@
 #include <locationHelp/locationHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
+using std::from_chars;
+using std::regex_match;
+using std::regex;
 using std::ios;
 using std::size_t;
 using std::count;
