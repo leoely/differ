@@ -5,12 +5,18 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <algorithm>
+#include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
 #include <ArgumentsResolver/ArgumentsResolver.hpp>
 #include <locationHelp/locationHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
+using std::ios;
+using std::size_t;
+using std::count;
+using std::istreambuf_iterator;
 using std::getline;
 using std::ifstream;
 using std::cout;
@@ -30,19 +36,35 @@ void showLocations(int left, int right) {
   if (!fs::exists(differLocationsPath)) {
     cout << termcolor::bold << "The locations is currently " << termcolor::reset <<  "[" << termcolor::bold << "empty" << termcolor::reset << "]" << termcolor::bold << ";" << termcolor::reset << endl;
   } else {
-    ifstream differLocationsFile(differLocationsPath);
-    string line;
-    int count = 0;
-    cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
-    while (getline(differLocationsFile, line)) {
-      count += 1;
-      cout << termcolor::color<150, 150, 150> << count << " " << termcolor::reset;
-      stringstream ss(line);
-      string location;
-      while (getline(ss, location, ',')) {
-        cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+    if (left == -1 && right == -1) {
+      ifstream differLocationsFile(differLocationsPath);
+      size_t lineCount = count(
+        istreambuf_iterator<char>(differLocationsFile),
+        istreambuf_iterator<char>(),
+        '\n'
+      );
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
+      int width = getWidth(lineCount);
+      string line;
+      int count = 0;
+      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
+      while (getline(differLocationsFile, line)) {
+        count += 1;
+        int lineWidth = getWidth(count);
+        string blanks = " ";
+        for (int i = 0; i < width - lineWidth; i += 1) {
+          blanks += " ";
+        }
+        cout << termcolor::color<150, 150, 150> << count << " " << termcolor::reset;
+        stringstream ss(line);
+        string location;
+        while (getline(ss, location, ',')) {
+          cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+        }
+        cout << endl;
       }
-      cout << endl;
+    } else {
     }
   }
 }

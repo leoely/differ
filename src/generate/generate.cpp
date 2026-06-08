@@ -171,15 +171,19 @@ void generate(vector<string>& arguments) {
       }
     } else {
       for (const auto& [key, value] : differ) {
+        int count = 0;
         for (const auto& set : sets) {
           if (differ.size() != set.size()) {
-            flag = false;
+            count += 1;
             break;
           }
           if (!set.contains(key)) {
-            flag = false;
+            count += 1;
             break;
           }
+        }
+        if (count == sets.size()) {
+          flag = false;
         }
         keys.push_back(key);
       }
