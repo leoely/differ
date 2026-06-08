@@ -10,8 +10,6 @@
 #include <exception>
 #include <sstream>
 #include <unordered_set>
-#include <string_view>
-#include <ranges>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
@@ -25,7 +23,6 @@
 #include <generateHelp/generateHelp.hpp>
 
 using std::views::join_with;
-using std::views::split;
 using std::ios_base;
 using std::vector;
 using std::unordered_map;

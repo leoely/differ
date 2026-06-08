@@ -8,8 +8,6 @@
 #include <exception>
 #include <sstream>
 #include <unordered_set>
-#include <string_view>
-#include <ranges>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
 #include <LocationParser/LocationParser.hpp>
@@ -23,7 +21,6 @@
 #include <generateHelp/generateHelp.hpp>
 
 using std::views::join_with;
-using std::views::split;
 using std::ios_base;
 using std::vector;
 using std::unordered_map;
@@ -148,6 +145,7 @@ void generate(vector<string>& arguments) {
     fs::path differLocationsPath = homePath / ".differ_locations";
     if (!fs::exists(differLocationsPath)) {
       ofstream differLocationsFile(differLocationsPath);
+      differLocationsFile.close();
     }
     vector<unordered_set<string>> sets;
     list<string> lines;
@@ -189,16 +187,16 @@ void generate(vector<string>& arguments) {
     if (flag == false) {
       auto joined = keys | std::views::join_with(',');
       string line{joined.begin(), joined.end()};
-      if (lines.size() + 1 <= 1) {
+      if (lines.size() + 1 <= 20) {
         ofstream differLocationsFile1(differLocationsPath, ios_base::app);
-        differLocationsFile1 << line;
+        differLocationsFile1 << line << "\n";
         differLocationsFile1.close();
       } else {
         lines.push_back(line);
         lines.pop_front();
         ofstream differLocationsFile1(differLocationsPath);
         for (const auto& line : lines) {
-          differLocationsFile1 << line;
+          differLocationsFile1 << line << "\n";
         }
         differLocationsFile1.close();
       }
