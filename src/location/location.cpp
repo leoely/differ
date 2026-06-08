@@ -140,7 +140,7 @@ void location(vector<string>& arguments) {
     } else {
       try {
         string leftFullString = pointerOptions[0];
-        string rightFullString = pointerOptions[0];
+        string rightFullString = pointerOptions[1];
         regex pattern("^\\^[0-9]+$");
         if (!regex_match(leftFullString, pattern)) {
           throw 1;

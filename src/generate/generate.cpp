@@ -179,11 +179,11 @@ void generate(vector<string>& arguments) {
         for (const auto& set : sets) {
           if (differ.size() != set.size()) {
             count += 1;
-            break;
+            continue;
           }
           if (!set.contains(key)) {
             count += 1;
-            break;
+            continue;
           }
           sameIndex = index;
           index += 1;
@@ -220,6 +220,7 @@ void generate(vector<string>& arguments) {
         for (const auto& line : lines) {
           differLocationsFile1 << line << "\n";
         }
+        differLocationsFile1.close();
       }
     }
     for (const auto& [key, value] : differ) {
