@@ -1,4 +1,5 @@
 #include <iostream>
+#include <regex>
 #include <fstream>
 #include <filesystem>
 #include <memory>
@@ -13,6 +14,9 @@
 #include <locationHelp/locationHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
+using std::from_chars;
+using std::regex_match;
+using std::regex;
 using std::ios;
 using std::size_t;
 using std::count;
@@ -65,6 +69,41 @@ void showLocations(int left, int right) {
         cout << endl;
       }
     } else {
+      ifstream differLocationsFile(differLocationsPath);
+      size_t lineCount = count(
+        istreambuf_iterator<char>(differLocationsFile),
+        istreambuf_iterator<char>(),
+        '\n'
+      );
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
+      if (left < 1) {
+        throw 3;
+      }
+      if (right > lineCount) {
+        throw 4;
+      }
+      int width = getWidth(lineCount);
+      string line;
+      int count = 0;
+      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
+      while (getline(differLocationsFile, line)) {
+        count += 1;
+        if (cout >= left && count <= right) {
+          int lineWidth = getWidth(count);
+          string blanks = " ";
+          for (int i = 0; i < width - lineWidth; i += 1) {
+            blanks += " ";
+          }
+          cout << termcolor::color<150, 150, 150> << count << " " << termcolor::reset;
+          stringstream ss(line);
+          string location;
+          while (getline(ss, location, ',')) {
+            cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+          }
+          cout << endl;
+        }
+      }
     }
   }
 }
@@ -93,6 +132,49 @@ void location(vector<string>& arguments) {
     } catch (int errorCode) {
       locationHelp();
       exit(EXIT_FAILURE);
+    }
+    vector<string> pointerOptions = argument["p"];
+    if (pointerOptions.size() != 2) {
+      locationHelp();
+      exit(EXIT_FAILURE);
+    } else {
+      try {
+        string leftFullString = pointerOptions[0];
+        string rightFullString = pointerOptions[0];
+        regex pattern("^\\^[0-9]+$");
+        if (!match(leftString, pattern)) {
+          throw 1;
+        }
+        if (!match(rightString, pattern)) {
+          throw 2;
+        }
+        string leftString = leftFullString.substr(1, leftFullString.size() - 1);
+        string rightString = rightFullString.substr(1, rightFullString.size() - 1);
+        int left = -1;
+        int right = -1;
+        from_chars(leftString.data(), leftString.data() + leftString.size(), left);
+        from_chars(rightString.data(), rightString.data() + rightString.size(), right);
+        showLocations(left, right);
+      } catch (int errorCode) {
+        switch (errorCode) {
+          case 1:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+          case 2:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+          case 3:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the left pointer exceeds the boundary." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+          case 4:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the right pointer exceeds the boundary." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+        }
+      }
     }
   }
 }
