@@ -6,6 +6,7 @@
 #include <preview/preview.hpp>
 #include <look/look.hpp>
 #include <clear/clear.hpp>
+#include <location/location.hpp>
 
 using std::vector;
 using std::string;
@@ -44,6 +45,9 @@ int main(int argc, const char *argv[]) {
     exit(EXIT_SUCCESS);
   } else if (argument1 == "preview") {
     preview(arguments);
+    exit(EXIT_SUCCESS);
+  } else if (argument1 == "location") {
+    location(arguments);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "clear") {
     clear(arguments);

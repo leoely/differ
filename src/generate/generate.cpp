@@ -166,18 +166,25 @@ void generate(vector<string>& arguments) {
     differLocationsFile.close();
     bool flag = true;
     vector<string> keys;
-    for (const auto& [key, value] : differ) {
-      for (const auto& set : sets) {
-        if (differ.size() != set.size()) {
-          flag = false;
-          break;
-        }
-        if (!set.contains(key)) {
-          flag = false;
-          break;
-        }
+    if (sets.size() == 0) {
+      flag = false;
+      for (const auto& [key, value] : differ) {
+        keys.push_back(key);
       }
-      keys.push_back(key);
+    } else {
+      for (const auto& [key, value] : differ) {
+        for (const auto& set : sets) {
+          if (differ.size() != set.size()) {
+            flag = false;
+            break;
+          }
+          if (!set.contains(key)) {
+            flag = false;
+            break;
+          }
+        }
+        keys.push_back(key);
+      }
     }
     if (flag == false) {
       auto joined = keys | std::views::join_with(',');

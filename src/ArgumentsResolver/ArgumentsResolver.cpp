@@ -48,6 +48,12 @@ int ArgumentsResolver::getType(const string& key) {
   if (key == "differs") {
     type = 6;
   }
+  if (key == "p") {
+    type = 7;
+  }
+  if (key == "pointers") {
+    type = 7;
+  }
   return type;
 }
 
@@ -99,6 +105,14 @@ unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const v
               paramSet.insert("d");
             }
             break;
+          case 7:
+          case 8:
+            if (paramSet.contains("p")) {
+              throw 3;
+            } else {
+              paramSet.insert("p");
+            }
+            break;
         }
         break;
       case 1:
@@ -126,6 +140,10 @@ unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const v
             case 5:
             case 6:
               argument["d"].push_back(param);
+              break;
+            case 7:
+            case 8:
+              argument["p"].push_back(param);
               break;
           }
         }

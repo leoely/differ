@@ -9,7 +9,7 @@ AddCoverage(differ)
 
 target_link_libraries(
   differ PRIVATE assist
-  validate validateHelp generate generateHelp
+  validate validateHelp generate generateHelp location locationHelp
   look lookHelp preview previewHelp clear clearHelp
   getWidth ArgumentsResolver FilePath
   Parser DifferParser LocationParser VariableParser
@@ -49,3 +49,5 @@ add_subdirectory(preview)
 add_subdirectory(previewHelp)
 add_subdirectory(clear)
 add_subdirectory(clearHelp)
+add_subdirectory(location)
+add_subdirectory(locationHelp)
