@@ -46,7 +46,6 @@ void clearLocations(int left, int right) {
         return;
       }
       ifstream differLocationsFile(differLocationsPath);
-      ofstream outputFile(differLocationsPath);
       string line;
       while (getline(differLocationsFile, line)) {
         stringstream ss(line);
@@ -56,14 +55,14 @@ void clearLocations(int left, int right) {
           fs::remove(locationPath);
         }
       }
-      outputFile.close();
+      ofstream differLocationsFile1(differLocationsPath);
+      differLocationsFile1.close();
     } else if (right == -1) {
       bool ans = question("Are you sure you want to delete all the files pointed to.");
       if (ans == false) {
         return;
       }
       ifstream differLocationsFile(differLocationsPath);
-      ofstream outputFile(differLocationsPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differLocationsFile),
         istreambuf_iterator<char>(),
@@ -78,6 +77,7 @@ void clearLocations(int left, int right) {
         throw 7;
       }
       int count = 0;
+      vector<string> lines;
       string line;
       while (getline(differLocationsFile, line)) {
         count += 1;
@@ -89,10 +89,14 @@ void clearLocations(int left, int right) {
             fs::remove(locationPath);
           }
         } else {
-          outputFile << line + "\n";
+          lines.push_back(line);
         }
       }
-      outputFile.close();
+      ofstream differLocationsFile1(differLocationsPath);
+      for (const auto& line : lines) {
+        differLocationsFile1 << line + "\n";
+      }
+      differLocationsFile1.close();
     } else {
       bool ans = question("Are you sure you want to delete all the files pointed to.");
       if (ans == false) {
@@ -114,6 +118,7 @@ void clearLocations(int left, int right) {
         throw 4;
       }
       string line;
+      vector<string> lines;
       int count = 0;
       while (getline(differLocationsFile, line)) {
         count += 1;
@@ -125,10 +130,14 @@ void clearLocations(int left, int right) {
             fs::remove(locationPath);
           }
         } else {
-          outputFile << line + "\n";
+          lines.push_back(line);
         }
       }
-      outputFile.close();
+      ofstream differLocationsFile1(differLocationsPath);
+      for (const auto& line : lines) {
+        differLocationsFile1 << line + "\n";
+      }
+      differLocationsFile1.close();
     }
   }
 }
