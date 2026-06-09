@@ -69,7 +69,7 @@ void generate(vector<string>& arguments) {
     shared_ptr<LocationMerge> locationMerge(new LocationMerge());
     vector<string> locationOptions = argument["l"];
     if (locationOptions.size() == 0) {
-      cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "Without a \".loc\" file,it is impossible to generate the target file." << termcolor::reset << endl;
+      cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " Without a \".loc\" file,it is impossible to generate the target file." << termcolor::reset << endl;
     }
     vector<list<string>> fullLists;
     vector<unordered_map<string, list<string>>> locations;
@@ -111,7 +111,7 @@ void generate(vector<string>& arguments) {
     shared_ptr<DifferMerge> differMerge(new DifferMerge());
     vector<string> diffOptions = argument["d"];
     if (diffOptions.size() == 0) {
-      cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "Without a \".diff\" file,it is impossible to generate the target file." << termcolor::reset << endl;
+      cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " Without a \".diff\" file,it is impossible to generate the target file." << termcolor::reset << endl;
     }
     vector<unordered_map<string, list<string>>> differs;
     for (const auto& diffOption: diffOptions) {
@@ -224,7 +224,7 @@ void generate(vector<string>& arguments) {
       }
     }
     for (const auto& [key, value] : differ) {
-      cout << termcolor::bold << "[Generate] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
+      cout << termcolor::bold << "[Generation] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << key << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
     }
   }
 }

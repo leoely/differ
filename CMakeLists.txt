@@ -3,7 +3,7 @@ set(CAMKE_CXX_STANDARD 26)
 set(CAMKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 project(
-  differ VERSION 1.0.0
+  differ VERSION 1.1.0
   DESCRIPTION "Efficient tool for generating diff files from source files."
   LANGUAGES CXX
 )

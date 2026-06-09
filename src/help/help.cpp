@@ -22,5 +22,7 @@ void help() {
   println("  - validate Validate the syntax of file at different stages.");
   println("  - preview  Preview the final generated file content via command line.");
   println("  - look     Look ths source files at different stages of merging.");
+  println("  - location View the location record of previously generated files.");
+  println("  - clear    Clear previously generated target files.");
   println();
 }

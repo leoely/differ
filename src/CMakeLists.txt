@@ -11,7 +11,7 @@ target_link_libraries(
   differ PRIVATE assist
   validate validateHelp generate generateHelp location locationHelp
   look lookHelp preview previewHelp clear clearHelp
-  getWidth ArgumentsResolver FilePath
+  getWidth question ArgumentsResolver FilePath
   Parser DifferParser LocationParser VariableParser
   LocationMerge VariableMerge DifferMerge
   Lexer LocationLexer DifferLexer VariableLexer
@@ -38,6 +38,7 @@ add_subdirectory(DifferMerge)
 add_subdirectory(ArgumentsResolver)
 add_subdirectory(FilePath)
 add_subdirectory(getWidth)
+add_subdirectory(question)
 add_subdirectory(generate)
 add_subdirectory(generateHelp)
 add_subdirectory(help)

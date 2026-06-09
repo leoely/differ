@@ -52,7 +52,6 @@ void showLocations(int left, int right) {
       int width = getWidth(lineCount);
       string line;
       int count = 0;
-      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
       while (getline(differLocationsFile, line)) {
         count += 1;
         int lineWidth = getWidth(count);
@@ -64,11 +63,11 @@ void showLocations(int left, int right) {
         stringstream ss(line);
         string location;
         while (getline(ss, location, ',')) {
-          cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+          cout << termcolor::on_white << termcolor::color<0, 0, 0> << "\"" + location + "\"" << termcolor::reset << " ";
         }
         cout << endl;
       }
-    } else if (right = -1) {
+    } else if (right == -1) {
       ifstream differLocationsFile(differLocationsPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differLocationsFile),
@@ -78,12 +77,14 @@ void showLocations(int left, int right) {
       differLocationsFile.clear();
       differLocationsFile.seekg(0, ios::beg);
       if (left < 1) {
-        throw 5;
+        throw 6;
+      }
+      if (left > lineCount) {
+        throw 7;
       }
       int width = getWidth(lineCount);
       string line;
       int count = 0;
-      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
       while (getline(differLocationsFile, line)) {
         count += 1;
         if (count == left) {
@@ -96,7 +97,7 @@ void showLocations(int left, int right) {
           stringstream ss(line);
           string location;
           while (getline(ss, location, ',')) {
-            cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+            cout << termcolor::on_white << termcolor::color<0, 0, 0> << "\"" + location + "\"" << termcolor::reset << " ";
           }
           cout << endl;
         }
@@ -119,7 +120,6 @@ void showLocations(int left, int right) {
       int width = getWidth(lineCount);
       string line;
       int count = 0;
-      cout << "[" << termcolor::bold << "Location" << termcolor::reset << "]" << termcolor::reset << termcolor::bold << " Recoeds" << termcolor::reset << ":" << termcolor::reset << endl;
       while (getline(differLocationsFile, line)) {
         count += 1;
         if (count >= left && count <= right) {
@@ -132,7 +132,7 @@ void showLocations(int left, int right) {
           stringstream ss(line);
           string location;
           while (getline(ss, location, ',')) {
-            cout << "\"" << termcolor::color<150, 150, 150> << location << termcolor::reset << "\" ";
+            cout << termcolor::on_white << termcolor::color<0, 0, 0> << "\"" + location + "\"" << termcolor::reset << " ";
           }
           cout << endl;
         }
@@ -172,20 +172,24 @@ void location(vector<string>& arguments) {
       try {
         string pointerFullString = pointerOptions[0];
         if (!regex_match(pointerFullString, pattern)) {
-          throw 1;
+          throw 5;
         }
         string pointerString = pointerFullString.substr(1, pointerFullString.size() - 1);
         int pointer = -1;
         from_chars(pointerString.data(), pointerString.data() + pointerString.size(), pointer);
-        showLocations(pointer, pointer);
+        showLocations(pointer, -1);
       } catch (int errorCode) {
         switch (errorCode) {
-          case 1:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the pointer should be \"^k\"." << termcolor::reset << endl;
+          case 5:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The format of the pointer should be \"^k\"." << termcolor::reset << endl;
             exit(errorCode);
             break;
-          case 5:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the pointer exceeds the boundary." << termcolor::reset << endl;
+          case 6:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The value of the pointer exceeds the lower boundary." << termcolor::reset << endl;
+            exit(errorCode);
+            break;
+          case 7:
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The value of the pointer exceeds the upper boundary." << termcolor::reset << endl;
             exit(errorCode);
             break;
         }
@@ -210,19 +214,19 @@ void location(vector<string>& arguments) {
       } catch (int errorCode) {
         switch (errorCode) {
           case 1:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
             exit(errorCode);
             break;
           case 2:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The format of the left pointer should be \"^k\"." << termcolor::reset << endl;
             exit(errorCode);
             break;
           case 3:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the left pointer exceeds the boundary." << termcolor::reset << endl;
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The value of the left pointer exceeds the boundary." << termcolor::reset << endl;
             exit(errorCode);
             break;
           case 4:
-            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << "The value of the right pointer exceeds the boundary." << termcolor::reset << endl;
+            cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " The value of the right pointer exceeds the boundary." << termcolor::reset << endl;
             exit(errorCode);
             break;
         }
