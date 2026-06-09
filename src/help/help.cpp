@@ -24,5 +24,7 @@ void help() {
   println("  - look     Look ths source files at different stages of merging.");
   println("  - location View the location record of previously generated files.");
   println("  - clear    Clear previously generated target files.");
+  println("  - history  View previously used commands.");
+  println("  - repeat   Repeat the command used before.");
   println();
 }

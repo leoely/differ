@@ -7,6 +7,8 @@
 #include <look/look.hpp>
 #include <clear/clear.hpp>
 #include <location/location.hpp>
+#include <repeat/repeat.hpp>
+#include <history/history.hpp>
 
 using std::vector;
 using std::string;
@@ -51,6 +53,12 @@ int main(int argc, const char *argv[]) {
     exit(EXIT_SUCCESS);
   } else if (argument1 == "clear") {
     clear(arguments);
+    exit(EXIT_SUCCESS);
+  } else if (argument1 == "history") {
+    history(arguments);
+    exit(EXIT_SUCCESS);
+  } else if (argument1 == "repeat") {
+    repeat(arguments);
     exit(EXIT_SUCCESS);
   } else {
     help();
