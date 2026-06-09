@@ -153,10 +153,8 @@ void location(vector<string>& arguments) {
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "-a") {
     showLocations(-1, -1);
-    exit(EXIT_SUCCESS);
   } else if (arguments[0] == "--all") {
     showLocations(-1, -1);
-    exit(EXIT_SUCCESS);
   } else {
     shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
     unordered_map<string, vector<string>> argument;

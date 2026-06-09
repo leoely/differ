@@ -158,10 +158,8 @@ void clear(vector<string>& arguments) {
     exit(EXIT_SUCCESS);
   } else if (arguments[0] == "-a") {
     clearLocations(-1, -1);
-    exit(EXIT_SUCCESS);
   } else if (arguments[0] == "--all") {
     clearLocations(-1, -1);
-    exit(EXIT_SUCCESS);
   } else {
     shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
     unordered_map<string, vector<string>> argument;
