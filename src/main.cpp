@@ -1,3 +1,4 @@
+#include <iostream>
 #include <list>
 #include <vector>
 #include <string>
@@ -15,6 +16,8 @@
 #include <history/history.hpp>
 #include <sago/platform_folders.h>
 
+using std::cout;
+using std::endl;
 using std::getline;
 using std::ifstream;
 using std::ofstream;

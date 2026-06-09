@@ -66,7 +66,6 @@ void validate(vector<string>& arguments) {
         }
         cout << termcolor::bold << "[Validation] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << variableFilePathString << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
       }
-      exit(EXIT_SUCCESS);
     } else {
       shared_ptr<LocationMerge> locationMerge(new LocationMerge());
       vector<string> locationOptions = argument["l"];
