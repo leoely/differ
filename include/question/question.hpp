@@ -12,4 +12,4 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-bool question(string content);
+bool question(const string content);

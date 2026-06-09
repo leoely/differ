@@ -12,7 +12,7 @@ using std::cin;
 
 bool question(string content) {
   string answer;
-  cout << termcolor::bold << content << termcolor::reset << "yes[" << termcolor::bold << "Y" << termcolor::reset << "]/no[" << termcolor::bold << "N" << termcolor::reset << "]?" << endl;
+  cout << termcolor::bold << content << termcolor::reset << "yes[" << termcolor::bold << "Y" << termcolor::reset << "]/no[" << termcolor::bold << "N" << termcolor::reset << "]?";
   cin >> answer;
   transform(answer.begin(), answer.end(), answer.begin(), [](unsigned char c) {
     return tolower(c);

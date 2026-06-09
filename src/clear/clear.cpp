@@ -15,6 +15,7 @@
 #include <question/question.hpp>
 #include <clearHelp/clearHelp.hpp>
 
+using std::to_string;
 using std::from_chars;
 using std::regex_match;
 using std::regex;
@@ -41,7 +42,7 @@ void clearLocations(int left, int right) {
   fs::path differLocationsPath = homePath / ".differ_locations";
   if (fs::exists(differLocationsPath)) {
     if (left == -1 && right == -1) {
-      bool ans = question("Are you sure you want to delete all the files pointed to.");
+      bool ans = question("Are you sure you want to delete all the files.");
       if (ans == false) {
         return;
       }
@@ -53,29 +54,30 @@ void clearLocations(int left, int right) {
         while (getline(ss, location, ',')) {
           fs::path locationPath = location;
           fs::remove(locationPath);
+          cout << termcolor::bold << "[Removal] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << location << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
         }
       }
       ofstream differLocationsFile1(differLocationsPath);
       differLocationsFile1.close();
     } else if (right == -1) {
-      bool ans = question("Are you sure you want to delete all the files pointed to.");
-      if (ans == false) {
-        return;
-      }
       ifstream differLocationsFile(differLocationsPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differLocationsFile),
         istreambuf_iterator<char>(),
         '\n'
       );
-      differLocationsFile.clear();
-      differLocationsFile.seekg(0, ios::beg);
       if (left < 1) {
         throw 6;
       }
       if (left > lineCount) {
         throw 7;
       }
+      bool ans = question("Are you sure you want to delete all the files pointed to: {^" + to_string(left) + "}.");
+      if (ans == false) {
+        return;
+      }
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
       int count = 0;
       vector<string> lines;
       string line;
@@ -87,6 +89,7 @@ void clearLocations(int left, int right) {
           while (getline(ss, location, ',')) {
             fs::path locationPath = location;
             fs::remove(locationPath);
+            cout << termcolor::bold << "[Removal] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << location << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
           }
         } else {
           lines.push_back(line);
@@ -98,10 +101,6 @@ void clearLocations(int left, int right) {
       }
       differLocationsFile1.close();
     } else {
-      bool ans = question("Are you sure you want to delete all the files pointed to.");
-      if (ans == false) {
-        return;
-      }
       ifstream differLocationsFile(differLocationsPath);
       ofstream outputFile(differLocationsPath);
       size_t lineCount = count(
@@ -109,14 +108,18 @@ void clearLocations(int left, int right) {
         istreambuf_iterator<char>(),
         '\n'
       );
-      differLocationsFile.clear();
-      differLocationsFile.seekg(0, ios::beg);
       if (left < 1) {
         throw 3;
       }
       if (right > lineCount) {
         throw 4;
       }
+      bool ans = question("Are you sure you want to delete all the files pointed to: [^" + to_string(left) + "," + "^" + to_string(right) + "].");
+      if (ans == false) {
+        return;
+      }
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
       string line;
       vector<string> lines;
       int count = 0;
@@ -128,6 +131,7 @@ void clearLocations(int left, int right) {
           while (getline(ss, location, ',')) {
             fs::path locationPath = location;
             fs::remove(locationPath);
+            cout << termcolor::bold << "[Removal] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << location << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
           }
         } else {
           lines.push_back(line);

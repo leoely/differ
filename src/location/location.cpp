@@ -74,14 +74,14 @@ void showLocations(int left, int right) {
         istreambuf_iterator<char>(),
         '\n'
       );
-      differLocationsFile.clear();
-      differLocationsFile.seekg(0, ios::beg);
       if (left < 1) {
         throw 6;
       }
       if (left > lineCount) {
         throw 7;
       }
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
       int width = getWidth(lineCount);
       string line;
       int count = 0;
@@ -109,14 +109,14 @@ void showLocations(int left, int right) {
         istreambuf_iterator<char>(),
         '\n'
       );
-      differLocationsFile.clear();
-      differLocationsFile.seekg(0, ios::beg);
       if (left < 1) {
         throw 3;
       }
       if (right > lineCount) {
         throw 4;
       }
+      differLocationsFile.clear();
+      differLocationsFile.seekg(0, ios::beg);
       int width = getWidth(lineCount);
       string line;
       int count = 0;
