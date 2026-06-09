@@ -11,6 +11,9 @@ void historyHelp() {
   cout << termcolor::color<150, 150, 150> << "  diff history -a" << termcolor::reset << endl;
   println("");
   cout << termcolor::bold << "Subcommand pattern" << termcolor::reset << "{" << termcolor::bold << "2" << termcolor::reset << "}" << termcolor::bold << ":" << termcolor::reset << endl;
+  cout << termcolor::color<150, 150, 150> << "  diff history -p [left] [right]" << termcolor::reset << endl;
+  println("");
+  cout << termcolor::bold << "Subcommand pattern" << termcolor::reset << "{" << termcolor::bold << "3" << termcolor::reset << "}" << termcolor::bold << ":" << termcolor::reset << endl;
   cout << termcolor::color<150, 150, 150> << "  diff history -p [pointer]" << termcolor::reset << endl;
   println("");
   cout << "{" << termcolor::bold << "Short" << termcolor::reset << "}" << termcolor::bold << " and " << termcolor::reset << "{" << termcolor::bold << "long" << termcolor::reset << "}" << termcolor::bold << " flag comparsion" << termcolor::reset << ":" << endl;
