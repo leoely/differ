@@ -13,8 +13,8 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
-#include <clearHelp/clearHelp.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
+#include <repeatHelp/repeatHelp.hpp>
 
 using std::to_string;
 using std::from_chars;
@@ -36,4 +36,4 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void repeat(vector<string>& arguments);
+void repeat(vector<string>& parameters);

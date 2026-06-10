@@ -13,10 +13,11 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <question/question.hpp>
 #include <clearHelp/clearHelp.hpp>
 
+using std::to_string;
 using std::from_chars;
 using std::regex_match;
 using std::regex;
@@ -26,6 +27,7 @@ using std::count;
 using std::istreambuf_iterator;
 using std::getline;
 using std::ifstream;
+using std::ofstream;
 using std::cout;
 using std::endl;
 using std::string;
@@ -35,4 +37,4 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void clear(vector<string>& arguments);
+void clear(vector<string>& parameters);

@@ -19,7 +19,7 @@
 #include <LocationMerge/LocationMerge.hpp>
 #include <VariableMerge/VariableMerge.hpp>
 #include <FilePath/FilePath.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
 using std::next;
@@ -41,4 +41,4 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void generate(vector<string>& arguments);
+void generate(vector<string>& parameters);

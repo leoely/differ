@@ -11,7 +11,7 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <historyHelp/historyHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
@@ -32,4 +32,4 @@ using std::shared_ptr;
 
 namespace fs = std::filesystem;
 
-void history(vector<string>& arguments);
+void history(vector<string>& paramters);

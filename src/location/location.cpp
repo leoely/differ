@@ -10,7 +10,7 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <locationHelp/locationHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
@@ -141,30 +141,30 @@ void showLocations(int left, int right) {
   }
 }
 
-void location(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void location(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     locationHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     locationHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     locationHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-a") {
+  } else if (parameters[0] == "-a") {
     showLocations(-1, -1);
-  } else if (arguments[0] == "--all") {
+  } else if (parameters[0] == "--all") {
     showLocations(-1, -1);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       locationHelp();
       exit(EXIT_FAILURE);
     }
-    vector<string> pointerOptions = argument["p"];
+    vector<string> pointerOptions = parameter["p"];
     regex pattern("^\\^[0-9]+$");
     if (pointerOptions.size() == 1) {
       try {

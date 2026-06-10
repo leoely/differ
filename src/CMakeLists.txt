@@ -12,7 +12,7 @@ target_link_libraries(
   validate validateHelp generate generateHelp location locationHelp
   look lookHelp preview previewHelp clear clearHelp history historyHelp
   repeat repeatHelp
-  getWidth question ArgumentsResolver FilePath
+  getWidth question ParametersResolver FilePath
   Parser DifferParser LocationParser VariableParser
   LocationMerge VariableMerge DifferMerge
   Lexer LocationLexer DifferLexer VariableLexer
@@ -36,7 +36,7 @@ add_subdirectory(VariableParser)
 add_subdirectory(VariableMerge)
 add_subdirectory(LocationMerge)
 add_subdirectory(DifferMerge)
-add_subdirectory(ArgumentsResolver)
+add_subdirectory(ParametersResolver)
 add_subdirectory(FilePath)
 add_subdirectory(getWidth)
 add_subdirectory(question)

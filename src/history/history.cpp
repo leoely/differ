@@ -9,7 +9,7 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <historyHelp/historyHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
@@ -125,30 +125,30 @@ void showHistorys(int left, int right) {
 }
 
 
-void history(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void history(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     historyHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     historyHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     historyHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-a") {
+  } else if (parameters[0] == "-a") {
     showHistorys(-1, -1);
-  } else if (arguments[0] == "--all") {
+  } else if (parameters[0] == "--all") {
     showHistorys(-1, -1);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       historyHelp();
       exit(EXIT_FAILURE);
     }
-    vector<string> pointerOptions = argument["p"];
+    vector<string> pointerOptions = parameter["p"];
     regex pattern("^\\^[0-9]+$");
     if (pointerOptions.size() == 1) {
       try {

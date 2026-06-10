@@ -15,20 +15,19 @@ using std::vector;
 using std::unordered_map;
 using std::string;
 
-class ArgumentsResolver {
+class ParametersResolver {
   private:
-    unordered_map<string, vector<string>> argument;
+    unordered_map<string, vector<string>> parameter;
     unordered_set<string> paramSet;
-    int status;
     static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseArguments(const vector<string>& params);
-    ArgumentsResolver();
+    unordered_map<string, vector<string>>& parseParameters(const vector<string>& params);
+    ParametersResolver();
 };
 
-ArgumentsResolver::ArgumentsResolver() : status(0) {}
+ParametersResolver::ParametersResolver() {}
 
-int ArgumentsResolver::getType(const string& key) {
+int ParametersResolver::getType(const string& key) {
   int type = 0;
   if (key == "v") {
     type = 1;
@@ -52,15 +51,21 @@ int ArgumentsResolver::getType(const string& key) {
     type = 7;
   }
   if (key == "pointers") {
-    type = 7;
+    type = 8;
+  }
+  if (key == "r") {
+    type = 9;
+  }
+  if (key == "range") {
+    type = 10;
   }
   return type;
 }
 
-unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const vector<string>& params) {
+unordered_map<string, vector<string>>& ParametersResolver::parseParameters(const vector<string>& params) {
   regex pattern1("^\\-[a-z]+$");
   regex pattern2("^\\-\\-[a-z]+$");
-  status = 0;
+  int status = 0;
   int type;
   string key;
   for (const auto &param : params) {
@@ -113,6 +118,14 @@ unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const v
               paramSet.insert("p");
             }
             break;
+          case 9:
+          case 10:
+            if (paramSet.contains("r")) {
+              throw 3;
+            } else {
+              paramSet.insert("r");
+            }
+            break;
         }
         break;
       case 1:
@@ -131,24 +144,28 @@ unordered_map<string, vector<string>>& ArgumentsResolver::parseArguments(const v
               break;
             case 1:
             case 2:
-              argument["v"].push_back(param);
+              parameter["v"].push_back(param);
               break;
             case 3:
             case 4:
-              argument["l"].push_back(param);
+              parameter["l"].push_back(param);
               break;
             case 5:
             case 6:
-              argument["d"].push_back(param);
+              parameter["d"].push_back(param);
               break;
             case 7:
             case 8:
-              argument["p"].push_back(param);
+              parameter["p"].push_back(param);
+              break;
+            case 9:
+            case 10:
+              parameter["r"].push_back(param);
               break;
           }
         }
         break;
     }
   }
-  return argument;
+  return parameter;
 }

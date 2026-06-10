@@ -48,8 +48,19 @@ void addCommandHistory(string commandName, vector<string>& parameters) {
   string parametersString{joined_view.begin(), joined_view.end()};
   string history = commandName + " " + parametersString;
   if (!set.contains(history)) {
-    ofstream differHistorysFile1(differHistorysPath, ios_base::app);
-    differHistorysFile1 << history << "\n";
+    if (lines.size() + 1 <= 20) {
+      ofstream differHistorysFile1(differHistorysPath, ios_base::app);
+      differHistorysFile1 << history << "\n";
+      differHistorysFile1.close();
+    } else {
+      lines.push_back(history);
+      lines.pop_front();
+      ofstream differHistorysFile1(differHistorysPath);
+      for (const auto& line : lines) {
+        differHistorysFile1 << line << "\n";
+      }
+      differHistorysFile1.close();
+    }
   } else {
     int sameIndex;
     int index = 0;
@@ -94,42 +105,42 @@ int main(int argc, const char *argv[]) {
     cout << "v1.1.0" << endl;
     exit(EXIT_SUCCESS);
   }
-  vector<string> arguments;
+  vector<string> parameters;
   for (int i = 2; i < argc; i += 1) {
     string argument = argv[i];
-    arguments.push_back(argument);
+    parameters.push_back(argument);
   }
   argc -= 2;
   if (argument1 == "generate") {
-    generate(arguments);
-    addCommandHistory("generate", arguments);
+    generate(parameters);
+    addCommandHistory("generate", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "validate") {
-    validate(arguments);
-    addCommandHistory("validate", arguments);
+    validate(parameters);
+    addCommandHistory("validate", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "look") {
-    look(arguments);
-    addCommandHistory("look", arguments);
+    look(parameters);
+    addCommandHistory("look", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "preview") {
-    preview(arguments);
-    addCommandHistory("preview", arguments);
+    preview(parameters);
+    addCommandHistory("preview", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "location") {
-    location(arguments);
-    addCommandHistory("location", arguments);
+    location(parameters);
+    addCommandHistory("location", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "clear") {
-    clear(arguments);
-    addCommandHistory("clear", arguments);
+    clear(parameters);
+    addCommandHistory("clear", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "history") {
-    history(arguments);
-    addCommandHistory("history", arguments);
+    history(parameters);
+    addCommandHistory("history", parameters);
     exit(EXIT_SUCCESS);
   } else if (argument1 == "repeat") {
-    repeat(arguments);
+    repeat(parameters);
     exit(EXIT_SUCCESS);
   } else {
     help();

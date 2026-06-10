@@ -5,7 +5,7 @@
 #include <DifferParser/DifferParser.hpp>
 #include <LocationParser/LocationParser.hpp>
 #include <VariableParser/VariableParser.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <FilePath/FilePath.hpp>
 #include <LocationMerge/LocationMerge.hpp>
 #include <VariableMerge/VariableMerge.hpp>
@@ -20,27 +20,27 @@ using std::getline;
 
 namespace fs = std::filesystem;
 
-void validate(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void validate(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     validateHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     validateHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     validateHelp();
     exit(EXIT_SUCCESS);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       validateHelp();
       exit(EXIT_FAILURE);
     }
-    if (argument["d"].size() == 0) {
-      vector<string> locationOptions = argument["l"];
+    if (parameter["d"].size() == 0) {
+      vector<string> locationOptions = parameter["l"];
       for (const auto& locationOption: locationOptions) {
         shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
         filePath->dealPath();
@@ -53,7 +53,7 @@ void validate(vector<string>& arguments) {
         }
         cout << termcolor::bold << "[Validation] :: " << termcolor::reset << termcolor::green << termcolor::bold << "✔" << termcolor::reset << " \"" << termcolor::color<145, 145, 145> << locationFilePathString << termcolor::reset << "\"" << termcolor::bold << ";" << termcolor::reset << endl;
       }
-      vector<string> variableOptions = argument["v"];
+      vector<string> variableOptions = parameter["v"];
       for (const auto& variableOption: variableOptions) {
         shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
         filePath->dealPath();
@@ -68,7 +68,7 @@ void validate(vector<string>& arguments) {
       }
     } else {
       shared_ptr<LocationMerge> locationMerge(new LocationMerge());
-      vector<string> locationOptions = argument["l"];
+      vector<string> locationOptions = parameter["l"];
       vector<list<string>> fullLists;
       vector<unordered_map<string, list<string>>> locations;
       for (const auto& locationOption: locationOptions) {
@@ -90,7 +90,7 @@ void validate(vector<string>& arguments) {
       unordered_map<string, list<string>> location = locationMerge->getLocation();
 
       shared_ptr<VariableMerge> variableMerge(new VariableMerge());
-      vector<string> variableOptions = argument["v"];
+      vector<string> variableOptions = parameter["v"];
       vector<unordered_map<string, string>> variables;
       for (const auto& variableOption: variableOptions) {
         shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
@@ -108,7 +108,7 @@ void validate(vector<string>& arguments) {
       variableMerge->merge(variables);
       unordered_map<string, string> variable = variableMerge->getVariable();
 
-      vector<string> diffOptions = argument["d"];
+      vector<string> diffOptions = parameter["d"];
       for (const auto& diffOption: diffOptions) {
         shared_ptr<FilePath> filePath(new FilePath(diffOption, ".diff"));
         filePath->dealPath();

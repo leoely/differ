@@ -17,7 +17,7 @@
 #include <LocationMerge/LocationMerge.hpp>
 #include <VariableMerge/VariableMerge.hpp>
 #include <FilePath/FilePath.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <generateHelp/generateHelp.hpp>
 
 using std::next;
@@ -47,27 +47,27 @@ const string dealBlankLine(const string& textLine) {
   }
 }
 
-void generate(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void generate(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     generateHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     generateHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     generateHelp();
     exit(EXIT_SUCCESS);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       generateHelp();
       exit(EXIT_FAILURE);
     }
     shared_ptr<LocationMerge> locationMerge(new LocationMerge());
-    vector<string> locationOptions = argument["l"];
+    vector<string> locationOptions = parameter["l"];
     if (locationOptions.size() == 0) {
       cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " Without a \".loc\" file,it is impossible to generate the target file." << termcolor::reset << endl;
     }
@@ -91,7 +91,7 @@ void generate(vector<string>& arguments) {
     unordered_map<string, list<string>> location = locationMerge->getLocation();
 
     shared_ptr<VariableMerge> variableMerge(new VariableMerge());
-    vector<string> variableOptions = argument["v"];
+    vector<string> variableOptions = parameter["v"];
     vector<unordered_map<string, string>> variables;
     for (const auto& variableOption: variableOptions) {
       shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
@@ -109,7 +109,7 @@ void generate(vector<string>& arguments) {
     unordered_map<string, string> variable = variableMerge->getVariable();
 
     shared_ptr<DifferMerge> differMerge(new DifferMerge());
-    vector<string> diffOptions = argument["d"];
+    vector<string> diffOptions = parameter["d"];
     if (diffOptions.size() == 0) {
       cout << termcolor::dark << "[" << termcolor::reset << termcolor::bold << "Error" << termcolor::reset << termcolor::dark << "]" << termcolor::reset << termcolor::bold << " Without a \".diff\" file,it is impossible to generate the target file." << termcolor::reset << endl;
     }

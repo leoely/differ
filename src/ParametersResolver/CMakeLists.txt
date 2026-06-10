@@ -1,0 +1,3 @@
+add_library(ParametersResolver STATIC ParametersResolver.cpp)
+MemoryCheck(ParametersResolver)
+AddCoverage(ParametersResolver)

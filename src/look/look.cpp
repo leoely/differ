@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <termcolor/termcolor.hpp>
 #include <lookHelp/lookHelp.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <FilePath/FilePath.hpp>
 #include <VariableLexer/VariableLexer.hpp>
 #include <LocationLexer/LocationLexer.hpp>
@@ -45,28 +45,28 @@ void outputWithLineNumber(int& index, int lastWidth) {
   cout << termcolor::bold << termcolor::grey << index << " " << blank;
 }
 
-void look(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void look(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     lookHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     lookHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     lookHelp();
     exit(EXIT_SUCCESS);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       lookHelp();
       exit(EXIT_FAILURE);
     }
     vector<list<string>> fullLists;
     vector<unordered_map<string, list<string>>> locations;
-    vector<string> locationOptions = argument["l"];
+    vector<string> locationOptions = parameter["l"];
     for (const auto& locationOption: locationOptions) {
       shared_ptr<FilePath> filePath(new FilePath(locationOption, ".loc"));
       filePath->dealPath();
@@ -110,7 +110,7 @@ void look(vector<string>& arguments) {
       }
     }
     vector<unordered_map<string, string>> variables;
-    vector<string> variableOptions = argument["v"];
+    vector<string> variableOptions = parameter["v"];
     for (const auto& variableOption: variableOptions) {
       shared_ptr<FilePath> filePath(new FilePath(variableOption, ".var"));
       filePath->dealPath();
@@ -156,7 +156,7 @@ void look(vector<string>& arguments) {
     shared_ptr<VariableMerge> variableMerge(new VariableMerge());
     locationMerge->merge(fullLists, locations);
     variableMerge->merge(variables);
-    vector<string> differOptions = argument["d"];
+    vector<string> differOptions = parameter["d"];
     for (const auto& differOption: differOptions) {
       shared_ptr<FilePath> filePath(new FilePath(differOption, ".diff"));
       filePath->dealPath();

@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <termcolor/termcolor.hpp>
 #include <lookHelp/lookHelp.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <FilePath/FilePath.hpp>
 #include <VariableLexer/VariableLexer.hpp>
 #include <LocationLexer/LocationLexer.hpp>
@@ -37,4 +37,4 @@ using std::unordered_map;
 using std::cout;
 using std::endl;
 
-void look(vector<string>& arguments);
+void look(vector<string>& parameters);

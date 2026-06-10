@@ -17,7 +17,7 @@
 #include <LocationMerge/LocationMerge.hpp>
 #include <VariableMerge/VariableMerge.hpp>
 #include <FilePath/FilePath.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <previewHelp/previewHelp.hpp>
 
 using std::println;
@@ -30,4 +30,4 @@ using std::shared_ptr;
 using std::ifstream;
 using std::exception;
 
-void preview(vector<string>& arguments);
+void preview(vector<string>& parameters);

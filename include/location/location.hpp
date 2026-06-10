@@ -12,7 +12,7 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <locationHelp/locationHelp.hpp>
 #include <getWidth/getWidth.hpp>
 
@@ -34,4 +34,4 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void location(vector<string>& arguments);
+void location(vector<string>& parameters);

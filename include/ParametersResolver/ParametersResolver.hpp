@@ -17,13 +17,13 @@ using std::vector;
 using std::unordered_map;
 using std::string;
 
-class ArgumentsResolver {
+class ParametersResolver {
   private:
-    unordered_map<string, vector<string>> argument;
+    unordered_map<string, vector<string>> parameter;
     unordered_set<string> paramSet;
-    int status;
     static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseArguments(const vector<string>& params);
-    ArgumentsResolver();
+    unordered_map<string, vector<string>>& parseParameters(const vector<string>& params);
+    ParametersResolver();
 };
+

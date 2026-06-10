@@ -11,7 +11,7 @@
 #include <iterator>
 #include <sago/platform_folders.h>
 #include <termcolor/termcolor.hpp>
-#include <ArgumentsResolver/ArgumentsResolver.hpp>
+#include <ParametersResolver/ParametersResolver.hpp>
 #include <repeatHelp/repeatHelp.hpp>
 
 using std::to_string;
@@ -34,24 +34,13 @@ using std::stringstream;
 
 namespace fs = std::filesystem;
 
-void clearHistorys(int left, int right) {
+void repeatHistorys(int left, int right) {
   string documentPathString = sago::getDocumentsFolder();
   const fs::path documentPath = documentPathString;
   const fs::path homePath = documentPath.parent_path();
   fs::path differHistorysPath = homePath / ".differ_historys";
   if (fs::exists(differHistorysPath)) {
-    if (left == -1 && right == -1) {
-      ifstream differHistorysFile(differHistorysPath);
-      string line;
-      while (getline(differHistorysFile, line)) {
-        stringstream ss(line);
-        string param;
-        while (getline(ss, param, ' ')) {
-        }
-      }
-      ofstream differHistorysFile1(differHistorysPath);
-      differHistorysFile1.close();
-    } else if (right == -1) {
+    if (right == -1) {
       ifstream differHistorysFile(differHistorysPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differHistorysFile),
@@ -125,37 +114,44 @@ void clearHistorys(int left, int right) {
 }
 
 
-void repeat(vector<string>& arguments) {
-  if (arguments.size() == 0) {
+void repeat(vector<string>& parameters) {
+  if (parameters.size() == 0) {
     repeatHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "-h") {
+  } else if (parameters[0] == "-h") {
     repeatHelp();
     exit(EXIT_SUCCESS);
-  } else if (arguments[0] == "--help") {
+  } else if (parameters[0] == "--help") {
     repeatHelp();
     exit(EXIT_SUCCESS);
   } else {
-    shared_ptr<ArgumentsResolver> argumentsResolver(new ArgumentsResolver());
-    unordered_map<string, vector<string>> argument;
+    shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
+    unordered_map<string, vector<string>> parameter;
     try {
-      argument = argumentsResolver->parseArguments(arguments);
+      parameter = parametersResolver->parseParameters(parameters);
     } catch (int errorCode) {
       repeatHelp();
       exit(EXIT_FAILURE);
     }
-    vector<string> pointerOptions = argument["p"];
     regex pattern("^\\^[0-9]+$");
-    if (pointerOptions.size() == 1) {
+    vector<string> pointerOptions = parameter["p"];
+    vector<string> rangeOptions = parameter["r"];
+    if (pointerOptions.size() >= 1) {
+      if (rangeOptions.size() != 0) {
+        repeatHelp();
+        exit(EXIT_FAILURE);
+      }
       try {
-        string pointerFullString = pointerOptions[0];
-        if (!regex_match(pointerFullString, pattern)) {
-          throw 5;
+        for (const auto& pointerOption : pointerOptions) {
+          string pointerFullString = pointerOption;
+          if (!regex_match(pointerFullString, pattern)) {
+            throw 5;
+          }
+          string pointerString = pointerFullString.substr(1, pointerFullString.size() - 1);
+          int pointer = -1;
+          from_chars(pointerString.data(), pointerString.data() + pointerString.size(), pointer);
+          repeatHistorys(pointer, -1);
         }
-        string pointerString = pointerFullString.substr(1, pointerFullString.size() - 1);
-        int pointer = -1;
-        from_chars(pointerString.data(), pointerString.data() + pointerString.size(), pointer);
-        clearHistorys(pointer, -1);
       } catch (int errorCode) {
         switch (errorCode) {
           case 5:
@@ -172,10 +168,14 @@ void repeat(vector<string>& arguments) {
             break;
         }
       }
-    } else if(pointerOptions.size() == 2) {
+    } else if(rangeOptions.size() == 2) {
+      if (rangeOptions.size() != 0) {
+        repeatHelp();
+        exit(EXIT_FAILURE);
+      }
       try {
-        string leftFullString = pointerOptions[0];
-        string rightFullString = pointerOptions[1];
+        string leftFullString = rangeOptions[0];
+        string rightFullString = rangeOptions[1];
         if (!regex_match(leftFullString, pattern)) {
           throw 1;
         }
@@ -188,7 +188,7 @@ void repeat(vector<string>& arguments) {
         int right = -1;
         from_chars(leftString.data(), leftString.data() + leftString.size(), left);
         from_chars(rightString.data(), rightString.data() + rightString.size(), right);
-        clearHistorys(left, right);
+        repeatHistorys(left, right);
       } catch (int errorCode) {
         switch (errorCode) {
           case 1:

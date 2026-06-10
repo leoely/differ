@@ -19,6 +19,6 @@ void historyHelp() {
   cout << "{" << termcolor::bold << "Short" << termcolor::reset << "}" << termcolor::bold << " and " << termcolor::reset << "{" << termcolor::bold << "long" << termcolor::reset << "}" << termcolor::bold << " flag comparsion" << termcolor::reset << ":" << endl;
   cout << termcolor::color<150, 150, 150> << "  -h --help" << termcolor::reset << endl;
   cout << termcolor::color<150, 150, 150> << "  -a --all" << termcolor::reset << endl;
-  cout << termcolor::color<150, 150, 150> << "  -p --pointer" << termcolor::reset << endl;
+  cout << termcolor::color<150, 150, 150> << "  -p --pointers" << termcolor::reset << endl;
   println("");
 }
