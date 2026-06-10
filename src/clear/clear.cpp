@@ -102,7 +102,6 @@ void clearLocations(int left, int right) {
       differLocationsFile1.close();
     } else {
       ifstream differLocationsFile(differLocationsPath);
-      ofstream outputFile(differLocationsPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differLocationsFile),
         istreambuf_iterator<char>(),
@@ -164,7 +163,8 @@ void clear(vector<string>& parameters) {
     shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
     unordered_map<string, vector<string>> parameter;
     try {
-      parameter = parametersResolver->parseParameters(parameters);
+      parametersResolver->parseParameters(parameters);
+      parameter = parametersResolver->getParameter();
     } catch (int errorCode) {
       clearHelp();
       exit(EXIT_FAILURE);

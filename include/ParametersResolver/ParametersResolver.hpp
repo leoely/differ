@@ -19,11 +19,12 @@ using std::string;
 
 class ParametersResolver {
   private:
+    int status;
     unordered_map<string, vector<string>> parameter;
     unordered_set<string> paramSet;
     static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseParameters(const vector<string>& params);
+    unordered_map<string, vector<string>>& getParameter();
+    void parseParameters(const vector<string>& params);
     ParametersResolver();
 };
-

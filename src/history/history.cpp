@@ -143,7 +143,8 @@ void history(vector<string>& parameters) {
     shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
     unordered_map<string, vector<string>> parameter;
     try {
-      parameter = parametersResolver->parseParameters(parameters);
+      parametersResolver->parseParameters(parameters);
+      parameter = parametersResolver->getParameter();
     } catch (int errorCode) {
       historyHelp();
       exit(EXIT_FAILURE);

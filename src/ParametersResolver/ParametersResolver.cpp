@@ -17,15 +17,24 @@ using std::string;
 
 class ParametersResolver {
   private:
+    int status;
     unordered_map<string, vector<string>> parameter;
     unordered_set<string> paramSet;
     static int getType(const string& key);
   public:
-    unordered_map<string, vector<string>>& parseParameters(const vector<string>& params);
+    unordered_map<string, vector<string>>& getParameter();
+    void parseParameters(const vector<string>& params);
     ParametersResolver();
 };
 
-ParametersResolver::ParametersResolver() {}
+ParametersResolver::ParametersResolver() : status(0) {}
+
+unordered_map<string, vector<string>>& ParametersResolver::getParameter() {
+  if (status == 0) {
+    throw 4;
+  }
+  return parameter;
+}
 
 int ParametersResolver::getType(const string& key) {
   int type = 0;
@@ -62,10 +71,10 @@ int ParametersResolver::getType(const string& key) {
   return type;
 }
 
-unordered_map<string, vector<string>>& ParametersResolver::parseParameters(const vector<string>& params) {
+void ParametersResolver::parseParameters(const vector<string>& params) {
   regex pattern1("^\\-[a-z]+$");
   regex pattern2("^\\-\\-[a-z]+$");
-  int status = 0;
+  status = 0;
   int type;
   string key;
   for (const auto &param : params) {
@@ -167,5 +176,4 @@ unordered_map<string, vector<string>>& ParametersResolver::parseParameters(const
         break;
     }
   }
-  return parameter;
 }

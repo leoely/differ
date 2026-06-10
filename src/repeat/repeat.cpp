@@ -13,6 +13,13 @@
 #include <termcolor/termcolor.hpp>
 #include <ParametersResolver/ParametersResolver.hpp>
 #include <repeatHelp/repeatHelp.hpp>
+#include <generate/generate.hpp>
+#include <validate/validate.hpp>
+#include <preview/preview.hpp>
+#include <look/look.hpp>
+#include <clear/clear.hpp>
+#include <location/location.hpp>
+#include <history/history.hpp>
 
 using std::to_string;
 using std::from_chars;
@@ -33,6 +40,24 @@ using std::shared_ptr;
 using std::stringstream;
 
 namespace fs = std::filesystem;
+
+void execCommand(string& command, vector<string> options) {
+  if (command == "generate") {
+    generate(options);
+  } else if (command == "validate") {
+    validate(options);
+  } else if (command == "preview") {
+    preview(options);
+  } else if (command == "look") {
+    look(options);
+  } else if (command == "clear") {
+    clear(options);
+  } else if (command == "location") {
+    location(options);
+  } else if (command == "history") {
+    history(options);
+  }
+}
 
 void repeatHistorys(int left, int right) {
   string documentPathString = sago::getDocumentsFolder();
@@ -56,32 +81,34 @@ void repeatHistorys(int left, int right) {
       differHistorysFile.clear();
       differHistorysFile.seekg(0, ios::beg);
       int count = 0;
-      vector<string> lines;
       string line;
       while (getline(differHistorysFile, line)) {
         count += 1;
         if (count == left) {
           stringstream ss(line);
           string param;
-          while (getline(ss, param, ',')) {
+          int index = 0;
+          string command;
+          vector<string> options;
+          while (getline(ss, param, ' ')) {
+            if (index == 0) {
+              command = param;
+            } else {
+              options.push_back(param);
+            }
+            index += 1;
           }
-        } else {
-          lines.push_back(line);
+          execCommand(command, options);
         }
       }
-      ofstream differHistorysFile1(differHistorysPath);
-      for (const auto& line : lines) {
-        differHistorysFile1 << line + "\n";
-      }
-      differHistorysFile1.close();
     } else {
       ifstream differHistorysFile(differHistorysPath);
-      ofstream outputFile(differHistorysPath);
       size_t lineCount = count(
         istreambuf_iterator<char>(differHistorysFile),
         istreambuf_iterator<char>(),
         '\n'
       );
+      cout << lineCount << endl;
       if (left < 1) {
         throw 3;
       }
@@ -91,24 +118,26 @@ void repeatHistorys(int left, int right) {
       differHistorysFile.clear();
       differHistorysFile.seekg(0, ios::beg);
       string line;
-      vector<string> lines;
       int count = 0;
       while (getline(differHistorysFile, line)) {
         count += 1;
         if (count >= left && count <= right) {
           stringstream ss(line);
           string param;
-          while (getline(ss, param, ',')) {
+          int index = 0;
+          string command;
+          vector<string> options;
+          while (getline(ss, param, ' ')) {
+            if (index == 0) {
+              command = param;
+            } else {
+              options.push_back(param);
+            }
+            index += 1;
           }
-        } else {
-          lines.push_back(line);
+          execCommand(command, options);
         }
       }
-      ofstream differHistorysFile1(differHistorysPath);
-      for (const auto& line : lines) {
-        differHistorysFile1 << line + "\n";
-      }
-      differHistorysFile1.close();
     }
   }
 }
@@ -124,11 +153,24 @@ void repeat(vector<string>& parameters) {
   } else if (parameters[0] == "--help") {
     repeatHelp();
     exit(EXIT_SUCCESS);
+  } else if (parameters[0] == "-l" || parameters[0] == "--last") {
+    string documentPathString = sago::getDocumentsFolder();
+    const fs::path documentPath = documentPathString;
+    const fs::path homePath = documentPath.parent_path();
+    fs::path differHistorysPath = homePath / ".differ_historys";
+    ifstream differHistorysFile(differHistorysPath);
+    size_t lineCount = count(
+      istreambuf_iterator<char>(differHistorysFile),
+      istreambuf_iterator<char>(),
+      '\n'
+    );
+    repeatHistorys(lineCount, -1);
   } else {
     shared_ptr<ParametersResolver> parametersResolver(new ParametersResolver());
     unordered_map<string, vector<string>> parameter;
     try {
-      parameter = parametersResolver->parseParameters(parameters);
+      parametersResolver->parseParameters(parameters);
+      parameter = parametersResolver->getParameter();
     } catch (int errorCode) {
       repeatHelp();
       exit(EXIT_FAILURE);
@@ -168,8 +210,8 @@ void repeat(vector<string>& parameters) {
             break;
         }
       }
-    } else if(rangeOptions.size() == 2) {
-      if (rangeOptions.size() != 0) {
+    } else if(rangeOptions.size() >= 1) {
+      if (pointerOptions.size() != 0) {
         repeatHelp();
         exit(EXIT_FAILURE);
       }
