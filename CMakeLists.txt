@@ -3,7 +3,7 @@ set(CAMKE_CXX_STANDARD 26)
 set(CAMKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 project(
-  differ VERSION 1.1.0
+  differ VERSION 1.1.1
   DESCRIPTION "Efficient tool for generating diff files from source files."
   LANGUAGES CXX
 )
@@ -23,7 +23,7 @@ include(Document)
 include(Optimize)
 
 set(CPACK_PACKAGE_NAME "differ")
-set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_VERSION "1.1.1")
 set(CPACK_PACKAGE_VENDOR "Leo Ely")
 set(CPACK_PACKAGE_DESCIPTION "Differential file generation tool.")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")

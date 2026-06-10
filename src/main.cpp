@@ -99,10 +99,10 @@ int main(int argc, const char *argv[]) {
     help();
     exit(EXIT_SUCCESS);
   } else if (argument1 == "-v") {
-    cout << "v1.1.0" << endl;
+    cout << "v1.1.1" << endl;
     exit(EXIT_SUCCESS);
   } else if (argument1 == "--version") {
-    cout << "v1.1.0" << endl;
+    cout << "v1.1.1" << endl;
     exit(EXIT_SUCCESS);
   }
   vector<string> parameters;
